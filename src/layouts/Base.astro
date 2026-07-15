@@ -1,0 +1,125 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  ogType?: string;
+}
+
+const { title, description, ogType = 'website' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const nav = [
+  { href: '/size-guides/', label: 'Size Guides' },
+  { href: '/how-to-measure/', label: 'How to Measure' },
+  { href: '/blog/why-clothes-dont-fit/', label: 'Blog' },
+  { href: '/about/', label: 'About' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Attirel" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-cream text-ink font-sans antialiased">
+    <header class="border-b border-ink/10">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
+        <a href="/" class="font-display text-2xl font-semibold tracking-tight text-plum">
+          Attirel
+        </a>
+        <nav class="hidden items-center gap-6 text-sm font-medium text-smoke md:flex">
+          {nav.map((item) => (
+            <a href={item.href} class="transition-colors hover:text-ink">{item.label}</a>
+          ))}
+        </nav>
+        <a
+          href="https://attirel.ai"
+          class="rounded-full bg-plum px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-plum-dark"
+        >
+          Try the App
+        </a>
+      </div>
+      <nav class="flex items-center gap-5 overflow-x-auto px-5 pb-3 text-sm font-medium text-smoke md:hidden">
+        {nav.map((item) => (
+          <a href={item.href} class="whitespace-nowrap transition-colors hover:text-ink">{item.label}</a>
+        ))}
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="mt-20 border-t border-ink/10 bg-white/60">
+      <div class="mx-auto max-w-6xl px-5 py-10">
+        <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+          <div class="max-w-md">
+            <p class="font-display text-xl font-semibold text-plum">Attirel</p>
+            <p class="mt-2 text-sm text-smoke">
+              Your intelligent fashion companion. Personalized fit scores, size matching
+              across 100+ brands, and smarter shopping for your exact measurements.
+            </p>
+          </div>
+          <div class="flex gap-12 text-sm">
+            <div class="flex flex-col gap-2">
+              <p class="font-semibold">Site</p>
+              <a href="/about/" class="text-smoke hover:text-ink">About</a>
+              <a href="/privacy/" class="text-smoke hover:text-ink">Privacy</a>
+              <a href="/terms/" class="text-smoke hover:text-ink">Terms</a>
+            </div>
+            <div class="flex flex-col gap-2">
+              <p class="font-semibold">Follow</p>
+              <div class="flex gap-3 text-smoke">
+                <!-- Social placeholders -->
+                <a href="#" aria-label="Instagram" class="hover:text-ink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                </a>
+                <a href="#" aria-label="TikTok" class="hover:text-ink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                </a>
+                <a href="#" aria-label="Pinterest" class="hover:text-ink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 20l3-9"/><path d="M10.5 14.5c.5 1 1.5 1.5 2.5 1.5a4 4 0 1 0-4-4"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 border-t border-ink/10 pt-6 text-xs text-smoke">
+          <p>
+            Affiliate disclosure: Attirel participates in affiliate marketing programs and may
+            earn a commission when you purchase through links on this site or in our app, at no
+            additional cost to you. This never affects our fit recommendations.
+          </p>
+          <p class="mt-2">© {new Date().getFullYear()} Attirel. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

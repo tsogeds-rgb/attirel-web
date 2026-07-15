@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+
+const steps = [
+  {
+    n: '1',
+    title: 'Measure',
+    body: 'Follow the in-app guided tutorial to record your measurements — bust or chest, waist, hips, inseam, even foot length and width. You only do this once, and audio guidance walks you through every step.',
+  },
+  {
+    n: '2',
+    title: 'Browse',
+    body: 'Shop across your favourite stores inside Attirel. Every product is checked against your profile — no more opening five size charts in five tabs.',
+  },
+  {
+    n: '3',
+    title: 'Shop confident',
+    body: 'Each item shows a fit score and a recommended size, adjusted for that brand’s sizing quirks. Buy the size Attirel recommends and skip the returns queue.',
+  },
+];
+
+const labels = [
+  {
+    label: 'High confidence fit',
+    color: 'bg-green-100 text-green-800 border-green-200',
+    body: 'An excellent match with high certainty (95%+). Buy with confidence — no extra checks needed.',
+  },
+  {
+    label: 'Good fit — check notes',
+    color: 'bg-blue-100 text-blue-800 border-blue-200',
+    body: 'A strong match (80–94%). Worth a quick look at the fit notes — for example, a slim cut through the shoulders.',
+  },
+  {
+    label: 'Moderate confidence',
+    color: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    body: 'An acceptable match with some uncertainty (70–79%) — often because a measurement is missing or the brand’s data is thin.',
+  },
+  {
+    label: 'Proceed with caution',
+    color: 'bg-orange-100 text-orange-800 border-orange-200',
+    body: 'Low certainty (below 70%). Review the details carefully before buying, or add the missing measurement to sharpen the score.',
+  },
+];
+
+const featureList = [
+  ['Body measurements', 'Guided capture of bust/chest, under-bust, natural waist, high hip, hips and inseam — with optional extras for precise fits.'],
+  ['Shoe fit with width', 'Foot length plus width at the ball of the foot, so recommendations cover narrow, standard, and wide — and calf circumference for boots.'],
+  ['Pet profiles', 'Add your dog’s measurements and get fit-checked harnesses, coats, and more.'],
+  ['Skin tone colour matching', 'Colour recommendations tuned to your skin tone, so suggested items don’t just fit — they suit you.'],
+  ['Price comparison', 'See prices normalized across stores and currencies, with value scoring to spot genuinely good deals.'],
+  ['Size feedback learning', 'Tell Attirel how something actually fit, and future recommendations for that brand get smarter.'],
+];
+---
+
+<Base
+  title="How Attirel Works — AI Fit Scores for Online Shopping"
+  description="Measure once, browse your favourite stores, and shop with an AI-powered fit score on every product. Learn how Attirel's fit confidence system works."
+>
+  <section class="mx-auto max-w-6xl px-5 pb-16 pt-16 text-center">
+    <h1 class="mx-auto max-w-3xl font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+      The app that does the size math for you.
+    </h1>
+    <p class="mx-auto mt-5 max-w-2xl text-lg text-smoke">
+      Attirel turns your real measurements into a personal fit score on every product,
+      at every store you shop.
+    </p>
+  </section>
+
+  <!-- 3 steps -->
+  <section class="border-y border-ink/10 bg-white/60">
+    <div class="mx-auto grid max-w-6xl gap-8 px-5 py-16 md:grid-cols-3">
+      {steps.map((s) => (
+        <div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-plum font-display text-lg font-semibold text-white">
+            {s.n}
+          </div>
+          <h2 class="mt-4 font-display text-2xl font-semibold">{s.title}</h2>
+          <p class="mt-2 text-smoke">{s.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Confidence labels -->
+  <section class="mx-auto max-w-article px-5 py-16">
+    <h2 class="font-display text-3xl font-semibold tracking-tight">Understanding fit confidence</h2>
+    <p class="mt-3 text-smoke">
+      Every fit score comes with a plain-English confidence label, so you always know how much
+      to trust the recommendation:
+    </p>
+    <div class="mt-8 flex flex-col gap-4">
+      {labels.map((l) => (
+        <div class={`rounded-xl border p-5 ${l.color}`}>
+          <p class="font-semibold">{l.label}</p>
+          <p class="mt-1 text-sm opacity-90">{l.body}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-6 text-sm text-smoke">
+      Confidence rises as you add more measurements and give feedback on past purchases —
+      Attirel learns your fit over time.
+    </p>
+  </section>
+
+  <!-- Feature list -->
+  <section class="border-y border-ink/10 bg-white/60">
+    <div class="mx-auto max-w-6xl px-5 py-16">
+      <h2 class="font-display text-3xl font-semibold tracking-tight">Everything in the app</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {featureList.map(([title, body]) => (
+          <div class="rounded-2xl bg-cream p-6">
+            <h3 class="font-semibold text-plum">{title}</h3>
+            <p class="mt-2 text-sm text-smoke">{body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-5 py-16 text-center">
+    <h2 class="font-display text-3xl font-semibold tracking-tight">Ready to stop guessing?</h2>
+    <a
+      href="https://attirel.ai"
+      class="mt-6 inline-block rounded-full bg-plum px-8 py-3.5 font-semibold text-white transition-colors hover:bg-plum-dark"
+    >
+      Try Attirel at attirel.ai
+    </a>
+  </section>
+</Base>

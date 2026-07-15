@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+
+const women = [
+  {
+    name: 'Bust',
+    how: 'Wrap the tape around the fullest part of your chest. Wear a non-padded bra for the most accurate reading — a padded bra adds volume that won’t reflect your true size.',
+    tip: 'Keep the tape parallel to the floor and breathe out naturally.',
+  },
+  {
+    name: 'Under-bust (optional)',
+    how: 'Measure just below your bra band, snugly around your ribcage. Useful for wrapped and structured tops that need a precise fit around the torso.',
+  },
+  {
+    name: 'Natural waist',
+    how: 'Bend sideways — the crease that forms is your natural waist. Measure around that point, keeping the tape snug but not tight.',
+    tip: 'Stand straight after finding the crease. Don’t hold your breath while measuring.',
+  },
+  {
+    name: 'High hip (optional)',
+    how: 'Measure 3–4 inches below your natural waist, around the upper hip. Especially useful for A-line skirts and high-rise styles.',
+  },
+  {
+    name: 'Hips & seat',
+    how: 'Measure around the fullest part of your hips and seat — usually 7–9 inches below your natural waist. Stand with feet together.',
+    tip: 'Keep the tape parallel to the floor.',
+  },
+  {
+    name: 'Inseam',
+    how: 'Measure along the inside of your leg from your crotch to the floor, or to your preferred hem length.',
+    tip: 'No helper? Lay a well-fitting pair of pants flat and measure the inner seam instead.',
+  },
+];
+
+const men = [
+  {
+    name: 'Chest',
+    how: 'Wrap the tape around the fullest part of your chest, just below your armpits. Keep it parallel to the floor and stand naturally.',
+    tip: 'Don’t puff out or suck in — a relaxed, natural breath gives the most accurate reading.',
+  },
+  {
+    name: 'Natural waist',
+    how: 'Measure around the narrowest part of your torso — usually about 1 inch above your belly button. Keep the tape snug but comfortable.',
+  },
+  {
+    name: 'Hips',
+    how: 'Measure around the fullest part of your seat, keeping the tape parallel to the floor. Stand with feet together.',
+  },
+  {
+    name: 'Inseam',
+    how: 'Measure along the inside of your leg from the crotch seam down to the ankle bone, or your preferred hem length.',
+    tip: 'Measure the inner seam of a well-fitting pair of pants if you don’t have a helper.',
+  },
+];
+---
+
+<Base
+  title="How to Measure Yourself for Clothes — Complete Guide | Attirel"
+  description="Step-by-step guide to taking accurate body measurements at home: bust, under-bust, natural waist, high hip, hips, and inseam — the same guided method used in the Attirel app."
+  ogType="article"
+>
+  <article class="mx-auto max-w-article px-5 py-16">
+    <h1 class="font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+      How to measure yourself, properly.
+    </h1>
+    <p class="mt-5 text-lg text-smoke">
+      Accurate measurements are the foundation of every good fit. All you need is a soft
+      measuring tape, five minutes, and this guide — the same one built into the Attirel app’s
+      guided tutorial.
+    </p>
+
+    <div class="mt-8 rounded-xl bg-plum-light p-5 text-sm">
+      <p class="font-semibold text-plum">Before you start</p>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-ink/80">
+        <li>Use a soft tape measure (not a metal one) against bare skin or thin clothing.</li>
+        <li>Keep the tape snug but never tight — it should sit flat without digging in.</li>
+        <li>Stand naturally in front of a mirror so you can check the tape stays level.</li>
+      </ul>
+    </div>
+
+    <h2 class="mt-14 font-display text-3xl font-semibold tracking-tight">Women’s measurements</h2>
+    <div class="mt-6 flex flex-col gap-8">
+      {women.map((m, i) => (
+        <section>
+          <h3 class="font-display text-xl font-semibold text-plum">
+            {i + 1}. {m.name}
+          </h3>
+          <p class="mt-2 text-ink/85">{m.how}</p>
+          {m.tip && (
+            <p class="mt-2 rounded-lg bg-white/70 p-3 text-sm text-smoke">
+              <strong class="text-ink">Tip:</strong> {m.tip}
+            </p>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <h2 class="mt-16 font-display text-3xl font-semibold tracking-tight">Men’s measurements</h2>
+    <div class="mt-6 flex flex-col gap-8">
+      {men.map((m, i) => (
+        <section>
+          <h3 class="font-display text-xl font-semibold text-plum">
+            {i + 1}. {m.name}
+          </h3>
+          <p class="mt-2 text-ink/85">{m.how}</p>
+          {m.tip && (
+            <p class="mt-2 rounded-lg bg-white/70 p-3 text-sm text-smoke">
+              <strong class="text-ink">Tip:</strong> {m.tip}
+            </p>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <p class="mt-12 text-smoke">
+      Buying shoes too? See our companion guide:
+      <a href="/how-to-measure-feet/" class="font-semibold text-plum underline-offset-2 hover:underline">
+        how to measure your feet</a>.
+    </p>
+
+    <div class="mt-12 rounded-3xl bg-plum px-8 py-12 text-center text-white">
+      <h2 class="font-display text-2xl font-semibold">Measured up? You’re done with size charts.</h2>
+      <p class="mx-auto mt-3 max-w-md text-white/80">
+        Enter your measurements once and Attirel does the size math for every brand and store.
+      </p>
+      <a
+        href="https://attirel.ai"
+        class="mt-6 inline-block rounded-full bg-white px-8 py-3 font-semibold text-plum transition-opacity hover:opacity-90"
+      >
+        Let Attirel do the size math →
+      </a>
+    </div>
+  </article>
+</Base>

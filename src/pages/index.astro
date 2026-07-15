@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro';
+
+const features = [
+  {
+    title: 'Your measurements, once',
+    body: 'Add your measurements a single time with our guided tutorial. Attirel remembers them and does the size math for every store, every brand, every time.',
+  },
+  {
+    title: 'Fit scores on every product',
+    body: 'Every item gets an AI-powered fit score matched to your exact body — with confidence labels that tell you when to buy and when to double-check.',
+  },
+  {
+    title: 'Shop across stores',
+    body: 'Browse your favourite retailers in one place. Attirel normalizes each brand’s sizing quirks so a “medium” actually means something.',
+  },
+];
+
+const guides = [
+  {
+    href: '/size-guides/nike/',
+    title: 'Nike Size Guide',
+    body: 'Does Nike run small? (Yes — about half a size.) Full charts and conversion tips.',
+  },
+  {
+    href: '/size-guides/zara/',
+    title: 'Zara Size Guide',
+    body: 'Zara’s famously slim European cut, decoded — with US/UK/EU charts.',
+  },
+  {
+    href: '/size-guides/hm/',
+    title: 'H&M Size Guide',
+    body: 'H&M sizing explained, plus the full size chart in US, UK, and EU.',
+  },
+  {
+    href: '/how-to-measure/',
+    title: 'How to Measure Yourself',
+    body: 'The complete at-home measuring guide — bust, waist, hips, inseam and more.',
+  },
+];
+---
+
+<Base
+  title="Attirel — Never Order the Wrong Size Again"
+  description="Attirel matches your exact measurements to clothing across your favourite stores — with an AI-powered fit score for every product."
+>
+  <!-- Hero -->
+  <section class="mx-auto max-w-6xl px-5 pb-20 pt-16 text-center md:pt-24">
+    <h1 class="mx-auto max-w-3xl font-display text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+      Never order the wrong size again.
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-smoke md:text-xl">
+      Attirel matches your exact measurements to clothing across your favourite stores —
+      with an AI-powered fit score for every product.
+    </p>
+    <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <a
+        href="https://attirel.ai"
+        class="rounded-full bg-plum px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-plum-dark"
+      >
+        Try Attirel Free
+      </a>
+      <a
+        href="/app/"
+        class="rounded-full border border-ink/15 px-8 py-3.5 text-base font-semibold text-ink transition-colors hover:border-plum hover:text-plum"
+      >
+        How it works
+      </a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="border-y border-ink/10 bg-white/60">
+    <div class="mx-auto grid max-w-6xl gap-8 px-5 py-16 md:grid-cols-3">
+      {features.map((f) => (
+        <div class="rounded-2xl bg-cream p-8">
+          <h2 class="font-display text-xl font-semibold text-plum">{f.title}</h2>
+          <p class="mt-3 text-smoke">{f.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured guides -->
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <h2 class="font-display text-3xl font-semibold tracking-tight">Fit guides &amp; resources</h2>
+    <p class="mt-2 text-smoke">Free, practical guides from the Attirel team.</p>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2">
+      {guides.map((g) => (
+        <a
+          href={g.href}
+          class="group rounded-2xl border border-ink/10 bg-white/60 p-7 transition-all hover:border-plum/40 hover:shadow-sm"
+        >
+          <h3 class="font-display text-lg font-semibold group-hover:text-plum">{g.title}</h3>
+          <p class="mt-2 text-sm text-smoke">{g.body}</p>
+          <span class="mt-4 inline-block text-sm font-semibold text-plum">Read the guide →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="mx-auto max-w-6xl px-5 pb-8">
+    <div class="rounded-3xl bg-plum px-8 py-14 text-center text-white md:py-16">
+      <h2 class="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+        Shopping should fit you.
+      </h2>
+      <p class="mx-auto mt-4 max-w-xl text-white/80">
+        Add your measurements once and let Attirel score every product for your body —
+        across all your favourite stores.
+      </p>
+      <a
+        href="https://attirel.ai"
+        class="mt-8 inline-block rounded-full bg-white px-8 py-3.5 font-semibold text-plum transition-opacity hover:opacity-90"
+      >
+        Get started at attirel.ai
+      </a>
+    </div>
+  </section>
+</Base>
