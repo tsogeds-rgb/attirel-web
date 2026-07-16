@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+
+interface Chart {
+  heading: string;
+  minWidth?: number;
+  headers: string[];
+  rows: string[][];
+}
+
+interface Props {
+  title: string;
+  description: string;
+  brand: string;
+  verdictQuestion: string;
+  charts: Chart[];
+  ctaHeading?: string;
+  ctaBody?: string;
+}
+
+const {
+  title,
+  description,
+  brand,
+  verdictQuestion,
+  charts,
+  ctaHeading = 'Skip the mental math.',
+  ctaBody = `Attirel adjusts for ${brand}'s sizing automatically — your measurements in, the right ${brand} size out.`,
+} = Astro.props;
+---
+
+<Base title={title} description={description} ogType="article">
+  <article class="mx-auto max-w-article px-5 py-16">
+    <p class="text-sm font-semibold uppercase tracking-wide text-plum">Size Guide</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+      {brand} Size Guide
+    </h1>
+
+    <div class="mt-8 rounded-xl bg-plum-light p-5">
+      <p class="font-semibold text-plum">{verdictQuestion}</p>
+      <p class="mt-2 text-ink/85"><slot name="verdict" /></p>
+    </div>
+
+    {charts.map((c) => (
+      <>
+        <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">{c.heading}</h2>
+        <div class="mt-4 overflow-x-auto rounded-xl border border-ink/10">
+          <table
+            class="w-full border-collapse bg-white/70 text-sm"
+            style={`min-width:${c.minWidth ?? 560}px`}
+          >
+            <thead>
+              <tr class="bg-plum text-left text-white">
+                {c.headers.map((h) => (
+                  <th class="px-4 py-3 font-semibold">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {c.rows.map((row) => (
+                <tr class="border-t border-ink/10">
+                  {row.map((cell, i) => (
+                    <td class={`px-4 py-3 ${i === 0 ? 'font-semibold' : 'text-smoke'}`}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    ))}
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Conversion &amp; fitting tips</h2>
+    <ul class="mt-4 list-disc space-y-2 pl-5 text-ink/85">
+      <slot name="tips" />
+    </ul>
+
+    <div class="mt-12 rounded-3xl bg-plum px-8 py-12 text-center text-white">
+      <h2 class="font-display text-2xl font-semibold">{ctaHeading}</h2>
+      <p class="mx-auto mt-3 max-w-md text-white/80">{ctaBody}</p>
+      <a
+        href="https://attirel.ai"
+        class="mt-6 inline-block rounded-full bg-white px-8 py-3 font-semibold text-plum transition-opacity hover:opacity-90"
+      >
+        Try it at attirel.ai →
+      </a>
+    </div>
+  </article>
+</Base>

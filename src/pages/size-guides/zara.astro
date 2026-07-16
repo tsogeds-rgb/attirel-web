@@ -1,115 +1,53 @@
 ---
-import Base from '../../layouts/Base.astro';
+import SizeGuide from '../../components/SizeGuide.astro';
 
-const womens = [
-  ['XS', '0–2', '4–6', '34', '31.5"', '24.5"', '34.5"'],
-  ['S', '4', '8', '36', '33"', '26"', '36"'],
-  ['M', '6', '10', '38', '34.5"', '27.5"', '37.5"'],
-  ['L', '8–10', '12', '40', '36.5"', '29.5"', '39.5"'],
-  ['XL', '12', '14', '42', '38.5"', '31.5"', '41.5"'],
-];
-
-const mens = [
-  ['S', '36–38', '46', '35–37"', '29–31"'],
-  ['M', '38–40', '48', '37–39"', '31–33"'],
-  ['L', '40–42', '50', '39–41"', '33–35"'],
-  ['XL', '42–44', '52', '41–43"', '35–37"'],
-  ['XXL', '44–46', '54', '43–45"', '37–39"'],
+const charts = [
+  {
+    heading: 'Zara women’s',
+    minWidth: 640,
+    headers: ['Size', 'US', 'UK', 'EU', 'Bust', 'Waist', 'Hips'],
+    rows: [
+      ['XS', '0–2', '4–6', '34', '31.5"', '24.5"', '34.5"'],
+      ['S', '4', '8', '36', '33"', '26"', '36"'],
+      ['M', '6', '10', '38', '34.5"', '27.5"', '37.5"'],
+      ['L', '8–10', '12', '40', '36.5"', '29.5"', '39.5"'],
+      ['XL', '12', '14', '42', '38.5"', '31.5"', '41.5"'],
+    ],
+  },
+  {
+    heading: 'Zara men’s',
+    headers: ['Size', 'US/UK', 'EU', 'Chest', 'Waist'],
+    rows: [
+      ['S', '36–38', '46', '35–37"', '29–31"'],
+      ['M', '38–40', '48', '37–39"', '31–33"'],
+      ['L', '40–42', '50', '39–41"', '33–35"'],
+      ['XL', '42–44', '52', '41–43"', '35–37"'],
+      ['XXL', '44–46', '54', '43–45"', '37–39"'],
+    ],
+  },
 ];
 ---
 
-<Base
+<SizeGuide
   title="Zara Size Guide — Does Zara Run Small? (Charts & Tips) | Attirel"
   description="Zara runs small with a slim European cut — most shoppers size up. Full Zara size charts for women and men with US, UK, and EU conversions, plus fitting tips."
-  ogType="article"
+  brand="Zara"
+  verdictQuestion="Does Zara run small?"
+  charts={charts}
+  ctaHeading="Zara math, handled."
+  ctaBody="Attirel adjusts for Zara's slim European cut automatically — your measurements in, the right Zara size out."
 >
-  <article class="mx-auto max-w-article px-5 py-16">
-    <p class="text-sm font-semibold uppercase tracking-wide text-plum">Size Guide</p>
-    <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-      Zara Size Guide
-    </h1>
-
-    <div class="mt-8 rounded-xl bg-plum-light p-5">
-      <p class="font-semibold text-plum">Does Zara run small?</p>
-      <p class="mt-2 text-ink/85">
-        <strong>Yes — Zara runs small, with a slim European cut.</strong> Zara designs to
-        continental European proportions: narrower shoulders, slimmer sleeves, and a shorter
-        torso than typical US/UK brands. Most shoppers should size up at least one size,
-        especially in blazers, shirts, and denim.
-      </p>
-    </div>
-
-    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Zara women’s</h2>
-    <div class="mt-4 overflow-x-auto rounded-xl border border-ink/10">
-      <table class="w-full min-w-[640px] border-collapse bg-white/70 text-sm">
-        <thead>
-          <tr class="bg-plum text-left text-white">
-            <th class="px-4 py-3 font-semibold">Size</th>
-            <th class="px-4 py-3 font-semibold">US</th>
-            <th class="px-4 py-3 font-semibold">UK</th>
-            <th class="px-4 py-3 font-semibold">EU</th>
-            <th class="px-4 py-3 font-semibold">Bust</th>
-            <th class="px-4 py-3 font-semibold">Waist</th>
-            <th class="px-4 py-3 font-semibold">Hips</th>
-          </tr>
-        </thead>
-        <tbody>
-          {womens.map((row) => (
-            <tr class="border-t border-ink/10">
-              {row.map((cell, i) => (
-                <td class={`px-4 py-3 ${i === 0 ? 'font-semibold' : 'text-smoke'}`}>{cell}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Zara men’s</h2>
-    <div class="mt-4 overflow-x-auto rounded-xl border border-ink/10">
-      <table class="w-full min-w-[560px] border-collapse bg-white/70 text-sm">
-        <thead>
-          <tr class="bg-plum text-left text-white">
-            <th class="px-4 py-3 font-semibold">Size</th>
-            <th class="px-4 py-3 font-semibold">US/UK</th>
-            <th class="px-4 py-3 font-semibold">EU</th>
-            <th class="px-4 py-3 font-semibold">Chest</th>
-            <th class="px-4 py-3 font-semibold">Waist</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mens.map((row) => (
-            <tr class="border-t border-ink/10">
-              {row.map((cell, i) => (
-                <td class={`px-4 py-3 ${i === 0 ? 'font-semibold' : 'text-smoke'}`}>{cell}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Conversion &amp; fitting tips</h2>
-    <ul class="mt-4 list-disc space-y-2 pl-5 text-ink/85">
-      <li><strong>Zara sizes by EU numbers first</strong> — the tag shows EU sizing with US/UK conversions printed underneath. When in doubt, trust the EU number and the garment measurements.</li>
-      <li><strong>Blazers and outerwear:</strong> cut close through the shoulders — size up if you layer underneath.</li>
-      <li><strong>Denim:</strong> Zara jeans have minimal stretch in many lines; size up unless the listing says “stretch.”</li>
-      <li><strong>Between sizes?</strong> With Zara’s slim cut, go up, not down.</li>
-      <li><strong>Check the product page:</strong> Zara’s fit varies noticeably between collections (TRF runs smaller than the main line).</li>
-    </ul>
-
-    <div class="mt-12 rounded-3xl bg-plum px-8 py-12 text-center text-white">
-      <h2 class="font-display text-2xl font-semibold">Zara math, handled.</h2>
-      <p class="mx-auto mt-3 max-w-md text-white/80">
-        Attirel adjusts for Zara’s slim European cut automatically — your measurements in,
-        the right Zara size out.
-      </p>
-      <a
-        href="https://attirel.ai"
-        class="mt-6 inline-block rounded-full bg-white px-8 py-3 font-semibold text-plum transition-opacity hover:opacity-90"
-      >
-        Try it at attirel.ai →
-      </a>
-    </div>
-  </article>
-</Base>
+  <Fragment slot="verdict">
+    <strong>Yes — Zara runs small, with a slim European cut.</strong> Zara designs to
+    continental European proportions: narrower shoulders, slimmer sleeves, and a shorter torso
+    than typical US/UK brands. Most shoppers should size up at least one size, especially in
+    blazers, shirts, and denim.
+  </Fragment>
+  <Fragment slot="tips">
+    <li><strong>Zara sizes by EU numbers first</strong> — the tag shows EU sizing with US/UK conversions printed underneath. When in doubt, trust the EU number and the garment measurements.</li>
+    <li><strong>Blazers and outerwear:</strong> cut close through the shoulders — size up if you layer underneath.</li>
+    <li><strong>Denim:</strong> Zara jeans have minimal stretch in many lines; size up unless the listing says "stretch."</li>
+    <li><strong>Between sizes?</strong> With Zara's slim cut, go up, not down.</li>
+    <li><strong>Check the product page:</strong> Zara's fit varies noticeably between collections (TRF runs smaller than the main line).</li>
+  </Fragment>
+</SizeGuide>

@@ -1,0 +1,55 @@
+---
+import SizeGuide from '../../components/SizeGuide.astro';
+
+const charts = [
+  {
+    heading: 'Levi’s women’s jeans',
+    minWidth: 560,
+    headers: ['Waist size', 'US', 'Waist', 'Hips'],
+    rows: [
+      ['W25', '0', '25"', '35"'],
+      ['W26', '2', '26"', '36"'],
+      ['W27', '4', '27"', '37"'],
+      ['W28', '6', '28"', '38"'],
+      ['W29', '8', '29"', '39"'],
+      ['W30', '10', '30"', '40"'],
+      ['W31', '12', '31"', '41"'],
+      ['W32', '14', '32"', '42"'],
+    ],
+  },
+  {
+    heading: 'Levi’s men’s jeans',
+    headers: ['Waist size', 'Waist', 'Common inseams'],
+    rows: [
+      ['W29', '29"', 'L30 / L32'],
+      ['W30', '30"', 'L30 / L32'],
+      ['W32', '32"', 'L30 / L32 / L34'],
+      ['W34', '34"', 'L30 / L32 / L34'],
+      ['W36', '36"', 'L30 / L32 / L34'],
+      ['W38', '38"', 'L30 / L32'],
+    ],
+  },
+];
+---
+
+<SizeGuide
+  title="Levi's Size Guide — Are Levi's True to Size? (Charts & Tips) | Attirel"
+  description="Levi's jeans are true to size in modern stretch fits, but rigid and shrink-to-fit styles need sizing up. Full Levi's waist/inseam charts and fit-by-fit tips."
+  brand="Levi's"
+  verdictQuestion="Are Levi's true to size?"
+  charts={charts}
+>
+  <Fragment slot="verdict">
+    <strong>Mostly yes — modern stretch Levi's fit true to your actual waist measurement.</strong>
+    The exceptions are the classics: rigid, non-stretch denim (and especially 501
+    Shrink-to-Fit) runs tight and shrinks further, so size the waist up. Levi's sizes by real
+    inches — measure your natural waist and you're most of the way there.
+  </Fragment>
+  <Fragment slot="tips">
+    <li><strong>501 Shrink-to-Fit:</strong> buy 1" up in the waist and 3" longer in the leg — the raw denim shrinks that much after the first washes.</li>
+    <li><strong>Rigid / vintage re-issues:</strong> no stretch means no forgiveness — if between sizes, go up.</li>
+    <li><strong>Stretch fits (311, 312, 511 Flex, 721):</strong> relax up to half a size with wear — if between sizes, go down.</li>
+    <li><strong>W = waist in inches, L = inseam in inches</strong> — a 32×32 is a 32" waist with a 32" inseam. Measure a well-fitting pair to find your true numbers.</li>
+    <li><strong>Vanity check:</strong> many people wear jeans labelled 2–3" smaller than their actual waist measurement in other brands — trust the tape, not the label you're used to.</li>
+  </Fragment>
+</SizeGuide>
