@@ -1,0 +1,23 @@
+---
+import { affiliateLinks } from '../config/affiliateLinks';
+
+interface Props {
+  brand: string;
+  /** Override the config URL for this one link (e.g. official chart deep link). */
+  href?: string;
+  class?: string;
+}
+
+const { brand, href, class: cls } = Astro.props;
+const link = affiliateLinks[brand];
+const target = href ?? link?.url ?? '#';
+---
+
+<a
+  href={target}
+  data-aff={brand}
+  target="_blank"
+  rel="noopener sponsored"
+  class={cls ??
+    'font-semibold text-plum underline decoration-plum/40 underline-offset-2 transition-colors hover:decoration-plum'}
+><slot /></a>

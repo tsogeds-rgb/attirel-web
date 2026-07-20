@@ -1,0 +1,155 @@
+---
+import Base from '../../layouts/Base.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import AppCTA from '../../components/AppCTA.astro';
+import {
+  womensClothingIntl,
+  mensClothingIntl,
+  womensShoes,
+  mensShoes,
+} from '../../config/sizeConversions';
+
+const tables = [womensClothingIntl, mensClothingIntl, womensShoes, mensShoes];
+
+const brandGuides = [
+  { href: '/size-guides/uniqlo-size-chart-fit-guide/', label: 'Uniqlo size chart & fit guide' },
+  { href: '/size-guides/levis-size-chart-fit-guide/', label: "Levi's size chart & fit guide" },
+  { href: '/size-guides/adidas-size-chart-fit-guide/', label: 'Adidas size chart & fit guide' },
+  { href: '/size-guides/gap-old-navy-size-chart-fit-guide/', label: 'Gap & Old Navy size chart & fit guide' },
+  { href: '/size-guides/shein-size-chart-fit-guide/', label: 'Shein size chart & fit guide' },
+  { href: '/size-guides/lululemon-size-chart-fit-guide/', label: 'Lululemon size chart & fit guide' },
+  { href: '/size-guides/mango-size-chart-fit-guide/', label: 'Mango size chart & fit guide' },
+  { href: '/size-guides/asos-size-chart-fit-guide/', label: 'ASOS size chart & fit guide' },
+];
+
+const faqs = [
+  {
+    q: 'What is a US women\'s size 8 in UK and EU sizes?',
+    a: 'By the standard conversion, a US women\'s 8 corresponds to a UK 12 and an EU 40. Individual brands can drift from this by a size in either direction, so treat it as a starting point and check the brand\'s own chart.',
+  },
+  {
+    q: 'Are UK and AU clothing sizes the same?',
+    a: 'For women\'s clothing, Australian sizing follows the UK numbering, so a UK 10 and an AU 10 generally describe the same size. Men\'s clothing in both countries is based on the same chest-in-inches system used in the US.',
+  },
+  {
+    q: 'How do EU clothing sizes work?',
+    a: 'EU women\'s sizes run in even numbers from roughly 32 to 54, sitting about 32 numbers above the equivalent US size (US 4 ≈ EU 36). EU men\'s sizes are approximately the chest measurement in inches plus 10 (a 40-inch chest ≈ EU 50).',
+  },
+  {
+    q: 'Why does my converted size still not fit?',
+    a: 'Conversion charts translate labels, not garments. Two brands can label the same measurements differently — vanity sizing, regional fit blocks, and cut all shift the result. When in doubt, compare your body measurements against the specific brand\'s chart rather than converting label-to-label.',
+  },
+];
+
+const faqJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+
+<Base
+  title="International Size Conversion: US, UK, EU, AU & JP"
+  description="Standard US↔UK↔EU↔AU↔JP size conversion charts for women's and men's clothing and shoes, plus links to brand-specific fit guides."
+  ogType="article"
+>
+  <article class="mx-auto max-w-article px-5 py-16">
+    <p class="text-sm font-semibold uppercase tracking-wide text-plum">Size Guide</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+      International Size Conversion Charts: US, UK, EU, AU &amp; JP
+    </h1>
+
+    <AffiliateDisclosure />
+
+    <p class="mt-8 text-lg leading-relaxed text-ink/85">
+      Shopping across borders means translating between at least four sizing systems that grew up
+      independently. This page is the master reference: the standard published conversions for
+      women's and men's clothing and shoes. One honest caveat before the tables — conversions
+      translate <em>labels</em>, not garments. A brand's cut can move you a full size in either
+      direction, which is why each of our
+      <a href="/size-guides/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">brand fit guides</a>
+      covers how specific brands actually run.
+    </p>
+
+    {tables.map((c) => (
+      <>
+        <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">{c.heading}</h2>
+        {c.note && <p class="mt-1 text-sm text-smoke">{c.note}</p>}
+        <div class="mt-4 overflow-x-auto rounded-xl border border-ink/10">
+          <table
+            class="w-full border-collapse bg-white/70 text-sm"
+            style={`min-width:${c.minWidth ?? 560}px`}
+          >
+            <thead>
+              <tr class="bg-plum text-left text-white">
+                {c.headers.map((h) => (
+                  <th class="px-4 py-3 font-semibold">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {c.rows.map((row) => (
+                <tr class="border-t border-ink/10">
+                  {row.map((cell, i) => (
+                    <td class={`px-4 py-3 ${i === 0 ? 'font-semibold' : 'text-smoke'}`}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    ))}
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
+      How to use these charts
+    </h2>
+    <ul class="mt-4 list-disc space-y-2 pl-5 text-ink/85">
+      <li><strong>Start from your measurements, not your usual label.</strong> Measure bust/chest, waist, and hips, then find the row that matches — our <a href="/how-to-measure/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">measuring guide</a> shows exactly how.</li>
+      <li><strong>Convert once, then verify against the brand.</strong> Use the table to find your likely size, then confirm on the retailer's own chart before ordering.</li>
+      <li><strong>Shoes: trust centimeters.</strong> JP sizing is the foot length in cm, which makes it the least ambiguous system — measure your foot and work backward.</li>
+      <li><strong>Between rows? Consider the garment.</strong> Structured pieces forgive less than knits; when a conversion lands you between sizes, the fabric decides. Our guide to <a href="/blog/how-to-shop-online-between-sizes/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">shopping between sizes</a> covers the judgment calls.</li>
+    </ul>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
+      Brand-by-brand fit guides
+    </h2>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Conversions get you to the right neighborhood; these guides get you to the right door.
+      Each covers how the brand tends to run, category by category:
+    </p>
+    <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+      {brandGuides.map((g) => (
+        <li>
+          <a href={g.href} class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">{g.label}</a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-4 leading-relaxed text-ink/85">
+      Also in the library: the
+      <a href="/size-guides/bra-size-calculator-guide/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">bra size guide</a>
+      and the
+      <a href="/size-guides/jeans-inseam-length-guide/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">jeans inseam &amp; length guide</a>.
+    </p>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Conversion FAQ</h2>
+    <div class="mt-4 space-y-5">
+      {faqs.map((f) => (
+        <div class="rounded-xl border border-ink/10 bg-white/60 p-5">
+          <h3 class="font-semibold text-ink">{f.q}</h3>
+          <p class="mt-2 leading-relaxed text-ink/85">{f.a}</p>
+        </div>
+      ))}
+    </div>
+
+    <AppCTA
+      body="Attirel converts your exact measurements into the right size in any system — US, UK, EU, and beyond — across 100+ brands."
+    />
+  </article>
+
+  <script type="application/ld+json" set:html={faqJsonLd} is:inline />
+</Base>

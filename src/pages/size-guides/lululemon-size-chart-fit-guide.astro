@@ -1,0 +1,70 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+
+const fitSections = [
+  {
+    category: 'Leggings & bottoms',
+    text: "Lululemon leggings are engineered as compression garments, so a snug first try-on is the intended fit, not a sizing mistake. In the brand's numeric 0–20 range, most shoppers do best taking their true size: sizing up sacrifices the compression and hold the leggings are designed around. Fabric matters, too — the buttery Align line feels noticeably less compressive than the firmer Wunder Train, so the same number can feel like two different fits.",
+  },
+  {
+    category: 'Tops & bras',
+    text: "Tanks and fitted tops follow the athletic, close-to-body cut you'd expect, while styles the brand labels relaxed or oversized genuinely are — the product page's fit designation is worth reading before defaulting to your number. Sports bras are sized for support, so they tend to feel firm on first wear; many shoppers find that checking the listed support level (light, medium, high) against their activity matters more than shifting a size.",
+  },
+  {
+    category: 'Outerwear & jackets',
+    text: "Jackets like the Define hug the body with an intentionally sculpted, fitted silhouette — comfortable over a tank, snug over a hoodie. If you routinely layer, many shoppers find one size up in fitted jackets gives welcome room without losing the shape. Looser outerwear and hoodies are cut with more ease from the start and are commonly reported fine at your regular number.",
+  },
+];
+
+const faqs = [
+  {
+    q: 'Do Lululemon leggings run small?',
+    a: "They run snug by design rather than small. Lululemon leggings are compression fit, so the tight feel at first pull-on is intentional — it's what delivers the hold and smoothing the brand is known for. Most shoppers land right at their true numeric size; a pair that slides on effortlessly is usually a size too big.",
+  },
+  {
+    q: 'Should I size up in Lululemon Align leggings?',
+    a: "Usually not. Align's Nulu fabric is the softest and least compressive in the lineup, so it already feels gentler than firmer lines like Wunder Train. Sizing up in Align commonly leads to bagging at the knees and slipping at the waist. Take your true size and let the fabric do its thing.",
+  },
+  {
+    q: 'What size am I in Lululemon numeric sizing?',
+    a: "Lululemon uses numeric women's sizing from 0 to 20 rather than letters. As a rough anchor, a US 4 corresponds to a Lululemon 4 — the numbers track standard US sizes fairly closely. Use the size guide on each product page to match your measurements, and remember compression pieces are meant to fit firmly at that number.",
+  },
+  {
+    q: 'Is Wunder Train tighter than Align?',
+    a: "It feels that way to most people. Wunder Train uses the brand's Everlux fabric, which is more compressive and structured for high-sweat training, while Align's Nulu is light and buttery for yoga and lounging. Same size, distinctly different sensation — shoppers commonly keep the same number across both and choose the line by activity.",
+  },
+  {
+    q: 'Do Lululemon sports bras run tight?',
+    a: "A supportive first impression is normal — bras are built to feel firmer than a top. If a band feels restrictive rather than secure after a few minutes of movement, going up one size or dropping to a lighter support level tends to fix it. Knowing your measured band and cup size helps you read Lululemon's bra size chart accurately.",
+  },
+];
+
+const related = [
+  { href: '/size-guides/adidas-size-chart-fit-guide/', label: 'Adidas size chart & fit guide' },
+  { href: '/size-guides/bra-size-calculator-guide/', label: 'Bra size calculator & fitting guide' },
+  { href: '/blog/why-the-same-size-fits-differently/', label: 'Why the same size fits differently across brands' },
+];
+---
+
+<BrandGuide
+  brandKey="lululemon"
+  brand="Lululemon"
+  title="Lululemon Size Chart & Fit Guide: Does It Run Small?"
+  description="Lululemon runs true to size with intentional compression — leggings feel snug by design, so don't size up. Numeric sizing explained, fit notes, and FAQ."
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <strong>Lululemon runs true to size — the snugness is the point.</strong> Leggings are
+    compression fit, so they're meant to feel firm at your true number in the brand's 0–20
+    numeric range. Sizing up loses the hold they're engineered for. Expect Align to feel softer
+    and less compressive than Wunder Train at the identical size.
+  </Fragment>
+  <Fragment slot="tips">
+    <li><strong>Trust the squeeze:</strong> compression leggings should feel firm on first wear — if they pull on with zero effort, try the number below.</li>
+    <li><strong>Pick the line by feel:</strong> Align for soft, low-compression comfort; Wunder Train for locked-in support — same size, different sensation.</li>
+    <li><strong>Read the fit label:</strong> product pages state whether a style is fitted, relaxed, or oversized — that designation shifts the fit more than a size step.</li>
+    <li><strong>Size jackets for layers:</strong> sculpted styles like the Define are cut close, so go up one if you'll regularly wear them over more than a tank.</li>
+  </Fragment>
+</BrandGuide>

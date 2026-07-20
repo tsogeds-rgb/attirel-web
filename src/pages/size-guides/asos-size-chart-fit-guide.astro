@@ -1,0 +1,70 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+
+const fitSections = [
+  {
+    category: 'ASOS DESIGN tops & dresses',
+    text: "ASOS's own label is cut on a standard UK size block, and tops and dresses tend to fit true to that chart for most shoppers. Trend-led pieces are the wildcard: styles described as oversized, slouchy, or shrunken are cut that way on purpose, so the product description and the model's listed size matter as much as the chart. When a listing shows exact garment measurements, those beat the generic letter size every time.",
+  },
+  {
+    category: 'ASOS DESIGN bottoms & denim',
+    text: "Jeans and trousers under the ASOS DESIGN label generally track the UK chart, with stretch styles feeling more forgiving than rigid ones. The Tall, Petite, and Curve ranges share the same width sizing but change lengths, rises, and proportions — so picking the right line for your height and shape first, then your usual size, tends to work better than sizing up or down within the main range.",
+  },
+  {
+    category: 'Third-party brands',
+    text: "This is where ASOS sizing gets complicated: the marketplace stocks over 850 brands, and each one fits to its own block. The size dropdown converts labels for you, but a Nike medium bought through ASOS still fits like Nike, and a Bershka medium fits like Bershka. Many shoppers check the specific brand's fit reputation — or the reviews on that exact product — before trusting a conversion.",
+  },
+];
+
+const faqs = [
+  {
+    q: 'Is ASOS sizing UK or US?',
+    a: "ASOS sizes UK-first, and the site converts to your region at checkout. For women's clothing the usual conversion is US size = UK size minus 4 (a UK 12 displays as a US 8), while EU sizes run UK plus 28. If you shop the US site you'll mostly see US labels, but the underlying fit block is British.",
+  },
+  {
+    q: 'Does ASOS run small?',
+    a: "ASOS DESIGN itself tends to fit true to a standard UK chart, so most shoppers can order their usual size in own-brand pieces. Reports of ASOS running small usually trace back to a third-party brand with its own tighter block, or a deliberately fitted trend style — check whose label is actually on the garment before adjusting.",
+  },
+  {
+    q: 'How do ASOS Tall, Petite, and Curve sizes work?',
+    a: "They keep the same numeric width sizing as the main range but re-proportion the garment. Tall adds length in sleeves, torsos, and legs; Petite shortens them; Curve is drafted for fuller figures rather than simply scaled up. The common advice is to choose the line that matches your height and shape, then order the size you normally wear.",
+  },
+  {
+    q: 'Do all brands on ASOS fit the same?',
+    a: "No — and this trips up a lot of shoppers. ASOS is a marketplace stocking hundreds of labels, from Adidas to Weekday, and each uses its own fit block. The conversion chart standardizes the label, not the garment. Product-page measurements, the 'Fit Assistant' prompts, and reviews for that specific item are more reliable than assuming ASOS-wide consistency.",
+  },
+  {
+    q: "What ASOS size am I if I'm a US 8?",
+    a: "In women's ASOS DESIGN clothing, a US 8 generally corresponds to a UK 12 (EU 40). That said, treat it as a starting point: measure your bust, waist, and hips and compare them against the chart on the product page, since trend cuts and third-party brands can sit looser or slimmer than the conversion implies.",
+  },
+];
+
+const related = [
+  { href: '/size-guides/shein-size-chart-fit-guide/', label: 'Shein size chart & fit guide' },
+  { href: '/size-guides/uniqlo-size-chart-fit-guide/', label: 'Uniqlo size chart & fit guide' },
+  { href: '/blog/why-the-same-size-fits-differently/', label: 'Why the same size fits differently across brands' },
+];
+---
+
+<BrandGuide
+  brandKey="asos"
+  brand="ASOS"
+  title="ASOS Size Chart & Fit Guide: Does It Run Small?"
+  description="ASOS DESIGN tends to run true to a UK size block — but the 850+ other brands ASOS stocks each fit their own way. UK/US/EU conversions and sizing FAQ."
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <strong>ASOS DESIGN tends to run true to size on a standard UK block</strong>, so own-brand
+    pieces in your usual size are a safe starting point. The complication is everything else:
+    ASOS stocks 850+ third-party brands that each fit their own way, so the brand name on the
+    garment matters more than the ASOS chart. Use the per-product measurements when listed.
+  </Fragment>
+  <Fragment slot="tips">
+    <li><strong>Think UK-first:</strong> the fit block is British even when the label shows your local size, so double-check conversions if you usually shop US or EU charts.</li>
+    <li><strong>Identify the actual brand:</strong> only ASOS DESIGN follows the ASOS chart — third-party items fit to their maker's block, whatever the dropdown says.</li>
+    <li><strong>Pick your line before your size:</strong> Tall, Petite, and Curve adjust proportions, which solves length problems that sizing up or down never will.</li>
+    <li><strong>Read the style cues:</strong> words like oversized or bodycon describe an intentional cut — compare the model's listed size to see how it wears.</li>
+  </Fragment>
+</BrandGuide>

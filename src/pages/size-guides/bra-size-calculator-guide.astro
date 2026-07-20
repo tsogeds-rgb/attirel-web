@@ -1,0 +1,280 @@
+---
+import Base from '../../layouts/Base.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import AppCTA from '../../components/AppCTA.astro';
+
+const faqs = [
+  {
+    q: 'How do I calculate my bra size at home?',
+    a: 'Measure snugly around your underbust for your band size, then measure loosely around the fullest part of your bust. Subtract the underbust number from the bust number: each inch of difference is roughly one cup letter (1 inch = A, 2 = B, 3 = C, 4 = D, and so on).',
+  },
+  {
+    q: 'What is a sister size in bras?',
+    a: 'A sister size is a different band-and-cup combination that holds roughly the same cup volume. Go down a band and up a cup (32D to 30DD) or up a band and down a cup (32D to 34C). Sister sizes are useful when a bra fits in the cup but the band feels too tight or too loose.',
+  },
+  {
+    q: 'Is a UK DD cup the same as a US DD cup?',
+    a: 'At DD the two systems still line up, but they diverge just above it. After DD, UK sizing runs E, F, FF, G, GG, while US sizing commonly runs DDD, G, H. So a UK E is roughly a US DDD, not a US E, which is why converting letter by letter goes wrong past DD.',
+  },
+  {
+    q: 'What EU bra size is a US 32D?',
+    a: 'Approximately a 70D. EU bands are labeled in centimeters, and a US or UK 32 band corresponds to about a 70 EU band (30 is about 65, 34 about 75, 36 about 80). Cup letters match closely through D, so 32D converts to roughly EU 70D.',
+  },
+];
+const faqJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base
+  title="Bra Size Guide: Band, Cup & Sister Sizes Explained"
+  description="Band = underbust measurement; cup = bust minus underbust, about one letter per inch. How to measure, sister sizes, and US/UK/EU conversions."
+  ogType="article"
+>
+  <article class="mx-auto max-w-article px-5 py-16">
+    <p class="text-sm font-semibold uppercase tracking-wide text-plum">Size Guide</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+      Bra Size Guide: Band, Cup &amp; Sister Sizes Explained
+    </h1>
+
+    <AffiliateDisclosure />
+
+    <p class="mt-8 leading-relaxed text-ink/85">
+      A bra size is really two measurements wearing one label. The <strong>number is your band</strong> — how big
+      around your ribcage is just under your bust — and the <strong>letter is your cup</strong>, which describes
+      how much bigger your bust is than that ribcage measurement. Once you understand that the letter is a
+      <em>difference</em>, not an absolute volume, the whole system clicks: it explains why a D cup on a 32 band is
+      smaller than a D cup on a 38 band, and why "sister sizes" exist at all. This guide walks through how to
+      measure yourself with an ordinary tape measure, works one example from start to finish, and untangles the
+      US, UK, and EU labeling systems.
+    </p>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">How band and cup sizing works</h2>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      The <strong>band size</strong> comes from your underbust measurement — the circumference of your ribcage
+      directly below your breasts. In US and UK sizing that number is expressed in inches, usually rounded to the
+      nearest even number (30, 32, 34, 36…). The band does most of the supporting work, which is why a well-fitting
+      band sits level and snug rather than riding up your back.
+    </p>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      The <strong>cup size</strong> is the difference between your full bust measurement and your underbust
+      measurement. As a rule of thumb, each inch of difference equals one cup letter: about 1 inch is an A cup,
+      2 inches a B, 3 inches a C, 4 inches a D, 5 inches a DD, and so on. That is why the same letter means
+      different things on different bands — the cup is always relative to the ribcage it sits on.
+    </p>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">How to measure yourself, step by step</h2>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      You need a soft tape measure and, ideally, a mirror. Wear an unpadded or lightly lined bra, or none at all.
+      For more detail on taking accurate body measurements generally, see our
+      <a href="/how-to-measure/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">how to measure guide</a>.
+    </p>
+    <ul class="mt-4 list-disc space-y-2 pl-5 text-ink/85">
+      <li>
+        <strong>Measure your underbust.</strong> Wrap the tape around your ribcage directly under your bust, keeping
+        it level all the way around. It should be snug — parallel to the floor, no slack, but not digging in.
+        Exhale normally and note the number.
+      </li>
+      <li>
+        <strong>Find your band size.</strong> Round the underbust measurement to the nearest even number. Many fitters
+        suggest that if you land on an odd number, you try both neighboring even bands and keep whichever stays put
+        when you raise your arms.
+      </li>
+      <li>
+        <strong>Measure your full bust.</strong> Wrap the tape around the fullest part of your bust, usually at nipple
+        level. Keep the tape level across your back and let it rest gently — don't compress the tissue.
+      </li>
+      <li>
+        <strong>Subtract to get your cup.</strong> Full bust minus underbust, rounded to the nearest whole inch.
+        Count one cup letter per inch of difference.
+      </li>
+    </ul>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">A worked example</h2>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Say your underbust measures <strong>31 inches</strong> and your full bust measures <strong>36 inches</strong>.
+      Rounding 31 to the nearest even number gives a <strong>32 band</strong>. The difference between bust and band
+      is 36 − 32 = <strong>4 inches</strong>, and four inches of difference corresponds to a <strong>D cup</strong>.
+      Put the two together and your starting size is <strong>32D</strong>. Treat that as a starting point, not a
+      verdict: cut, padding, and stretch vary between styles, so the tape gets you to the right shelf and trying on
+      gets you to the right bra.
+    </p>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Sister sizes: same cup volume, different band</h2>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Because the cup letter is relative to the band, you can trade band for cup and keep roughly the same cup
+      volume. Go <strong>down a band, up a cup</strong> or <strong>up a band, down a cup</strong> and you have a
+      "sister size." This is the trick to reach for when the cups fit perfectly but the band is wrong — or when a
+      brand simply doesn't stock your exact combination.
+    </p>
+    <div class="mt-3 overflow-x-auto rounded-xl border border-ink/10">
+      <table class="w-full border-collapse bg-white/70 text-sm" style="min-width:560px">
+        <thead>
+          <tr class="bg-plum text-left text-white">
+            <th class="px-4 py-3 font-semibold">Band down, cup up</th>
+            <th class="px-4 py-3 font-semibold">Your measured size</th>
+            <th class="px-4 py-3 font-semibold">Band up, cup down</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">30C</td>
+            <td class="px-4 py-3 text-smoke">32B</td>
+            <td class="px-4 py-3 text-smoke">34A</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">30D</td>
+            <td class="px-4 py-3 text-smoke">32C</td>
+            <td class="px-4 py-3 text-smoke">34B</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">30DD</td>
+            <td class="px-4 py-3 text-smoke">32D</td>
+            <td class="px-4 py-3 text-smoke">34C</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">32DD</td>
+            <td class="px-4 py-3 text-smoke">34D</td>
+            <td class="px-4 py-3 text-smoke">36C</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">34DD</td>
+            <td class="px-4 py-3 text-smoke">36D</td>
+            <td class="px-4 py-3 text-smoke">38C</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      One caveat: sister sizing changes the band, and the band is where the support comes from. A sister size is a
+      good backup plan, not an upgrade — if your measured band fits, stick with it. Sizing also matters beyond bras:
+      sports bras at activewear brands often use S–M–L instead of band-and-cup sizing, which our
+      <a href="/size-guides/lululemon-size-chart-fit-guide/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">Lululemon size chart and fit guide</a>
+      covers in detail.
+    </p>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">US vs UK vs EU: the cup letters diverge</h2>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Through a D cup, US and UK letters agree. Above that they split: the <strong>UK</strong> system runs
+      DD, E, F, FF, G, GG, while the <strong>US</strong> commonly runs DD, DDD, G, H (with some brands using E and F
+      instead of DD and DDD, which adds to the confusion). <strong>EU</strong> sizing labels bands in centimeters —
+      a US/UK 32 band is roughly a 70 EU band — and its cups run in single letters. The tables below show the
+      approximate equivalences; treat them as a guide, since brands apply these systems unevenly.
+    </p>
+
+    <h3 class="mt-8 text-lg font-semibold text-ink">Band conversion (approximate)</h3>
+    <div class="mt-3 overflow-x-auto rounded-xl border border-ink/10">
+      <table class="w-full border-collapse bg-white/70 text-sm" style="min-width:560px">
+        <thead>
+          <tr class="bg-plum text-left text-white">
+            <th class="px-4 py-3 font-semibold">US / UK band (in)</th>
+            <th class="px-4 py-3 font-semibold">30</th>
+            <th class="px-4 py-3 font-semibold">32</th>
+            <th class="px-4 py-3 font-semibold">34</th>
+            <th class="px-4 py-3 font-semibold">36</th>
+            <th class="px-4 py-3 font-semibold">38</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">EU band (cm)</td>
+            <td class="px-4 py-3 text-smoke">65</td>
+            <td class="px-4 py-3 text-smoke">70</td>
+            <td class="px-4 py-3 text-smoke">75</td>
+            <td class="px-4 py-3 text-smoke">80</td>
+            <td class="px-4 py-3 text-smoke">85</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="mt-8 text-lg font-semibold text-ink">Cup letter conversion (approximate)</h3>
+    <div class="mt-3 overflow-x-auto rounded-xl border border-ink/10">
+      <table class="w-full border-collapse bg-white/70 text-sm" style="min-width:560px">
+        <thead>
+          <tr class="bg-plum text-left text-white">
+            <th class="px-4 py-3 font-semibold">Bust − band</th>
+            <th class="px-4 py-3 font-semibold">US cup</th>
+            <th class="px-4 py-3 font-semibold">UK cup</th>
+            <th class="px-4 py-3 font-semibold">EU cup</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">3 in</td>
+            <td class="px-4 py-3 text-smoke">C</td>
+            <td class="px-4 py-3 text-smoke">C</td>
+            <td class="px-4 py-3 text-smoke">C</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">4 in</td>
+            <td class="px-4 py-3 text-smoke">D</td>
+            <td class="px-4 py-3 text-smoke">D</td>
+            <td class="px-4 py-3 text-smoke">D</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">5 in</td>
+            <td class="px-4 py-3 text-smoke">DD</td>
+            <td class="px-4 py-3 text-smoke">DD</td>
+            <td class="px-4 py-3 text-smoke">E</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">6 in</td>
+            <td class="px-4 py-3 text-smoke">DDD</td>
+            <td class="px-4 py-3 text-smoke">E</td>
+            <td class="px-4 py-3 text-smoke">F</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">7 in</td>
+            <td class="px-4 py-3 text-smoke">G</td>
+            <td class="px-4 py-3 text-smoke">F</td>
+            <td class="px-4 py-3 text-smoke">G</td>
+          </tr>
+          <tr class="border-t border-ink/10">
+            <td class="px-4 py-3 font-semibold">8 in</td>
+            <td class="px-4 py-3 text-smoke">H</td>
+            <td class="px-4 py-3 text-smoke">FF</td>
+            <td class="px-4 py-3 text-smoke">H</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Shopping across borders? Bra bands are only one piece of the puzzle — our
+      <a href="/size-guides/international-size-conversion/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">international size conversion charts</a>
+      cover clothing and shoe sizes across the US, UK, and EU as well.
+    </p>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Bra sizing FAQ</h2>
+    <div class="mt-4 space-y-5">
+      {faqs.map((f) => (
+        <div class="rounded-xl border border-ink/10 bg-white/60 p-5">
+          <h3 class="font-semibold text-ink">{f.q}</h3>
+          <p class="mt-2 leading-relaxed text-ink/85">{f.a}</p>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Keep reading</h2>
+    <ul class="mt-4 list-disc space-y-2 pl-5">
+      <li>
+        <a href="/size-guides/international-size-conversion/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">International size conversion charts</a>
+      </li>
+      <li>
+        <a href="/size-guides/lululemon-size-chart-fit-guide/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">Lululemon size chart &amp; fit guide</a>
+      </li>
+      <li>
+        <a href="/how-to-measure/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">How to measure yourself at home</a>
+      </li>
+      <li>
+        <a href="/size-guides/gap-old-navy-size-chart-fit-guide/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">Gap &amp; Old Navy size chart &amp; fit guide</a>
+      </li>
+    </ul>
+
+    <AppCTA />
+  </article>
+
+  <script type="application/ld+json" set:html={faqJsonLd} is:inline />
+</Base>

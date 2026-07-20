@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import AppCTA from './AppCTA.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  /** ISO date, e.g. "2026-07-20". */
+  date: string;
+  readingTime?: string;
+  ctaHeading?: string;
+  ctaBody?: string;
+  /** Set false to omit the app CTA block (rare). */
+  showCta?: boolean;
+}
+
+const { title, description, heading, date, readingTime, ctaHeading, ctaBody, showCta = true } =
+  Astro.props;
+
+const displayDate = new Date(date + 'T00:00:00Z').toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
+const articleJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: heading,
+  description,
+  datePublished: date,
+  dateModified: date,
+  author: { '@type': 'Organization', name: 'Attirel Team', url: 'https://attirel.com/about/' },
+  publisher: { '@type': 'Organization', name: 'Attirel', url: 'https://attirel.com/' },
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+});
+---
+
+<Base title={title} description={description} ogType="article">
+  <article class="mx-auto max-w-article px-5 py-16">
+    <p class="text-sm font-semibold uppercase tracking-wide text-plum">The Attirel Blog</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+      {heading}
+    </h1>
+    <p class="mt-4 text-sm text-smoke">
+      By Attirel Team · {displayDate}{readingTime && ` · ${readingTime}`}
+    </p>
+
+    <div class="prose-attirel mt-10 space-y-6 text-lg leading-relaxed text-ink/85">
+      <slot />
+    </div>
+
+    {showCta && <AppCTA heading={ctaHeading} body={ctaBody} />}
+  </article>
+
+  <script type="application/ld+json" set:html={articleJsonLd} is:inline />
+</Base>

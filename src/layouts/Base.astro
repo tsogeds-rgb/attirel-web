@@ -12,7 +12,7 @@ const ogImage = new URL('/og-logo.png', Astro.site);
 const nav = [
   { href: '/size-guides/', label: 'Size Guides' },
   { href: '/how-to-measure/', label: 'How to Measure' },
-  { href: '/blog/why-clothes-dont-fit/', label: 'Blog' },
+  { href: '/blog/', label: 'Blog' },
   { href: '/about/', label: 'About' },
 ];
 ---
@@ -99,10 +99,17 @@ const nav = [
           </div>
           <div class="flex gap-12 text-sm">
             <div class="flex flex-col gap-2">
+              <p class="font-semibold">Explore</p>
+              <a href="/size-guides/" class="text-smoke hover:text-ink">Size Guides</a>
+              <a href="/blog/" class="text-smoke hover:text-ink">Blog</a>
+              <a href="/how-to-measure/" class="text-smoke hover:text-ink">How to Measure</a>
+            </div>
+            <div class="flex flex-col gap-2">
               <p class="font-semibold">Site</p>
               <a href="/about/" class="text-smoke hover:text-ink">About</a>
               <a href="/privacy/" class="text-smoke hover:text-ink">Privacy</a>
               <a href="/terms/" class="text-smoke hover:text-ink">Terms</a>
+              <a href="/affiliate-disclosure/" class="text-smoke hover:text-ink">Affiliate Disclosure</a>
             </div>
             <div class="flex flex-col gap-2">
               <p class="font-semibold">Follow</p>

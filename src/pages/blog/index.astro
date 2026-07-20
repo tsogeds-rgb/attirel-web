@@ -1,0 +1,102 @@
+---
+import Base from '../../layouts/Base.astro';
+
+interface PostCard {
+  href: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  pinned?: boolean;
+}
+
+const posts: PostCard[] = [
+  {
+    href: '/blog/introducing-attirel-size-guide-library/',
+    title: 'Introducing the Attirel Size Guide Library',
+    date: '2026-07-20',
+    excerpt:
+      'Eight brand fit guides, bra sizing, international conversions, and inseam lengths — a complete, free sizing reference library, launching today.',
+    pinned: true,
+  },
+  {
+    href: '/blog/vanity-sizing-explained/',
+    title: "Vanity Sizing, Explained: Why You're a Different Size Than in 2010",
+    date: '2026-07-20',
+    excerpt:
+      'Size labels have been drifting for decades. Where vanity sizing came from, why brands keep doing it, and what it means for your closet.',
+  },
+  {
+    href: '/blog/why-the-same-size-fits-differently/',
+    title: 'Why the Same Size Fits Differently Across Brands',
+    date: '2026-07-20',
+    excerpt:
+      "A medium is not a measurement. Fit blocks, regional sizing systems, and cut — the real reasons your size changes from store to store.",
+  },
+  {
+    href: '/blog/how-to-shop-online-between-sizes/',
+    title: "How to Shop Online When You're Between Sizes",
+    date: '2026-07-20',
+    excerpt:
+      'Garment measurements, fabric judgment, and silhouette rules: a practical playbook for the shopper who is never quite one size.',
+  },
+  {
+    href: '/blog/petite-vs-regular-vs-tall/',
+    title: 'Petite vs. Regular vs. Tall: What Clothing Labels Actually Mean',
+    date: '2026-07-20',
+    excerpt:
+      "They're height designations, not width. What actually changes between petite, regular, and tall cuts — and how to pick yours.",
+  },
+  {
+    href: '/blog/why-clothes-dont-fit/',
+    title: 'Why 40% of Clothes Bought Online Get Returned',
+    date: '2026-07-17',
+    excerpt:
+      'Vanity sizing, brand inconsistency, and size chart chaos: why online clothes shopping is broken and how measurement-based fit fixes it.',
+  },
+];
+
+const fmt = (d: string) =>
+  new Date(d + 'T00:00:00Z').toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+---
+
+<Base
+  title="The Attirel Blog: Sizing & Fit, Explained"
+  description="Essays and guides on clothing sizes, fit, and smarter online shopping from the team building measurement-based size matching."
+>
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <p class="text-sm font-semibold uppercase tracking-wide text-plum">The Attirel Blog</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+      Sizing &amp; fit, explained
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-smoke">
+      Why clothes fit the way they do — and how to shop like you know it.
+    </p>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      {posts.map((p) => (
+        <a
+          href={p.href}
+          class={`group flex flex-col rounded-2xl border p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+            p.pinned
+              ? 'border-plum/30 bg-plum-light md:col-span-2'
+              : 'border-ink/10 bg-white/70'
+          }`}
+        >
+          {p.pinned && (
+            <p class="text-xs font-semibold uppercase tracking-wide text-plum">New · Launch</p>
+          )}
+          <h2 class={`font-display font-semibold tracking-tight text-ink group-hover:text-plum ${p.pinned ? 'mt-2 text-3xl' : 'text-xl'}`}>
+            {p.title}
+          </h2>
+          <p class="mt-3 flex-1 text-smoke">{p.excerpt}</p>
+          <p class="mt-4 text-sm text-smoke/80">{fmt(p.date)} · Attirel Team</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

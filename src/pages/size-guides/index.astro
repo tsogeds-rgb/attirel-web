@@ -1,18 +1,67 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const guides = [
+interface GuideCard {
+  href: string;
+  brand: string;
+  verdict: string;
+  body: string;
+}
+
+const brandGuides: GuideCard[] = [
+  {
+    href: '/size-guides/uniqlo-size-chart-fit-guide/',
+    brand: 'Uniqlo',
+    verdict: 'Tends to run small',
+    body: 'Slim Japanese fit with shorter sleeves and torsos — most Western shoppers size up one.',
+  },
+  {
+    href: '/size-guides/levis-size-chart-fit-guide/',
+    brand: "Levi's",
+    verdict: 'True to size (stretch)',
+    body: 'Modern stretch fits match your real waist; rigid and Shrink-to-Fit classics need sizing up.',
+  },
+  {
+    href: '/size-guides/adidas-size-chart-fit-guide/',
+    brand: 'Adidas',
+    verdict: 'Shoes tend to run big',
+    body: 'Originals run about a half size large, so many size down. Apparel varies by line.',
+  },
+  {
+    href: '/size-guides/gap-old-navy-size-chart-fit-guide/',
+    brand: 'Gap & Old Navy',
+    verdict: 'Tend to run large',
+    body: 'American vanity sizing at work — both cut generous, with Old Navy the roomier of the two.',
+  },
+  {
+    href: '/size-guides/shein-size-chart-fit-guide/',
+    brand: 'Shein',
+    verdict: 'Tends to run small',
+    body: 'Small-running and famously inconsistent — the garment measurements decide, not the label.',
+  },
+  {
+    href: '/size-guides/lululemon-size-chart-fit-guide/',
+    brand: 'Lululemon',
+    verdict: 'Snug by design',
+    body: 'Numeric sizing and compression fits — sizing up costs you the compression.',
+  },
+  {
+    href: '/size-guides/mango-size-chart-fit-guide/',
+    brand: 'Mango',
+    verdict: 'Tends to run small',
+    body: 'A slim European block in the Zara family — many US shoppers go up a size.',
+  },
+  {
+    href: '/size-guides/asos-size-chart-fit-guide/',
+    brand: 'ASOS',
+    verdict: 'True to size (own brand)',
+    body: 'ASOS DESIGN fits true on a UK block — but the 850+ brands it stocks each fit their own way.',
+  },
   {
     href: '/size-guides/nike/',
     brand: 'Nike',
     verdict: 'Runs ~half a size small',
     body: 'Footwear runs about half a size small and apparel cuts athletic-slim. Charts and tips inside.',
-  },
-  {
-    href: '/size-guides/adidas/',
-    brand: 'Adidas',
-    verdict: 'Shoes run ~half a size big',
-    body: 'The opposite of Nike: Originals run large, so most size down half. Apparel charts inside.',
   },
   {
     href: '/size-guides/zara/',
@@ -26,47 +75,52 @@ const guides = [
     verdict: 'True to size',
     body: 'Generally true to size with a standard European fit — but watch the Divided line. Full charts inside.',
   },
+];
+
+const referenceGuides: GuideCard[] = [
   {
-    href: '/size-guides/uniqlo/',
-    brand: 'Uniqlo',
-    verdict: 'Runs small / slim cut',
-    body: 'Slim Japanese fit with shorter sleeves and torsos — most Western shoppers size up one.',
+    href: '/size-guides/international-size-conversion/',
+    brand: 'International Size Conversion',
+    verdict: 'Master reference',
+    body: 'The US ↔ UK ↔ EU ↔ AU ↔ JP conversion charts for clothing and shoes, in one place.',
   },
   {
-    href: '/size-guides/levis/',
-    brand: "Levi's",
-    verdict: 'True to size (stretch)',
-    body: 'Modern stretch fits match your real waist; rigid and shrink-to-fit classics need sizing up.',
+    href: '/size-guides/bra-size-calculator-guide/',
+    brand: 'Bra Size Guide',
+    verdict: 'Band, cup & sister sizes',
+    body: 'How band and cup sizing actually works, with a worked example and US/UK/EU differences.',
   },
   {
-    href: '/size-guides/asos/',
-    brand: 'ASOS',
-    verdict: 'True to size (own brand)',
-    body: 'ASOS DESIGN fits true on a UK block — but the 850+ brands it stocks each fit their own way.',
+    href: '/size-guides/jeans-inseam-length-guide/',
+    brand: 'Jeans Inseam & Length',
+    verdict: 'Inseam by height',
+    body: 'Typical inseams by height, petite/regular/tall explained, and how to measure your own.',
   },
 ];
 ---
 
 <Base
-  title="Brand Size Guides — Nike, Adidas, Zara, H&M, Uniqlo & More | Attirel"
-  description="Does it run small or true to size? Brand-by-brand size guides with full US/UK/EU charts and conversion tips, from the Attirel team."
+  title="Size Guides: Brand Fit Charts & Sizing References"
+  description="Free size guides for Uniqlo, Levi's, Adidas, Shein, Lululemon and more — plus international conversions, bra sizing, and inseam lengths."
 >
   <section class="mx-auto max-w-6xl px-5 py-16">
     <h1 class="font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-      Brand size guides
+      The size guide library
     </h1>
     <p class="mt-4 max-w-2xl text-lg text-smoke">
-      Every brand sizes differently. These guides tell you whether a brand runs small, large,
-      or true to size — with the full charts to prove it.
+      Straight answers about how brands really fit — does it run small, when to size up, and how
+      to convert between systems. New here? Start with the
+      <a href="/blog/introducing-attirel-size-guide-library/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">launch announcement</a>.
     </p>
 
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {guides.map((g) => (
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Brand fit guides</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {brandGuides.map((g) => (
         <a
           href={g.href}
           class="group rounded-2xl border border-ink/10 bg-white/60 p-7 transition-all hover:border-plum/40 hover:shadow-sm"
         >
-          <h2 class="font-display text-2xl font-semibold group-hover:text-plum">{g.brand}</h2>
+          <h3 class="font-display text-2xl font-semibold group-hover:text-plum">{g.brand}</h3>
           <p class="mt-1 inline-block rounded-full bg-plum-light px-3 py-1 text-xs font-semibold text-plum">
             {g.verdict}
           </p>
@@ -74,12 +128,23 @@ const guides = [
           <span class="mt-4 inline-block text-sm font-semibold text-plum">View size guide →</span>
         </a>
       ))}
-      <div class="flex items-center justify-center rounded-2xl border border-dashed border-ink/20 p-7 text-center">
-        <p class="text-smoke">
-          <span class="font-semibold text-ink">More brands coming soon</span><br />
-          <span class="text-sm">Gap, Mango, COS, North Face and more.</span>
-        </p>
-      </div>
+    </div>
+
+    <h2 class="mt-14 font-display text-2xl font-semibold tracking-tight">Reference guides</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {referenceGuides.map((g) => (
+        <a
+          href={g.href}
+          class="group rounded-2xl border border-plum/20 bg-plum-light p-7 transition-all hover:border-plum/40 hover:shadow-sm"
+        >
+          <h3 class="font-display text-2xl font-semibold group-hover:text-plum">{g.brand}</h3>
+          <p class="mt-1 inline-block rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-plum">
+            {g.verdict}
+          </p>
+          <p class="mt-3 text-sm text-ink/70">{g.body}</p>
+          <span class="mt-4 inline-block text-sm font-semibold text-plum">Open the reference →</span>
+        </a>
+      ))}
     </div>
 
     <div class="mt-14 rounded-3xl bg-plum px-8 py-12 text-center text-white">
@@ -88,7 +153,7 @@ const guides = [
         Attirel knows how every brand runs and matches sizes to your measurements automatically.
       </p>
       <a
-        href="https://attirel.ai"
+        href="https://www.attirel.ai"
         class="mt-6 inline-block rounded-full bg-white px-8 py-3 font-semibold text-plum transition-opacity hover:opacity-90"
       >
         Try Attirel at attirel.ai →

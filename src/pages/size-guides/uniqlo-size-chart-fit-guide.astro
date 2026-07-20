@@ -1,0 +1,70 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+
+const fitSections = [
+  {
+    category: 'Tops & knits',
+    text: "Uniqlo cuts to a slim Japanese fit block: many shoppers find tops narrower through the shoulders and chest than US mall brands, with noticeably shorter sleeves and torsos. Supima tees and merino knits in particular tend to fit close to the body, so shoppers used to a relaxed American cut often go up one size.",
+  },
+  {
+    category: 'Bottoms',
+    text: "Trousers and jeans tend to run slim through the hip and thigh with a tapered leg. Uniqlo hems trousers in-store and online in many regions, which helps with length — but the waist itself tends to measure true to the labeled size rather than generously, so there's less hidden room than at vanity-sized brands.",
+  },
+  {
+    category: 'Outerwear',
+    text: "Ultra Light Down, blocktech coats, and jackets are cut trim so they layer under other clothing. If you plan to wear anything heavier than a t-shirt underneath, many shoppers find sizing up one gives the intended silhouette. Collaboration lines like Uniqlo U and JW Anderson deliberately cut boxier — check the model measurements before defaulting to your usual size.",
+  },
+];
+
+const faqs = [
+  {
+    q: 'Does Uniqlo run small in the US?',
+    a: "For most US shoppers, yes. Uniqlo's fit block originates from Japanese sizing, which tends to run slimmer and shorter than typical US brands. Uniqlo adjusts sizing upward for its US range, but many shoppers still find it fits about one size smaller than they expect from American mall brands.",
+  },
+  {
+    q: 'Should I size up in Uniqlo?',
+    a: "If you're between sizes, or buying knits and outerwear you plan to layer, sizing up one is the common advice. For base layers like Heattech and Airism, stay true to size — they're designed to fit snug against the skin.",
+  },
+  {
+    q: 'Is Uniqlo sizing the same as Japan?',
+    a: "No. Items sold in Uniqlo's US and European ranges are cut roughly one size more generous than the same item in Japan. If you buy Japan-spec items abroad or from the Japanese site, expect them to run a full size smaller than the Western equivalent.",
+  },
+  {
+    q: 'Do Uniqlo clothes shrink?',
+    a: 'Cotton-heavy pieces like Supima tees can shrink slightly in a hot wash or dryer. Washing cold and air-drying keeps them close to their original size; if you always machine-dry, consider going up a size in pure cotton styles.',
+  },
+  {
+    q: 'How does Uniqlo U sizing differ from regular Uniqlo?',
+    a: 'Uniqlo U and designer collaborations (like JW Anderson) are intentionally cut boxier and more oversized than the core range. Many shoppers take their regular size or even size down in these lines — check the listed model size and measurements on each product page.',
+  },
+];
+
+const related = [
+  { href: '/size-guides/asos-size-chart-fit-guide/', label: 'ASOS size chart & fit guide' },
+  { href: '/size-guides/mango-size-chart-fit-guide/', label: 'Mango size chart & fit guide' },
+  { href: '/blog/why-the-same-size-fits-differently/', label: 'Why the same size fits differently across brands' },
+];
+---
+
+<BrandGuide
+  brandKey="uniqlo"
+  brand="Uniqlo"
+  title="Uniqlo Size Chart & Fit Guide: Does It Run Small?"
+  description="Uniqlo tends to run small with a slim Japanese cut — many shoppers size up one. Standard US/UK/EU conversions, fit notes by category, and sizing FAQ."
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <strong>Uniqlo tends to run small for most Western shoppers.</strong> Its slim Japanese fit
+    block sits narrower in the shoulders and shorter in the sleeves and torso than typical US
+    brands. If you're between sizes — or layering knits and outerwear — most shoppers do best
+    sizing up one.
+  </Fragment>
+  <Fragment slot="tips">
+    <li><strong>Know your region:</strong> US/EU-range items are cut roughly a size more generous than Japan-spec stock — check which version you're buying.</li>
+    <li><strong>Watch sleeve and torso length:</strong> if you have long arms or a long torso, size up even when the width fits.</li>
+    <li><strong>Base layers stay true:</strong> Heattech and Airism are designed to fit snug — take your usual size for the intended effect.</li>
+    <li><strong>Collabs cut boxy:</strong> Uniqlo U and JW Anderson run oversized — check model measurements before sizing up again.</li>
+  </Fragment>
+</BrandGuide>

@@ -1,0 +1,70 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+
+const fitSections = [
+  {
+    category: 'Tops & blazers',
+    text: "Mango drafts to a slim Spanish fit block, so shirts and knits tend to sit close through the shoulders and arms compared with American labels. Blazers — a Mango signature — are commonly reported narrow across the back and snug in the upper arm; US shoppers who like room for a sweater underneath frequently take one size up from their usual, while those wanting the sharp European silhouette stay with the size that skims.",
+  },
+  {
+    category: 'Bottoms & denim',
+    text: "Trousers and jeans follow the same trim European proportions: waists tend to measure honest-to-snug rather than generous, and thighs run lean. Shoppers coming from vanity-sized US brands are often surprised by how little hidden ease there is, which is why sizing up one in tailored pants is such common advice. Wide-leg and slouchy cuts carry more room by design and are usually fine at your regular size.",
+  },
+  {
+    category: 'Dresses & outerwear',
+    text: "Fitted dresses are cut for a narrow frame through the ribcage and hips, and zip-back styles have little give, so between-size shoppers tend to go up. Coats sit closer to the body than typical American outerwear — lovely open, restrictive when buttoned over knitwear — so many buyers choose the larger size in wool coats they plan to layer through winter.",
+  },
+];
+
+const faqs = [
+  {
+    q: 'Is Mango sizing the same as Zara?',
+    a: "Close cousins. Both are Spanish brands cut on slim European blocks that run narrow against US sizing, and shoppers commonly find their Zara size carries over to Mango. Many report Mango feels slightly more consistent piece to piece than Zara, but the size-up-from-US instinct applies equally at both.",
+  },
+  {
+    q: 'Does Mango run small for US shoppers?',
+    a: "It tends to, yes. Mango's Spanish fit block is slimmer and narrower than the average American cut, particularly in shoulders, arms, and hips. Many US shoppers order one size above their usual, especially in structured pieces like blazers and fitted dresses.",
+  },
+  {
+    q: 'Should I size up in Mango blazers?',
+    a: "If you're used to American tailoring or plan to layer, sizing up is the commonly shared advice — Mango blazers run trim in the back and upper arms. If you want the cropped, sharply fitted European look over just a thin top, your skimming size delivers it best.",
+  },
+  {
+    q: 'What is my Mango size in US sizing?',
+    a: "Mango labels in EU sizing with US conversions shown at checkout on the US site. As a starting point, use the standard EU-to-US conversion charts on this page, then lean one size up if the piece is structured or fitted — the slim cut eats into the ease a US shopper expects at their converted size.",
+  },
+  {
+    q: 'Do Mango jeans run true to size?',
+    a: "The waist tends to measure true-to-snug rather than roomy, and thighs run slim, so denim commonly feels tighter than the same number at a US brand. Stretch styles soften with wear; rigid ones don't, so between-size shoppers usually take the larger size in non-stretch washes.",
+  },
+];
+
+const related = [
+  { href: '/size-guides/shein-size-chart-fit-guide/', label: 'Shein size chart & fit guide' },
+  { href: '/size-guides/uniqlo-size-chart-fit-guide/', label: 'Uniqlo size chart & fit guide' },
+  { href: '/blog/how-to-shop-online-between-sizes/', label: 'How to shop online when you fall between sizes' },
+];
+---
+
+<BrandGuide
+  brandKey="mango"
+  brand="Mango"
+  title="Mango Size Chart & Fit Guide: Does It Run Small?"
+  description="Mango tends to run small with a slim European cut like Zara's — many US shoppers size up one. EU-to-US conversions, fit notes by category, and sizing FAQ."
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <strong>Mango tends to run small and narrow for US shoppers.</strong> Like fellow Spanish
+    brand Zara, it cuts to a slim European block with less ease through the shoulders, arms, and
+    hips than American labels. Many US shoppers size up one, particularly in blazers, fitted
+    dresses, and tailored pants — while relaxed and oversized styles usually fit true.
+  </Fragment>
+  <Fragment slot="tips">
+    <li><strong>Borrow your Zara size:</strong> the two Spanish brands share a similar slim block, so whatever works at Zara is the best starting guess at Mango.</li>
+    <li><strong>Size up in structure:</strong> blazers, sheath dresses, and tailored trousers carry the least ease — go one up if you're between sizes or layering.</li>
+    <li><strong>Let relaxed cuts be relaxed:</strong> styles sold as oversized or wide-leg already include the extra room, so stay with your regular size there.</li>
+    <li><strong>Convert from EU, then adjust:</strong> start with the standard EU-to-US chart below, and remember the slim cut means the converted size fits closer than a US brand's would.</li>
+  </Fragment>
+</BrandGuide>

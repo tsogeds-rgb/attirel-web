@@ -1,0 +1,27 @@
+---
+interface Props {
+  brand?: string;
+  heading?: string;
+  body?: string;
+}
+
+const { brand, heading, body } = Astro.props;
+
+const resolvedHeading = heading ?? 'Skip the guesswork.';
+const resolvedBody =
+  body ??
+  (brand
+    ? `Attirel matches your exact measurements to the right size at ${brand} and 100+ other brands.`
+    : 'Attirel matches your exact measurements to the right size across 100+ brands.');
+---
+
+<div class="mt-12 rounded-3xl bg-plum px-8 py-12 text-center text-white">
+  <h2 class="font-display text-2xl font-semibold">{resolvedHeading}</h2>
+  <p class="mx-auto mt-3 max-w-md text-white/80">{resolvedBody}</p>
+  <a
+    href="https://www.attirel.ai"
+    class="mt-6 inline-block rounded-full bg-white px-8 py-3 font-semibold text-plum transition-opacity hover:opacity-90"
+  >
+    Try it at attirel.ai →
+  </a>
+</div>

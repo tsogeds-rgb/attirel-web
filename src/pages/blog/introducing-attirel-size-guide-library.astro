@@ -1,0 +1,79 @@
+---
+import BlogPost from '../../components/BlogPost.astro';
+
+const link = (href: string) =>
+  `font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum`;
+---
+
+<BlogPost
+  title="Introducing the Attirel Size Guide Library"
+  description="Eight brand fit guides, bra sizing, international conversions, and inseam lengths — a complete, free sizing reference library, launching today."
+  heading="Introducing the Attirel Size Guide Library"
+  date="2026-07-20"
+  readingTime="3 min read"
+  ctaHeading="Guides answer the general question. The app answers yours."
+  ctaBody="Attirel matches your exact measurements to the right size across 100+ brands — the interactive companion to everything in this library."
+>
+  <p>
+    Every size label is a small act of translation — from your body, to a measurement, to a
+    number that means something different at every store in the mall. Most of us handle that
+    translation by guessing, and the guessing shows: closets with three "mediums" in three
+    different actual sizes, and a steady rhythm of returns.
+  </p>
+  <p>
+    Today we're shipping something we've wanted to exist for a long time: a complete, free
+    sizing reference library. No email gates, no ten-paragraph preambles — just direct answers
+    to the questions people actually type into search bars at 11pm with a full cart.
+  </p>
+
+  <h2 class="font-display text-2xl font-semibold text-ink">Eight brands, honestly assessed</h2>
+  <p>
+    The heart of the library is a set of brand fit guides. Each one opens with a straight
+    verdict — runs small, runs large, true to size — then backs it up with how the brand
+    behaves category by category, standard international conversions, and the questions
+    shoppers ask most:
+  </p>
+  <ul class="list-disc space-y-2 pl-5">
+    <li><a href="/size-guides/uniqlo-size-chart-fit-guide/" class={link('')}>Uniqlo</a> — the slim Japanese cut, explained</li>
+    <li><a href="/size-guides/levis-size-chart-fit-guide/" class={link('')}>Levi's</a> — stretch vs. rigid, and when to size up</li>
+    <li><a href="/size-guides/adidas-size-chart-fit-guide/" class={link('')}>Adidas</a> — why so many people size down in Originals</li>
+    <li><a href="/size-guides/gap-old-navy-size-chart-fit-guide/" class={link('')}>Gap &amp; Old Navy</a> — American vanity sizing at work</li>
+    <li><a href="/size-guides/shein-size-chart-fit-guide/" class={link('')}>Shein</a> — navigating famously inconsistent sizing</li>
+    <li><a href="/size-guides/lululemon-size-chart-fit-guide/" class={link('')}>Lululemon</a> — compression fit and the numeric system</li>
+    <li><a href="/size-guides/mango-size-chart-fit-guide/" class={link('')}>Mango</a> — the slim European block, decoded</li>
+    <li><a href="/size-guides/asos-size-chart-fit-guide/" class={link('')}>ASOS</a> — one true-to-size house brand, 850+ wildcards</li>
+  </ul>
+
+  <h2 class="font-display text-2xl font-semibold text-ink">Three references you'll keep coming back to</h2>
+  <p>
+    Around the brand guides sit three evergreen references. The
+    <a href="/size-guides/international-size-conversion/" class={link('')}>international size
+    conversion charts</a> translate between US, UK, EU, AU, and JP systems for clothing and
+    shoes. The <a href="/size-guides/bra-size-calculator-guide/" class={link('')}>bra size
+    guide</a> demystifies band math, cup letters, and sister sizes — with a worked example
+    instead of hand-waving. And the
+    <a href="/size-guides/jeans-inseam-length-guide/" class={link('')}>jeans inseam &amp; length
+    guide</a> finally answers what those petite, regular, and tall labels mean in actual inches.
+  </p>
+
+  <h2 class="font-display text-2xl font-semibold text-ink">Why static guides, when we build a fit app?</h2>
+  <p>
+    Because the two solve different halves of the problem. A guide can tell you that Uniqlo
+    tends to run a size small or that Adidas Originals run large — the brand-level pattern.
+    What it can't know is <em>you</em>: your measurements, your fit preferences, the difference
+    between how you want a tee and a trucker jacket to sit. That's the half the
+    <a href="https://www.attirel.ai" class={link('')}>Attirel app</a> handles, matching your
+    exact measurements against specific garments across 100+ brands.
+  </p>
+  <p>
+    Start with the guides. When you're ready for answers about your own wardrobe,
+    <a href="/app/" class={link('')}>the app is the interactive companion</a>. And if you're
+    not sure of your measurements in the first place, our
+    <a href="/how-to-measure/" class={link('')}>how-to-measure guide</a> takes ten minutes and
+    a soft tape measure.
+  </p>
+  <p>
+    The library grows from here — more brands, more categories. If there's a brand whose sizing
+    keeps burning you, we'd like to hear about it.
+  </p>
+</BlogPost>

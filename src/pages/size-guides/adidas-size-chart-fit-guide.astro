@@ -1,0 +1,70 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+
+const fitSections = [
+  {
+    category: 'Shoes',
+    text: "Adidas sneakers — especially Originals like the Superstar, Stan Smith, Samba, and Gazelle — tend to run about half a size large, so many shoppers drop half a size from their measured foot size. Performance styles behave differently: Ultraboost and most running models are commonly reported to fit snug and true, and soccer shoes are designed to hug the foot closely. Treat each silhouette as its own decision rather than picking one 'Adidas size'.",
+  },
+  {
+    category: 'Tops & jerseys',
+    text: "Originals tees, hoodies, and trefoil styles tend toward a roomy, boxy streetwear cut, so shoppers who want a neater line often go down one. Performance tops flip that logic: training and running pieces are cut slimmer to sit close to the body, and football jerseys in 'authentic' player specs commonly fit tighter than the looser replica versions of the same shirt.",
+  },
+  {
+    category: 'Bottoms & track pants',
+    text: "Classic three-stripe track pants carry a generous, sporty cut through the seat and thigh — part of their retro appeal — and many shoppers size down or look for styles labeled slim or tapered when they want a trimmer leg. Training shorts and tights from the performance side tend to fit true to the size chart, with tights intentionally compressive at your usual size.",
+  },
+];
+
+const faqs = [
+  {
+    q: 'Do Adidas Superstars run big?',
+    a: "That's the common experience, yes. The Superstar's shell-toe construction leaves extra room up front, and many shoppers report going down half a size — sometimes a full size for narrow feet — compared with their usual sneaker size. Wide feet are the exception; staying true to size preserves toe-box comfort.",
+  },
+  {
+    q: 'Should I size down in all Adidas shoes?',
+    a: "No — the half-size-down rule mainly applies to Originals and other lifestyle silhouettes. Ultraboost and most running shoes tend to fit true or even snug thanks to their knit uppers, and cleats are meant to fit close for ball feel. Check the fit notes on each product page before assuming the Originals rule carries over.",
+  },
+  {
+    q: 'Is Adidas sizing the same as Nike?',
+    a: "Not quite — the two brands have opposite reputations. Nike shoes are commonly reported to run slightly small, while Adidas lifestyle shoes tend to run slightly large. The adjustments stack: someone who goes up half a size in Nike may find they drop a full size when switching to Adidas Originals.",
+  },
+  {
+    q: 'Does Adidas clothing run big or small?',
+    a: "It depends on the line. Originals apparel tends to run roomy and boxy in keeping with its streetwear styling, so sizing down for a closer fit is common. Performance lines like training, running, and Techfit are cut slimmer and closer to the chart, and compression pieces are meant to feel tight at your normal size.",
+  },
+  {
+    q: 'Do Adidas Sambas fit true to size?',
+    a: "The Samba runs low-profile and slightly long, and many shoppers find a half size down gives the best fit — similar to other Originals. It's also commonly described as a narrow shoe, so wide-footed shoppers often stay true to size and accept a little extra length instead of a squeezed midfoot.",
+  },
+];
+
+const related = [
+  { href: '/size-guides/lululemon-size-chart-fit-guide/', label: 'Lululemon size chart & fit guide' },
+  { href: '/size-guides/levis-size-chart-fit-guide/', label: "Levi's size chart & fit guide" },
+  { href: '/blog/how-to-shop-online-between-sizes/', label: 'How to shop online when you are between sizes' },
+];
+---
+
+<BrandGuide
+  brandKey="adidas"
+  brand="Adidas"
+  title="Adidas Size Chart & Fit Guide: Does It Run Big?"
+  description="Adidas shoes tend to run about half a size big — especially Originals — so many size down. Apparel is roomy in Originals, slimmer in performance lines."
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <strong>Adidas footwear tends to run big</strong> — Originals like the Superstar, Stan Smith,
+    and Samba are commonly reported to fit about half a size large, so many shoppers size down.
+    Apparel splits by line: Originals clothing leans roomy and boxy, while performance pieces are
+    cut slimmer and closer to the chart. Know which line you're buying before you pick a size.
+  </Fragment>
+  <Fragment slot="tips">
+    <li><strong>Sort by silhouette, not brand:</strong> half a size down is common in Originals sneakers, while Ultraboost and running models tend to fit true.</li>
+    <li><strong>Coming from Nike?</strong> The brands lean opposite ways, so your Nike size is a starting point at best — re-measure rather than transfer the number.</li>
+    <li><strong>Check the line on apparel:</strong> Originals cuts run relaxed for the retro look; training and Techfit pieces are meant to sit close to the body.</li>
+    <li><strong>Wide feet change the math:</strong> shoppers with wider feet often skip the size-down advice in Originals to keep toe-box room.</li>
+  </Fragment>
+</BrandGuide>
