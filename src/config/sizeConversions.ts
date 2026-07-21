@@ -1,5 +1,5 @@
 // Standard published international size conversions.
-// These are generic industry conversions — NOT brand-specific garment
+// These are generic industry conversions, NOT brand-specific garment
 // measurements. Brand guides render these tables and link out to each
 // brand's official chart for exact garment measurements.
 
@@ -12,7 +12,7 @@ export interface ConversionTable {
 }
 
 export const womensClothing: ConversionTable = {
-  heading: "Women's clothing — standard international conversion",
+  heading: "Women's clothing: standard international conversion",
   note: 'Standard conversions; individual brands vary by cut and fabric.',
   minWidth: 560,
   headers: ['Alpha', 'US', 'UK', 'EU'],
@@ -27,7 +27,7 @@ export const womensClothing: ConversionTable = {
 };
 
 export const mensClothing: ConversionTable = {
-  heading: "Men's tops — standard international conversion",
+  heading: "Men's tops: standard international conversion",
   note: 'US and UK men\'s sizes use the same chest-inch base; EU adds roughly 10.',
   minWidth: 560,
   headers: ['Alpha', 'Chest (US/UK, in)', 'EU'],
@@ -42,7 +42,7 @@ export const mensClothing: ConversionTable = {
 };
 
 export const womensClothingIntl: ConversionTable = {
-  heading: "Women's clothing — US / UK / EU / AU / JP",
+  heading: "Women's clothing: US / UK / EU / AU / JP",
   note: 'AU sizing follows UK numbers; JP typically runs one number above UK.',
   minWidth: 640,
   headers: ['US', 'UK', 'EU', 'AU', 'JP'],
@@ -60,7 +60,7 @@ export const womensClothingIntl: ConversionTable = {
 };
 
 export const mensClothingIntl: ConversionTable = {
-  heading: "Men's clothing — US / UK / EU / AU / JP",
+  heading: "Men's clothing: US / UK / EU / AU / JP",
   note: 'US, UK, and AU men\'s sizes share the chest-inch base; EU ≈ chest + 10; JP uses S–3L alpha sizing.',
   minWidth: 640,
   headers: ['Alpha', 'US/UK/AU chest (in)', 'EU', 'JP'],
@@ -74,7 +74,7 @@ export const mensClothingIntl: ConversionTable = {
 };
 
 export const womensShoes: ConversionTable = {
-  heading: "Women's shoes — standard conversion",
+  heading: "Women's shoes: standard conversion",
   note: 'EU conversions are approximate; half sizes fall between rows.',
   minWidth: 560,
   headers: ['US', 'UK', 'EU', 'JP (cm)'],
@@ -90,7 +90,7 @@ export const womensShoes: ConversionTable = {
 };
 
 export const mensShoes: ConversionTable = {
-  heading: "Men's shoes — standard conversion",
+  heading: "Men's shoes: standard conversion",
   note: 'EU conversions are approximate; half sizes fall between rows.',
   minWidth: 560,
   headers: ['US', 'UK', 'EU', 'JP (cm)'],
