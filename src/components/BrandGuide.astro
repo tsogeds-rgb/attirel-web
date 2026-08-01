@@ -9,7 +9,11 @@ import { affiliateLinks } from '../config/affiliateLinks';
 
 interface FitSection {
   category: string;
-  text: string;
+  /**
+   * One paragraph, or several. Rendered as HTML so body copy can carry inline
+   * links; author-supplied only, never user input.
+   */
+  text: string | string[];
 }
 
 interface Faq {
@@ -31,13 +35,38 @@ interface Props {
   description: string;
   /** Optional brand-typical measurement chart(s), clearly labeled approximate. */
   typicalCharts?: ConversionTable[];
+  /**
+   * Render the generic international clothing conversion tables. Defaults to
+   * true so existing guides are unchanged; footwear-only guides pass false,
+   * where women's/men's clothing conversions are noise rather than context.
+   */
+  standardCharts?: boolean;
+  /** Override the generated H1 when the default question doesn't fit the brand. */
+  h1?: string;
+  /** Override the heading above the charts. */
+  chartsHeading?: string;
   fitSections: FitSection[];
   faqs: Faq[];
   related: RelatedLink[];
 }
 
-const { brandKey, brand, title, description, typicalCharts = [], fitSections, faqs, related } =
-  Astro.props;
+const {
+  brandKey,
+  brand,
+  title,
+  description,
+  typicalCharts = [],
+  standardCharts = true,
+  h1,
+  chartsHeading,
+  fitSections,
+  faqs,
+  related,
+} = Astro.props;
+
+// A guide can supply its own lead-in to the charts; otherwise the default
+// copy below applies.
+const hasChartsIntro = Astro.slots.has('charts-intro');
 
 const chartLink = affiliateLinks[brandKey]?.officialSiteUrl;
 
@@ -51,21 +80,23 @@ const faqJsonLd = JSON.stringify({
   })),
 });
 
-const standardTables: ConversionTable[] = [womensClothing, mensClothing];
+const standardTables: ConversionTable[] = standardCharts ? [womensClothing, mensClothing] : [];
+
+const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?`;
 ---
 
 <Base title={title} description={description} ogType="article">
   <article class="mx-auto max-w-article px-5 py-16">
     <p class="text-sm font-semibold uppercase tracking-wide text-plum">Size Guide</p>
     <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-      {brand} Size Chart &amp; Fit Guide: Does {brand} Run Small?
+      {heading}
     </h1>
 
     <AffiliateDisclosure />
 
     <div class="mt-8 rounded-xl bg-plum-light p-5">
       <p class="font-semibold text-plum">Quick verdict</p>
-      <p class="mt-2 text-ink/85"><slot name="verdict" /></p>
+      <div class="mt-2 text-ink/85"><slot name="verdict" /></div>
     </div>
 
     <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
@@ -74,23 +105,37 @@ const standardTables: ConversionTable[] = [womensClothing, mensClothing];
     {fitSections.map((s) => (
       <>
         <h3 class="mt-6 text-lg font-semibold text-ink">{s.category}</h3>
-        <p class="mt-2 leading-relaxed text-ink/85">{s.text}</p>
+        {(Array.isArray(s.text) ? s.text : [s.text]).map((para) => (
+          <p class="mt-2 leading-relaxed text-ink/85" set:html={para} />
+        ))}
       </>
     ))}
 
-    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">Size conversion charts</h2>
-    <p class="mt-3 leading-relaxed text-ink/85">
-      The tables below are <strong>standard international conversions</strong>, not {brand}-specific
-      garment measurements. Cuts and fabrics vary between styles, so
-      <AffLink brand={brandKey} href={chartLink}
-        >check {brand}'s official size chart for exact garment measurements</AffLink
-      > before you order.
-    </p>
+    <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
+      {chartsHeading ?? 'Size conversion charts'}
+    </h2>
+    {hasChartsIntro ? (
+      <slot name="charts-intro" />
+    ) : standardCharts ? (
+      <p class="mt-3 leading-relaxed text-ink/85">
+        The tables below are <strong>standard international conversions</strong>, not {brand}-specific
+        garment measurements. Cuts and fabrics vary between styles, so
+        <AffLink brand={brandKey} href={chartLink}
+          >check {brand}'s official size chart for exact garment measurements</AffLink
+        > before you order.
+      </p>
+    ) : (
+      <p class="mt-3 leading-relaxed text-ink/85">
+        Fit varies between styles, so
+        <AffLink brand={brandKey} href={chartLink}>check {brand}'s official size chart</AffLink>
+        before you order.
+      </p>
+    )}
 
     {[...standardTables, ...typicalCharts].map((c) => (
       <>
         <h3 class="mt-8 text-lg font-semibold text-ink">{c.heading}</h3>
-        {c.note && <p class="mt-1 text-sm text-smoke">{c.note}</p>}
+        {c.note && !c.noteAfter && <p class="mt-1 text-sm text-smoke">{c.note}</p>}
         <div class="mt-3 overflow-x-auto rounded-xl border border-ink/10">
           <table
             class="w-full border-collapse bg-white/70 text-sm"
@@ -114,8 +159,12 @@ const standardTables: ConversionTable[] = [womensClothing, mensClothing];
             </tbody>
           </table>
         </div>
+        {c.note && c.noteAfter && <p class="mt-2 text-sm text-smoke">{c.note}</p>}
       </>
     ))}
+
+    <slot name="charts-outro" />
+
 
     <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
       How to choose your size at {brand}

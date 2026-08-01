@@ -11,13 +11,20 @@ interface Props {
 const { brand, href, class: cls } = Astro.props;
 const link = affiliateLinks[brand];
 const target = href ?? link?.url ?? '#';
+
+// Eligibility gate. Only a retailer explicitly marked `affiliate: true` gets
+// the sponsored token and the data-aff hook; everything else — including a
+// brand missing from the registry — falls back to a plain outbound link.
+// Defaulting the unknown case to false keeps us from ever claiming a paid
+// relationship we do not have.
+const isAffiliate = link?.affiliate ?? false;
 ---
 
 <a
   href={target}
-  data-aff={brand}
+  data-aff={isAffiliate ? brand : undefined}
   target="_blank"
-  rel="noopener sponsored"
+  rel={isAffiliate ? 'noopener sponsored' : 'noopener'}
   class={cls ??
     'font-semibold text-plum underline decoration-plum/40 underline-offset-2 transition-colors hover:decoration-plum'}
 ><slot /></a>
