@@ -1,0 +1,334 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
+
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
+
+const fitSections = [
+  {
+    category: "Skechers is not one brand, it's a dozen lasts",
+    text: [
+      `Every shoe is built around a <strong>last</strong>: a rigid foot-shaped form that determines length, toe box volume, instep height, and heel width. The last is to footwear what a fit block is to clothing — the base geometry everything else inherits. We covered how that works for garments in <a href="/blog/why-the-same-size-fits-differently/" class="${linkClass}">why the same size fits differently across brands</a>; footwear is the same story with harder edges, because a shoe can't drape over a mismatch the way a t-shirt can.`,
+      `Most footwear brands run a small number of lasts and keep them stable for years. Skechers is unusual in how wide its range is: walking lines, structured-support lines, slip-on systems, chunky retro silhouettes, and a full occupational range all coexist, and they are not built on the same form. A shoe designed to be pulled on without hands has to grip the heel differently than one with six eyelets of lacing. A shoe with a molded support footbed has less internal volume than one with a flat foam insert.`,
+      `So the brand-level advice you'll read everywhere — "Skechers runs true to size" — is true on average and unhelpful in practice. Averages don't ship; individual models do. Treat your size as a property of the line, not of the brand, and expect to learn two or three of them rather than one.`,
+    ],
+  },
+  {
+    category: 'Width is the variable most people get wrong',
+    text: [
+      `Here is the single most useful thing to know about buying Skechers, and the reason the brand is worth the trouble for a lot of feet: they actually stock widths, across a large part of the range, in men's and women's, which most mainstream sneaker brands do not.`,
+      `US footwear expresses width as a letter, and the same letter means different things by gender. Skechers simplifies this to named fits on the product page, and states the equivalents on its own charts: <strong>Skechers Men's Wide Fit corresponds to a 2E/3E width</strong>, and <strong>Skechers Women's Wide Fit corresponds to a W or D width</strong>. Styles marked <strong>EWW</strong> belong to the Extra Wide Fit Collection, a step beyond Wide.`,
+      `Worth knowing what those letters imply. In men's sizing, standard is D, so a 2E/3E is one to two full width grades up — a meaningful change in forefoot volume, not a token one. In women's, standard is B (usually printed simply as M), so a D is likewise two grades of extra room. If you have historically bought New Balance or similar in a 2E, Skechers Wide is the equivalent territory rather than a compromise.`,
+      `Now the part that matters. <strong>When a shoe pinches across the ball of the foot, most people size up — and sizing up is the wrong fix.</strong> Going up a length adds forefoot width slowly and adds heel-to-toe length quickly, so you end up with a shoe that still presses at the widest point while your heel slips and your toes slide forward on every step. The symptoms then look like a cushioning or lacing problem, and no amount of insole swapping solves them.`,
+      `If your feet are wide, ordering your true length in a wide fitting will almost always beat ordering a half or full size up in a medium. If they're narrow, the reverse trap applies: a medium in a roomy line can leave you cinching the laces hard enough to fold the upper, which is a sign you want a snugger platform rather than a smaller size.`,
+    ],
+  },
+  {
+    category: 'Arch Fit changes the fit, not just the feel',
+    text: [
+      `Arch Fit is easy to read as a comfort upgrade — better insole, same shoe. It isn't. The structured, contoured footbed occupies real volume inside the shoe and holds the foot in a more fixed position, so the same nominal size has less room to give than a flat-foam equivalent and distributes pressure differently across the instep.`,
+      `Two practical consequences. First, if you're moving to Arch Fit from another Skechers line, don't assume your size transfers untested; the length may be right while the volume is not. Second, on models where the footbed is removable, taking it out is a genuine fit adjustment rather than just a comfort preference — worth trying before you conclude the size is wrong, and worth knowing if you intend to use a custom orthotic, which needs that space back.`,
+    ],
+  },
+  {
+    category: 'Slip-ins trade adjustability for a fixed heel',
+    text: [
+      `The Hands Free Slip-ins system works by building a supportive structure at the heel that holds your foot in place as you step in, rather than relying on you to tighten anything. It's genuinely clever, and it changes the sizing maths in a way almost nobody writes down: <strong>there is no lacing to compensate with.</strong>`,
+      `In a lace-up, a shoe that's a touch long is recoverable — you snug it down and the heel stays put. In a slip-in, the heel is held by geometry that assumes your foot is where it should be. Slightly too large and it will feel loose no matter what you do; slightly too small and the fixed heel structure has nowhere to yield. The effective tolerance is narrower on both sides, so this is the line where getting the size right the first time matters most, and the line where free returns are worth using deliberately rather than guessing.`,
+    ],
+  },
+];
+
+const charts: ConversionTable[] = [
+  {
+    heading: "Women's",
+    note: "Note that the women's run has no 11.5: it steps 11 → 12 → 13 at the top end, so if you measure between those, you're choosing between a half-centimetre short and a full centimetre long.",
+    noteAfter: true,
+    headers: ['US', 'UK', 'EU', 'CM'],
+    rows: [
+      ['5', '2', '35', '22'],
+      ['5.5', '2.5', '35.5', '22.5'],
+      ['6', '3', '36', '23'],
+      ['6.5', '3.5', '36.5', '23.5'],
+      ['7', '4', '37', '24'],
+      ['7.5', '4.5', '37.5', '24.5'],
+      ['8', '5', '38', '25'],
+      ['8.5', '5.5', '38.5', '25.5'],
+      ['9', '6', '39', '26'],
+      ['9.5', '6.5', '39.5', '26.5'],
+      ['10', '7', '40', '27'],
+      ['10.5', '7.5', '40.5', '27.5'],
+      ['11', '8', '41', '28'],
+      ['12', '9', '42', '29'],
+      ['13', '10', '43', '30'],
+    ],
+  },
+  {
+    heading: "Men's",
+    headers: ['US', 'UK', 'EU', 'CM'],
+    rows: [
+      ['6.5', '5.5', '39', '24.5'],
+      ['7', '6', '39.5', '25'],
+      ['7.5', '6.5', '40', '25.5'],
+      ['8', '7', '41', '26'],
+      ['8.5', '7.5', '41.5', '26.5'],
+      ['9', '8', '42', '27'],
+      ['9.5', '8.5', '42.5', '27.5'],
+      ['10', '9', '43', '28'],
+      ['10.5', '9.5', '44', '28.5'],
+      ['11', '10', '45', '29'],
+      ['11.5', '10.5', '45.5', '29.5'],
+      ['12', '11', '46', '30'],
+      ['12.5', '11.5', '47', '30.5'],
+      ['13', '12', '47.5', '31'],
+      ['13.5', '12.5', '48', '31.5'],
+      ['14', '13', '48.5', '32'],
+      ['15', '14', '49.5', '33'],
+      ['16', '15', '50.5', '34'],
+    ],
+  },
+  {
+    heading: 'Unisex styles',
+    note: "Some styles are sold on a single unisex run with both conversions printed. This table offsets men's and women's by the conventional 1.5 sizes, and — as flagged above — its UK and EU columns don't match the gender-specific charts. Use it only for styles that present it.",
+    minWidth: 640,
+    headers: ['US Men', 'US Women', 'UK', 'EU', 'CM'],
+    rows: [
+      ['5', '6.5', '4', '37.5', '23.5'],
+      ['5.5', '7', '4.5', '38', '24'],
+      ['6', '7.5', '5', '38.5', '24.5'],
+      ['6.5', '8', '5.5', '39', '25'],
+      ['7', '8.5', '6', '40', '25.5'],
+      ['7.5', '9', '6.5', '40.5', '26'],
+      ['8', '9.5', '7', '41', '26.5'],
+      ['8.5', '10', '7.5', '42', '27'],
+      ['9', '10.5', '8', '42.5', '27.5'],
+      ['9.5', '11', '8.5', '43', '28'],
+      ['10', '11.5', '9', '44', '28.5'],
+      ['10.5', '12', '9.5', '44.5', '29'],
+      ['11', '12.5', '10', '45', '29.5'],
+      ['11.5', '13', '10.5', '45.5', '30'],
+      ['12', '13.5', '11', '46', '30.5'],
+      ['12.5', '14', '11.5', '47', '31'],
+      ['13', '14.5', '12', '47.5', '31.5'],
+      ['13.5', '15', '12.5', '48', '32'],
+      ['14', '15.5', '13', '48.5', '32.5'],
+    ],
+  },
+  {
+    heading: "Kids': Infant",
+    note: "Children's sizing restarts its numbering across four ranges, so the same printed number appears more than once and means different lengths. Always buy by measured foot length, never by the number alone.",
+    headers: ['US', 'UK', 'EU', 'CM'],
+    rows: [
+      ['0', '—', '16', '7'],
+      ['1', '0', '17', '7.5'],
+      ['2', '1', '18', '8'],
+      ['3', '2', '19', '9'],
+    ],
+  },
+  {
+    heading: "Kids': Toddler (1–3 years)",
+    headers: ['US', 'UK', 'EU', 'CM'],
+    rows: [
+      ['4', '3', '20', '10'],
+      ['5', '4', '21', '11'],
+      ['6', '5', '22', '12'],
+      ['7', '6', '23', '13'],
+      ['8', '7', '24', '14'],
+      ['9', '8', '25', '15'],
+      ['10', '9', '26', '16'],
+    ],
+  },
+  {
+    heading: "Kids': Little Kids (4–8 years)",
+    headers: ['US', 'UK', 'EU', 'CM'],
+    rows: [
+      ['10.5', '9.5', '27', '16.5'],
+      ['11', '10', '27.5', '17'],
+      ['11.5', '10.5', '28', '17.5'],
+      ['12', '11', '28.5', '18'],
+      ['12.5', '11.5', '29', '18.5'],
+      ['13', '12', '30', '19'],
+      ['13.5', '12.5', '31', '19.5'],
+      ['1', '13', '32', '20'],
+      ['1.5', '13.5', '33', '20.5'],
+      ['2', '1', '33.5', '21'],
+      ['2.5', '1.5', '34', '21.5'],
+      ['3', '2', '35', '22'],
+    ],
+  },
+  {
+    heading: "Kids': Big Kids (8–10 years)",
+    note: "Skechers' own Big Kids table repeats centimetre values across adjacent sizes (both 4.5 and 5 map to 23.5 cm; both 5.5 and 6 map to 24 cm), which means the chart can't distinguish those pairs. Where the table is ambiguous, size up — children's feet only move in one direction.",
+    noteAfter: true,
+    headers: ['US', 'UK', 'EU', 'CM'],
+    rows: [
+      ['3.5', '2.5', '35.5', '22.5'],
+      ['4', '3', '36', '23'],
+      ['4.5', '3.5', '36.5', '23.5'],
+      ['5', '4', '37', '23.5'],
+      ['5.5', '4.5', '37.5', '24'],
+      ['6', '5', '38', '24'],
+      ['6.5', '5.5', '39', '24.5'],
+      ['7', '6', '40', '25'],
+      ['8', '7', '41', '26'],
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: 'Why does Skechers publish conflicting UK and EU conversions?',
+    a: "Because it publishes more than one chart. Open the size modal on a unisex style, a women's style, and a men's style and you will get three different tables — and they do not agree with each other. On the unisex chart, a women's 9.5 is listed as UK 7 / EU 41; on the women's chart, a women's 9.5 is UK 6.5 / EU 39.5. That's a full size and a half of disagreement in the EU column, published by the same brand on the same website. Use the chart on the product page you are actually buying from, and convert from your centimetre measurement rather than from a UK or EU size you think you are.",
+  },
+  {
+    q: 'For a wide foot, should I size up or order a wide fitting?',
+    a: 'Order the wide fitting in your true length. When a shoe pinches across the ball of the foot, most people size up — and sizing up is the wrong fix. Going up a length adds forefoot width slowly and adds heel-to-toe length quickly, so you end up with a shoe that still presses at the widest point while your heel slips and your toes slide forward on every step. This single correction fixes more Skechers returns than anything else.',
+  },
+  {
+    q: 'What does Skechers Wide equal in letter widths?',
+    a: "Skechers Men's Wide Fit corresponds to a 2E/3E width, and Skechers Women's Wide Fit corresponds to a W or D width. Styles marked EWW belong to the Extra Wide Fit Collection, a step beyond Wide. In men's sizing, standard is D, so a 2E/3E is one to two full width grades up — a meaningful change in forefoot volume, not a token one. In women's, standard is B (usually printed simply as M), so a D is likewise two grades of extra room.",
+  },
+  {
+    q: 'Does Arch Fit change my size?',
+    a: "It can. The structured, contoured footbed occupies real volume inside the shoe and holds the foot in a more fixed position, so the same nominal size has less room to give than a flat-foam equivalent. If you're moving to Arch Fit from another Skechers line, don't assume your size transfers untested; the length may be right while the volume is not. On models where the footbed is removable, taking it out is a genuine fit adjustment rather than just a comfort preference.",
+  },
+  {
+    q: 'Does Skechers run small?',
+    a: "The brand-level advice you'll read everywhere — “Skechers runs true to size” — is true on average and unhelpful in practice. Averages don't ship; individual models do. Skechers doesn't sell one fit; it sells a catalogue of fit platforms that happen to share a logo, and each one is built on a different foot-shaped form with a different amount of room inside it. Treat your size as a property of the line, not of the brand.",
+  },
+];
+
+const related = [
+  { href: '/size-guides/adidas-size-chart-fit-guide/', label: 'Adidas size chart & fit guide' },
+  { href: '/size-guides/nike/', label: 'Nike size chart & fit guide' },
+  {
+    href: '/blog/why-the-same-size-fits-differently/',
+    label: 'Why the same size fits differently across brands',
+  },
+];
+---
+
+<BrandGuide
+  brandKey="skechers"
+  brand="Skechers"
+  title="Skechers Size Guide: Why Your Size Changes Between Arch Fit, Slip-ins, and Go Walk"
+  description="Skechers isn't one fit. Lasts, widths, closure systems, and memory foam decide your size more than the number on the box. Full charts and a decision flow."
+  h1="Skechers Size Chart & Fit Guide: Why Your Size Changes Between Lines"
+  chartsHeading="The charts"
+  standardCharts={false}
+  typicalCharts={charts}
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <p>
+      Do these in sequence. Most sizing mistakes come from skipping to step four:
+    </p>
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Get your length in centimetres, not your size.</strong> A size is a claim about your
+        foot; a measurement is your foot. Everything downstream depends on this number being right.
+      </li>
+      <li>
+        <strong>Read length off the chart, then stop thinking about length.</strong> Resist the urge
+        to adjust for anything yet.
+      </li>
+      <li>
+        <strong>Choose width deliberately.</strong> If shoes routinely feel tight across the ball of
+        your foot while your heel slips, you are a wide fitting in your true length, not a medium in
+        a bigger size. This single correction fixes more Skechers returns than anything else.
+      </li>
+      <li>
+        <strong>Adjust for the platform, not the brand.</strong> Structured support footbeds take up
+        volume. Slip-ins have no lacing to compensate with, so aim for exact. Soft-foam walking
+        models will loosen slightly as they compress. Retro silhouettes run generous.
+      </li>
+      <li>
+        <strong>Learn your size in a line once and reuse it.</strong> A brand's individual lines are
+        far more consistent with themselves than with each other. One successful purchase in Arch
+        Fit teaches you Arch Fit — it doesn't teach you Go Walk.
+      </li>
+    </ol>
+    <p class="mt-3">
+      The number on the box was never the specification. The last it was built on, the width it was
+      cut for, and the foam it shipped with are the specification, and unlike the number, all three
+      are things you can actually check before you buy.
+    </p>
+  </Fragment>
+
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      A warning before the numbers, and it's the most useful thing on this page.
+      <strong>Skechers does not publish one conversion chart.</strong> Open the size modal on a unisex
+      style, a women's style, and a men's style and you will get three different tables — and they do
+      not agree with each other. On the unisex chart, a women's 9.5 is listed as UK 7 / EU 41. On the
+      women's chart, a women's 9.5 is UK 6.5 / EU 39.5. That's a full size and a half of disagreement
+      in the EU column, published by the same brand on the same website.
+    </p>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      The practical consequence: <strong
+        >use <AffLink brand="skechers"
+          >the chart on the product page you are actually buying from</AffLink
+        ></strong
+      >, and convert from your centimetre measurement rather than from a UK or EU size you think you
+      are. The centimetre column is the only one that means the same thing everywhere.
+    </p>
+  </Fragment>
+
+  <Fragment slot="charts-outro">
+    <p class="mt-6 leading-relaxed text-ink/85">
+      One more caveat straight from Skechers: <strong
+        >performance running and walking footwear sizes may vary</strong
+      >, which is the brand's own acknowledgement that these tables are a starting point rather than
+      a guarantee.
+    </p>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Measure late in the day, standing, with the socks you'll actually wear, and use the longer foot
+      — most people have one. Our <a
+        href="/how-to-measure/"
+        class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum"
+        >measuring guide</a
+      > covers the method in a few minutes.
+    </p>
+  </Fragment>
+
+  <Fragment slot="tips">
+    <li>
+      <strong>Memory foam compresses, so month-one fit isn't month-six fit:</strong> Skechers built
+      much of its reputation on soft foam cushioning, and soft foam does what soft foam does: it
+      packs down. Over weeks of wear, the insole and midsole compress and take a set, which slightly
+      increases the internal volume of the shoe and lowers your foot within it.
+    </li>
+    <li>
+      This is the mechanism behind a contradiction you'll see all over the reviews for the same model
+      — one buyer reports it snug, another reports it roomy. Both are often describing the same shoe
+      at different points in its life. A pair that fits <em>perfectly</em> out of the box, with no room
+      anywhere, will likely feel a half-step loose once it's broken in; a pair that feels faintly firm
+      underfoot on day one may be closer to correct than it seems. And when you replace a well-loved
+      pair with the identical model, order your measured size rather than the size that pair <em
+        >feels</em
+      > like now, because you're comparing new against compressed.
+    </li>
+    <li>
+      <strong>Occupational and safety footwear.</strong> Protective toe caps — steel, alloy, or
+      composite — are rigid inserts that fix the shape and height of the toe box. They don't flex or
+      break in, so toe clearance you'd get away with in a sneaker becomes a daily problem here. Order
+      with more forefoot room than you would in a walking shoe, and pay attention to width, since a
+      rigid cap can't accommodate a wide foot the way a knit upper will.
+    </li>
+    <li>
+      <strong>Kids' sizes.</strong> Children's footwear is segmented into ranges (toddler, little
+      kid, big kid) whose numbering restarts, so the same printed number appears in more than one
+      range and means different lengths. Buy by the range and the measured foot length, never by the
+      number alone.
+    </li>
+    <li>
+      <strong>Chunky retro silhouettes.</strong> The heavier lifestyle models are built on generous
+      lasts with substantial uppers, and tend to feel roomier than the brand's walking lines at the
+      same size.
+    </li>
+  </Fragment>
+</BrandGuide>

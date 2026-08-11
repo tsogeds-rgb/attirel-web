@@ -6,6 +6,13 @@
 export interface ConversionTable {
   heading: string;
   note?: string;
+  /**
+   * Render `note` below the table instead of above it. Defaults to false, so
+   * existing charts are unchanged. Set it when the note is a conclusion drawn
+   * from the table the reader has just read ("this run has no 11.5") rather
+   * than a caveat they need before reading it.
+   */
+  noteAfter?: boolean;
   minWidth?: number;
   headers: string[];
   rows: string[][];
