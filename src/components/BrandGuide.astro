@@ -141,9 +141,13 @@ const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?
                   <tbody>
                     {para.rows.map((row) => (
                       <tr class="border-t border-ink/10">
-                        {row.map((cell, i) => (
-                          <td class={`px-4 py-3 ${i === 0 ? 'font-semibold' : 'text-smoke'}`}>{cell}</td>
-                        ))}
+                        {row.map((cell, i) =>
+                          i === 0 ? (
+                            <th scope="row" class="px-4 py-3 text-left font-semibold">{cell}</th>
+                          ) : (
+                            <td class="px-4 py-3 text-smoke">{cell}</td>
+                          )
+                        )}
                       </tr>
                     ))}
                   </tbody>
