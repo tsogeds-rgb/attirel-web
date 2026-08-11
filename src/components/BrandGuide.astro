@@ -181,7 +181,12 @@ const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?
       <>
         <h3 class="mt-8 text-lg font-semibold text-ink">{c.heading}</h3>
         {c.note && !c.noteAfter && <p class="mt-1 text-sm text-smoke">{c.note}</p>}
-        <div class="mt-3 overflow-x-auto rounded-xl border border-ink/10">
+        <div
+          class="mt-3 overflow-x-auto rounded-xl border border-ink/10"
+          tabindex="0"
+          role="region"
+          aria-label={c.heading}
+        >
           <table
             class="w-full border-collapse bg-white/70 text-sm"
             style={`min-width:${c.minWidth ?? 560}px`}
@@ -189,16 +194,20 @@ const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?
             <thead>
               <tr class="bg-plum text-left text-white">
                 {c.headers.map((h) => (
-                  <th class="px-4 py-3 font-semibold">{h}</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {c.rows.map((row) => (
                 <tr class="border-t border-ink/10">
-                  {row.map((cell, i) => (
-                    <td class={`px-4 py-3 ${i === 0 ? 'font-semibold' : 'text-smoke'}`}>{cell}</td>
-                  ))}
+                  {row.map((cell, i) =>
+                    i === 0 ? (
+                      <th scope="row" class="px-4 py-3 text-left font-semibold">{cell}</th>
+                    ) : (
+                      <td class="px-4 py-3 text-smoke">{cell}</td>
+                    )
+                  )}
                 </tr>
               ))}
             </tbody>
