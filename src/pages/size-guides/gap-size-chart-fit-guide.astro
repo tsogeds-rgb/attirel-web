@@ -1,0 +1,294 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
+
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
+
+const fitSections = [
+  {
+    category: "The bottoms charts don't agree with each other",
+    text: [
+      `Gap publishes two separate charts that translate women's bottoms sizes into men's: one on the women's bottoms guide and one on the men's, both behind <a href="https://www.gap.com/customer-service/size-charts?cid=2103" class="${linkClass}" target="_blank" rel="noopener">Gap's own size chart page</a> (captured August 2026), which every figure on this page is drawn from. They give different answers for the same body, and they do it consistently, one full size apart across the entire range.`,
+      {
+        ariaLabel: "Women's to men's bottoms sizes compared",
+        minWidth: 520,
+        headers: ["Your women's size", 'Waist', "Women's chart says", "Men's chart says"],
+        rows: [
+          ['8/29', '29½"', "Men's M", "Men's S"],
+          ['12/31', '32"', "Men's L", "Men's M"],
+          ['16/33', '35½"', "Men's XL", "Men's L"],
+        ],
+        noteAfter: true,
+        note: `The tops charts do not have this problem. Gap's women's tops guide maps a women's L to a men's M, and the men's tops guide maps a men's M back to a women's L. They agree at every size. Whatever went wrong here is specific to bottoms.`,
+      },
+      `Which one to trust depends on what you are buying. If you are a woman buying a men's or unisex bottom, the men's chart is built around the men's waist measurement you will actually be selecting, so it is the safer reference. The practical version: <strong>match your waist measurement to the men's waist column and ignore the letter size on both charts.</strong>`,
+    ],
+  },
+  {
+    category: "Petite and tall change one measurement, and it isn't the one you think",
+    text: [
+      `Gap's women's tops chart has four tabs: regular, petite, tall, and unisex. Compare the regular and petite tables measurement by measurement and something becomes obvious. Bust and waist are identical. Not similar, identical, at every one of the fourteen sizes from 000 to 22. The same is true of the tall table. The only row that changes is sleeve length.`,
+      {
+        ariaLabel: 'Sleeve length by fit',
+        minWidth: 440,
+        headers: ['Size', 'Regular', 'Petite', 'Tall'],
+        rows: [
+          ['000', '30½', '29', '32½'],
+          ['4', '31¼', '29¾', '33¼'],
+          ['8', '31¾', '30¼', '33¾'],
+          ['12', '32⅛', '30⅝', '34⅛'],
+          ['16', '32¾', '31¼', '34¾'],
+          ['20', '33½', '32', '35½'],
+        ],
+        noteAfter: true,
+        note: `Sleeve length in inches. Petite runs 1½ inches shorter than regular, and tall runs 2 inches longer, at every size. The offsets are constant. Bust and waist rows are omitted deliberately: they are identical across all three tabs, which is the point.`,
+      },
+      `This matters because the standard advice about petite lines, including Gap's own marketing language, is that they are proportionally redesigned rather than simply shortened. Gap's published body measurements do not support that for tops. If you are choosing petite because your bust or waist sits between sizes, the petite chart will not help you. It is a <a href="/blog/petite-vs-regular-vs-tall/" class="${linkClass}">sleeve length decision</a>.`,
+      `Bottoms work differently, and better. The women's bottoms guide offers five inseam lengths (petite 29", short 30", regular 31½", long 33½", tall 35½"), so length is a genuine independent variable there.`,
+    ],
+  },
+  {
+    category: 'Your jean number stops being your waist at size 12',
+    text: [
+      `Gap labels women's bottoms with a paired number, so a size 12 is written 12/31. The second number reads like a waist measurement in inches, and up to a point it behaves like one.`,
+      `Through size 10, Gap's own chart puts your body waist about half an inch above the jean number. A 4/27 is a 27½ inch waist, an 8/29 is 29½. Consistent, and close enough that the label is useful.`,
+      `Above size 10 the two come apart, and the gap widens with every size. This is <a href="/blog/vanity-sizing-explained/" class="${linkClass}">vanity sizing</a>, quantified from Gap's own published measurements.`,
+      {
+        ariaLabel: 'Gap size label versus measured waist',
+        minWidth: 520,
+        headers: ['Gap size', 'Jean number', 'Actual waist', 'Difference'],
+        rows: [
+          ['4/27', '27', '27½"', '+½"'],
+          ['8/29', '29', '29½"', '+½"'],
+          ['10/30', '30', '30½"', '+½"'],
+          ['12/31', '31', '32"', '+1"'],
+          ['14/32', '32', '33½"', '+1½"'],
+          ['18/34', '34', '37½"', '+3½"'],
+          ['22/36', '36', '41½"', '+5½"'],
+        ],
+        noteAfter: true,
+        note: `By size 22/36 the label understates the body waist by five and a half inches.`,
+      },
+      `The practical consequence: <strong>if you wear size 12 or above, ignore the second number and match your measured waist to the chart.</strong> A shopper who reads 18/34 as "34 inch waist" and orders on that basis is off by three and a half inches, which is more than two full size grades at that end of the range.`,
+    ],
+  },
+  {
+    category: 'The accessories charts are a mess',
+    text: [
+      `Gap's women's hat chart lists S/M as 21½ inches wide and, on the same row, gives a Japan size of 52 to 54 centimetres. Twenty-one and a half inches is 54.6 centimetres, which is outside the range printed beside it. The L/XL row has the same problem: 22½ inches is 57.2 centimetres against a stated 54 to 56. Both rows are wrong in the same direction, so it is not a rounding artifact.`,
+      `Gloves are measured differently by gender. The women's chart labels the measurement "Width" and runs 7 to 8. The men's chart labels it "Circumference Of Dominant Hand" and runs 8 to 10. Those are different quantities on overlapping scales, and one of the two labels has to be wrong.`,
+      `The women's belt chart tops out at a 24 inch waist for XL. Gap's own women's apparel chart puts an XL waist at 35½ to 37½ inches. Whatever those belt figures describe, they do not correspond to any women's size in Gap's clothing range.`,
+      `None of this stops you buying a hat. It is worth knowing because it tells you how much weight to put on the accessories charts generally, which is not much. Measure, then compare against the product page.`,
+    ],
+  },
+  {
+    category: "Men's charts, plainly",
+    text: [
+      `The men's charts are the most straightforward thing Gap publishes. Tops run from a 35 to 36 inch chest at XS to 49 to 52 at XXL, with neck and sleeve given as ranges alongside. Bottoms run from a 28 to 29 inch waist at XS to 42 to 45 at XXL. Both charts convert cleanly between inches and centimetres, and the men's tops chart agrees with the women's tops chart on cross-gender sizes.`,
+      `The one asymmetry worth noting: men get two inseam lengths, regular at 32 inches and tall at 36. Women get five. If you are a man between those two lengths, Gap's own chart offers you nothing, and the answer is hemming.`,
+    ],
+  },
+];
+
+const charts: ConversionTable[] = [
+  {
+    heading: "Women's tops, outerwear & dresses (regular)",
+    note: 'All measurements in inches, from the regular tab of the women’s tops chart.',
+    minWidth: 900,
+    headers: ['Size', '000', '00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22'],
+    rows: [
+      ['Alpha', 'XXS', 'XXS', 'XS', 'XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL', 'XXL'],
+      ['Bust', '30¼', '31¼', '32¼', '33¼', '34¼', '35¼', '36¼', '37¼', '38¾', '40¼', '42', '43¾', '45¾', '47¾'],
+      ['Waist', '23½', '24½', '25½', '26½', '27½', '28½', '29½', '30½', '32', '33½', '35½', '37½', '39½', '41½'],
+      ['Sleeve', '30½', '30¾', '30⅞', '31⅛', '31¼', '31½', '31¾', '31⅞', '32⅛', '32½', '32¾', '33⅛', '33½', '33⅞'],
+    ],
+  },
+  {
+    heading: "Women's tops sleeve length: regular, petite, tall",
+    note: 'Petite is 1½" below regular and tall is 2" above regular at every size without exception. Bust and waist rows are omitted because they are identical across all three tabs, which is the point of the table.',
+    noteAfter: true,
+    minWidth: 900,
+    headers: ['Size', '000', '00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22'],
+    rows: [
+      ['Petite', '29', '29¼', '29⅜', '29⅝', '29¾', '30', '30¼', '30⅜', '30⅝', '31', '31¼', '31⅝', '32', '32⅜'],
+      ['Regular', '30½', '30¾', '30⅞', '31⅛', '31¼', '31½', '31¾', '31⅞', '32⅛', '32½', '32¾', '33⅛', '33½', '33⅞'],
+      ['Tall', '32½', '32¾', '32⅞', '33⅛', '33¼', '33½', '33¾', '33⅞', '34⅛', '34½', '34¾', '35⅛', '35½', '35⅞'],
+    ],
+  },
+  {
+    heading: "Women's jeans & bottoms (regular)",
+    note: 'All measurements in inches, from the regular tab of the women’s bottoms chart.',
+    minWidth: 900,
+    headers: ['Size', '000/23', '00/24', '0/25', '2/26', '4/27', '6/28', '8/29', '10/30', '12/31', '14/32', '16/33', '18/34', '20/35', '22/36'],
+    rows: [
+      ['Alpha', 'XXS', 'XXS', 'XS', 'XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL', 'XXL'],
+      ['Waist', '23½', '24½', '25½', '26½', '27½', '28½', '29½', '30½', '32', '33½', '35½', '37½', '39½', '41½'],
+      ['Hip', '33¼', '34¼', '35¼', '36¼', '37¼', '38¼', '39¼', '40¼', '41¾', '43¼', '45¼', '47¼', '49¼', '51¼'],
+    ],
+  },
+  {
+    heading: 'Inseam lengths',
+    minWidth: 480,
+    headers: ['Inseam', 'Petite', 'Short', 'Regular', 'Long', 'Tall'],
+    rows: [
+      ["Women's", '29', '30', '31½', '33½', '35½'],
+      ["Men's", 'Not offered', 'Not offered', '32', 'Not offered', '36'],
+    ],
+  },
+  {
+    heading: "Men's tops & outerwear",
+    note: 'Ranges in inches, from the men’s tops chart.',
+    minWidth: 560,
+    headers: ['Size', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    rows: [
+      ['Chest', '35–36', '37–38', '39–41', '42–44', '45–48', '49–52'],
+      ['Neck', '13½–14', '14–14½', '15–15½', '16–16½', '17–17½', '18–18½'],
+      ['Sleeve', '31–32', '32–33', '33–34', '34–35', '35–35½', '35½–36'],
+    ],
+  },
+  {
+    heading: "Men's bottoms waist",
+    minWidth: 560,
+    headers: ['Size', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    rows: [['Waist', '28–29', '30–31', '32–34', '35–37', '38–41', '42–45']],
+  },
+  {
+    heading: "Women's to men's, tops only",
+    note: 'This mapping holds for tops only. Gap’s two bottoms charts disagree, which is covered in the first fit section above.',
+    noteAfter: true,
+    minWidth: 620,
+    headers: ["Women's", 'S', 'M', 'L', 'XL', 'XXL'],
+    rows: [
+      ['Numeric', '4–6', '8–10', '12–14', '16–18', '20–22'],
+      ['Bust', '34¼–35¼', '36¼–37¼', '38¾–40¼', '42–43¾', '45¾–47¾'],
+      ['Waist', '27½–28½', '29½–30½', '32–33½', '35½–37½', '39½–41½'],
+      ["Men's", 'XS', 'S', 'M', 'L', 'XL'],
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: 'Does Gap run small?',
+    a: "No. Gap's published measurements sit close to standard US sizing, and the brand is generally accurate to its own chart. The complaint that Gap runs small usually comes from bottoms above size 10, where the number on the label drifts below the actual waist measurement, so a shopper ordering by label gets something tighter than expected.",
+  },
+  {
+    q: 'Is Gap petite sized differently through the body, or just shorter?',
+    a: "For tops, just shorter. Gap's petite chart lists identical bust and waist measurements to the regular chart at every size from 000 to 22, and differs only in sleeve length, by a constant inch and a half. Bottoms are different: petite there is a 29 inch inseam against a 31½ inch regular, and that is a genuine length change.",
+  },
+  {
+    q: "What is my Gap size in men's if I usually buy women's?",
+    a: "For tops, take two sizes down: a women's L is a men's M. For bottoms, Gap publishes two charts that disagree by one size, so go by the waist measurement instead. Match your measured waist to the men's waist column and disregard the letter.",
+  },
+  {
+    q: 'Does my jean number equal my waist in inches?',
+    a: 'Only up to size 10. Through 10/30 your body waist runs about half an inch above the jean number. From 12/31 the two separate, and by 22/36 the label understates the waist by five and a half inches.',
+  },
+  {
+    q: 'What inseam lengths does Gap offer?',
+    a: "Women's bottoms come in five: petite 29 inches, short 30, regular 31½, long 33½, and tall 35½. Men's bottoms come in two: regular 32 inches and tall 36.",
+  },
+  {
+    q: 'How do I convert my Gap size to UK or EU?',
+    a: "Gap labels in US sizes and does not publish UK or EU conversions on its women's or men's apparel charts. The conversion columns appear only on the kids' and accessories charts, where the EU column duplicates the US column exactly and carries no information.",
+  },
+  {
+    q: "Should I trust Gap's accessories size charts?",
+    a: `Less than the apparel ones. The women's hat chart's inch and centimetre figures do not convert to each other, gloves are measured as "width" for women and "circumference" for men, and the women's belt chart's waist figures do not correspond to any size in Gap's clothing range.`,
+  },
+];
+
+const related = [
+  { href: '/size-guides/levis-size-chart-fit-guide/', label: "Levi's size chart & fit guide" },
+  { href: '/blog/vanity-sizing-explained/', label: 'Vanity sizing, explained' },
+  {
+    href: '/blog/petite-vs-regular-vs-tall/',
+    label: 'Petite vs. regular vs. tall, explained',
+  },
+];
+---
+
+<BrandGuide
+  brandKey="gap"
+  brand="Gap"
+  title="Gap Size Chart & Fit Guide: Does Gap Run Small?"
+  description="Gap's own charts disagree on unisex bottoms, petite only changes sleeve length, and the jean number stops tracking your waist above size 10."
+  chartsHeading="The charts"
+  standardCharts={false}
+  typicalCharts={charts}
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <p>Four rules cover almost everything:</p>
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Measure, then use the chart, not the label.</strong> Gap's size names are stable
+        across tops and bottoms, but the numbers printed on bottoms drift from your body above size
+        10.
+      </li>
+      <li>
+        <strong>Treat petite and tall as sleeve length.</strong> For tops they change nothing else.
+        For bottoms, use the five inseam options, which are real.
+      </li>
+      <li>
+        <strong>For unisex bottoms, match the waist measurement, not the letter.</strong> Gap's two
+        charts disagree by a full size on the letter, and agree on the inches.
+      </li>
+      <li>
+        <strong>Check the product page for anything the chart calls a range.</strong> Men's tops and
+        bottoms are published as ranges rather than points, so a mid-range body can land either side
+        depending on cut.
+      </li>
+    </ol>
+  </Fragment>
+
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Every measurement on this page comes from <AffLink brand="gap"
+        href="https://www.gap.com/customer-service/size-charts?cid=2103"
+        >Gap's published size chart modals</AffLink
+      >, captured August 2026. These are Gap's own figures, not standard international conversions:
+      Gap labels in US sizes and publishes no UK or EU conversion for adult apparel, so what follows
+      is Gap's chart data rather than a conversion reference.
+    </p>
+  </Fragment>
+
+  <Fragment slot="charts-outro">
+    <p class="mt-6 leading-relaxed text-ink/85">
+      Measure over underwear or thin clothing with a soft tape, and take the waist at the narrowest
+      point. Our <a href="/how-to-measure/" class={linkClass}>measuring guide</a> covers the method
+      in a few minutes.
+    </p>
+  </Fragment>
+
+  <Fragment slot="tips">
+    <li>
+      <strong>Order bottoms by measured waist, not by the label:</strong> the jean number and your
+      body agree within half an inch through size 10, then drift apart by up to five and a half
+      inches at 22/36.
+    </li>
+    <li>
+      <strong>Pick petite or tall for your arms, not your torso:</strong> in tops, both variants
+      keep bust and waist identical to regular and move only the sleeve. If your bust or waist sits
+      between sizes, the variant tabs solve nothing.
+    </li>
+    <li>
+      <strong>Use the inseam options before you tailor:</strong> women's bottoms come in five
+      lengths from 29" to 35½", which covers most bodies without hemming. Men get 32" or 36" and
+      nothing between.
+    </li>
+    <li>
+      <strong>Buying across genders, trust inches over letters:</strong> the two unisex charts
+      disagree by a full size on the letter and agree on the waist measurement.
+    </li>
+    <li>
+      <strong>Treat accessories charts as suggestions:</strong> the hat, glove, and belt figures
+      contain internal contradictions that the apparel charts do not. Measure and compare against
+      the product page instead.
+    </li>
+  </Fragment>
+</BrandGuide>
