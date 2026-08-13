@@ -39,8 +39,11 @@ export const affiliateLinks: Record<string, RetailerLink> = {
     officialSiteUrl: 'https://www.adidas.com/',
     affiliate: true,
   },
-  // No affiliate approval. Deliberately false so <AffLink> emits a plain
-  // untracked anchor — do not flip this without an actual approval.
+  // Gap Inc. brands (Gap, Old Navy, Banana Republic, Athleta): declined
+  // together through Impact brand-direct, so all four are deliberately
+  // false and <AffLink> emits plain untracked anchors. A live `sponsored`
+  // token with no relationship is a false disclosure — do not flip any of
+  // these without an actual approval.
   gap: {
     name: 'Gap',
     url: 'https://www.gap.com/',
@@ -51,7 +54,19 @@ export const affiliateLinks: Record<string, RetailerLink> = {
     name: 'Old Navy',
     url: 'https://oldnavy.gap.com/',
     officialSiteUrl: 'https://oldnavy.gap.com/',
-    affiliate: true,
+    affiliate: false,
+  },
+  bananarepublic: {
+    name: 'Banana Republic',
+    url: 'https://bananarepublic.gap.com/',
+    officialSiteUrl: 'https://bananarepublic.gap.com/',
+    affiliate: false,
+  },
+  athleta: {
+    name: 'Athleta',
+    url: 'https://athleta.gap.com/',
+    officialSiteUrl: 'https://athleta.gap.com/',
+    affiliate: false,
   },
   shein: {
     name: 'Shein',
