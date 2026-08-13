@@ -4,6 +4,11 @@
       "source": "/sitemap.xml",
       "destination": "/sitemap-index.xml",
       "statusCode": 301
+    },
+    {
+      "source": "/size-guides/gap-old-navy-size-chart-fit-guide{/}?",
+      "destination": "/size-guides/gap-size-chart-fit-guide/",
+      "statusCode": 301
     }
   ]
 }
