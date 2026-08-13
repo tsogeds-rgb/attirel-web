@@ -12,6 +12,7 @@ const fitSections = [
     text: [
       `Gap publishes two separate charts that translate women's bottoms sizes into men's: one on the women's bottoms guide and one on the men's, both behind <a href="https://www.gap.com/customer-service/size-charts?cid=2103" class="${linkClass}" target="_blank" rel="noopener">Gap's own size chart page</a> (captured August 2026), which every figure on this page is drawn from. They give different answers for the same body, and they do it consistently, one full size apart across the entire range.`,
       {
+        ariaLabel: "Women's to men's bottoms sizes compared",
         minWidth: 520,
         headers: ["Your women's size", 'Waist', "Women's chart says", "Men's chart says"],
         rows: [
@@ -30,6 +31,7 @@ const fitSections = [
     text: [
       `Gap's women's tops chart has four tabs: regular, petite, tall, and unisex. Compare the regular and petite tables measurement by measurement and something becomes obvious. Bust and waist are identical. Not similar, identical, at every one of the fourteen sizes from 000 to 22. The same is true of the tall table. The only row that changes is sleeve length.`,
       {
+        ariaLabel: 'Sleeve length by fit',
         minWidth: 440,
         headers: ['Size', 'Regular', 'Petite', 'Tall'],
         rows: [
@@ -54,6 +56,7 @@ const fitSections = [
       `Through size 10, Gap's own chart puts your body waist about half an inch above the jean number. A 4/27 is a 27½ inch waist, an 8/29 is 29½. Consistent, and close enough that the label is useful.`,
       `Above size 10 the two come apart, and the gap widens with every size. This is <a href="/blog/vanity-sizing-explained/" class="${linkClass}">vanity sizing</a>, quantified from Gap's own published measurements.`,
       {
+        ariaLabel: 'Gap size label versus measured waist',
         minWidth: 520,
         headers: ['Gap size', 'Jean number', 'Actual waist', 'Difference'],
         rows: [
@@ -91,17 +94,77 @@ const fitSections = [
 
 const charts: ConversionTable[] = [
   {
-    heading: "Women's bottoms: inseam lengths",
-    note: "Men's bottoms come in two lengths on the same chart system: regular at 32 inches and tall at 36.",
-    noteAfter: true,
-    minWidth: 360,
-    headers: ['Length', 'Inseam'],
+    heading: "Women's tops, outerwear & dresses (regular)",
+    note: 'All measurements in inches, from the regular tab of the women’s tops chart.',
+    minWidth: 900,
+    headers: ['Size', '000', '00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22'],
     rows: [
-      ['Petite', '29"'],
-      ['Short', '30"'],
-      ['Regular', '31½"'],
-      ['Long', '33½"'],
-      ['Tall', '35½"'],
+      ['Alpha', 'XXS', 'XXS', 'XS', 'XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL', 'XXL'],
+      ['Bust', '30¼', '31¼', '32¼', '33¼', '34¼', '35¼', '36¼', '37¼', '38¾', '40¼', '42', '43¾', '45¾', '47¾'],
+      ['Waist', '23½', '24½', '25½', '26½', '27½', '28½', '29½', '30½', '32', '33½', '35½', '37½', '39½', '41½'],
+      ['Sleeve', '30½', '30¾', '30⅞', '31⅛', '31¼', '31½', '31¾', '31⅞', '32⅛', '32½', '32¾', '33⅛', '33½', '33⅞'],
+    ],
+  },
+  {
+    heading: "Women's tops sleeve length: regular, petite, tall",
+    note: 'Petite is 1½" below regular and tall is 2" above regular at every size without exception. Bust and waist rows are omitted because they are identical across all three tabs, which is the point of the table.',
+    noteAfter: true,
+    minWidth: 900,
+    headers: ['Size', '000', '00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22'],
+    rows: [
+      ['Petite', '29', '29¼', '29⅜', '29⅝', '29¾', '30', '30¼', '30⅜', '30⅝', '31', '31¼', '31⅝', '32', '32⅜'],
+      ['Regular', '30½', '30¾', '30⅞', '31⅛', '31¼', '31½', '31¾', '31⅞', '32⅛', '32½', '32¾', '33⅛', '33½', '33⅞'],
+      ['Tall', '32½', '32¾', '32⅞', '33⅛', '33¼', '33½', '33¾', '33⅞', '34⅛', '34½', '34¾', '35⅛', '35½', '35⅞'],
+    ],
+  },
+  {
+    heading: "Women's jeans & bottoms (regular)",
+    note: 'All measurements in inches, from the regular tab of the women’s bottoms chart.',
+    minWidth: 900,
+    headers: ['Size', '000/23', '00/24', '0/25', '2/26', '4/27', '6/28', '8/29', '10/30', '12/31', '14/32', '16/33', '18/34', '20/35', '22/36'],
+    rows: [
+      ['Alpha', 'XXS', 'XXS', 'XS', 'XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL', 'XXL'],
+      ['Waist', '23½', '24½', '25½', '26½', '27½', '28½', '29½', '30½', '32', '33½', '35½', '37½', '39½', '41½'],
+      ['Hip', '33¼', '34¼', '35¼', '36¼', '37¼', '38¼', '39¼', '40¼', '41¾', '43¼', '45¼', '47¼', '49¼', '51¼'],
+    ],
+  },
+  {
+    heading: 'Inseam lengths',
+    minWidth: 480,
+    headers: ['Inseam', 'Petite', 'Short', 'Regular', 'Long', 'Tall'],
+    rows: [
+      ["Women's", '29', '30', '31½', '33½', '35½'],
+      ["Men's", 'Not offered', 'Not offered', '32', 'Not offered', '36'],
+    ],
+  },
+  {
+    heading: "Men's tops & outerwear",
+    note: 'Ranges in inches, from the men’s tops chart.',
+    minWidth: 560,
+    headers: ['Size', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    rows: [
+      ['Chest', '35–36', '37–38', '39–41', '42–44', '45–48', '49–52'],
+      ['Neck', '13½–14', '14–14½', '15–15½', '16–16½', '17–17½', '18–18½'],
+      ['Sleeve', '31–32', '32–33', '33–34', '34–35', '35–35½', '35½–36'],
+    ],
+  },
+  {
+    heading: "Men's bottoms waist",
+    minWidth: 560,
+    headers: ['Size', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    rows: [['Waist', '28–29', '30–31', '32–34', '35–37', '38–41', '42–45']],
+  },
+  {
+    heading: "Women's to men's, tops only",
+    note: 'This mapping holds for tops only. Gap’s two bottoms charts disagree, which is covered in the first fit section above.',
+    noteAfter: true,
+    minWidth: 620,
+    headers: ["Women's", 'S', 'M', 'L', 'XL', 'XXL'],
+    rows: [
+      ['Numeric', '4–6', '8–10', '12–14', '16–18', '20–22'],
+      ['Bust', '34¼–35¼', '36¼–37¼', '38¾–40¼', '42–43¾', '45¾–47¾'],
+      ['Waist', '27½–28½', '29½–30½', '32–33½', '35½–37½', '39½–41½'],
+      ["Men's", 'XS', 'S', 'M', 'L', 'XL'],
     ],
   },
 ];
@@ -189,8 +252,8 @@ const related = [
         href="https://www.gap.com/customer-service/size-charts?cid=2103"
         >Gap's published size chart modals</AffLink
       >, captured August 2026. These are Gap's own figures, not standard international conversions:
-      Gap labels in US sizes and publishes no UK or EU conversion for adult apparel, so there is no
-      conversion table to reproduce here.
+      Gap labels in US sizes and publishes no UK or EU conversion for adult apparel, so what follows
+      is Gap's chart data rather than a conversion reference.
     </p>
   </Fragment>
 
