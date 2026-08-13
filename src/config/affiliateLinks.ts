@@ -39,11 +39,13 @@ export const affiliateLinks: Record<string, RetailerLink> = {
     officialSiteUrl: 'https://www.adidas.com/',
     affiliate: true,
   },
+  // No affiliate approval. Deliberately false so <AffLink> emits a plain
+  // untracked anchor — do not flip this without an actual approval.
   gap: {
     name: 'Gap',
     url: 'https://www.gap.com/',
     officialSiteUrl: 'https://www.gap.com/',
-    affiliate: true,
+    affiliate: false,
   },
   oldnavy: {
     name: 'Old Navy',
