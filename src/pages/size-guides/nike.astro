@@ -1,7 +1,8 @@
 ---
-import SizeGuide from '../../components/SizeGuide.astro';
+import BrandGuide from '../../components/BrandGuide.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
 
-const charts = [
+const charts: ConversionTable[] = [
   {
     heading: 'Nike women’s apparel',
     minWidth: 640,
@@ -29,12 +30,17 @@ const charts = [
 ];
 ---
 
-<SizeGuide
+<BrandGuide
+  brandKey="nike"
+  brand="Nike"
   title="Nike Size Guide — Does Nike Run Small? (Charts & Tips) | Attirel"
   description="Nike runs about half a size small in shoes and slim in apparel. Full Nike size charts for women and men with US, UK, and EU conversions, plus fitting tips."
-  brand="Nike"
-  verdictQuestion="Does Nike run small?"
-  charts={charts}
+  h1="Nike Size Guide"
+  standardCharts={false}
+  typicalCharts={charts}
+  fitSections={[]}
+  faqs={[]}
+  related={[]}
 >
   <Fragment slot="verdict">
     <strong>Yes — Nike runs about half a size small in footwear</strong>, especially in running
@@ -47,4 +53,4 @@ const charts = [
     <li><strong>UK vs US women's apparel:</strong> UK sizes are numerically 4 higher (US 8 = UK 12).</li>
     <li><strong>Dri-FIT tops:</strong> designed with an athletic taper through the waist; broad-shouldered builds often prefer one size up.</li>
   </Fragment>
-</SizeGuide>
+</BrandGuide>
