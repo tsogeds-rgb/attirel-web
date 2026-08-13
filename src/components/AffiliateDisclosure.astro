@@ -1,9 +1,29 @@
 ---
-// FTC-required affiliate disclosure, rendered near the top of every size guide.
+// FTC-required affiliate disclosure. Renders only when the page actually
+// carries at least one affiliate-eligible outbound link, judged from the
+// same registry <AffLink> reads, so the banner and the links can never
+// disagree: a page whose every retailer is affiliate: false gets no banner,
+// because disclosing a commercial relationship that does not exist is as
+// inaccurate as a sponsored token on an untracked link.
+import { affiliateLinks } from '../config/affiliateLinks';
+
+interface Props {
+  /** Brand keys this page links out to via <AffLink>. */
+  brands?: string[];
+}
+
+const { brands = [] } = Astro.props;
+const hasAffiliate = brands.some((b) => affiliateLinks[b]?.affiliate);
 ---
 
-<p class="mt-6 rounded-xl border border-ink/10 bg-white/60 px-4 py-3 text-xs leading-relaxed text-smoke">
-  Attirel may earn a commission from links on this page, at no additional cost to you. This
-  never affects our sizing advice.
-  <a href="/affiliate-disclosure/" class="underline underline-offset-2 hover:text-ink">Learn more</a>
-</p>
+{
+  hasAffiliate && (
+    <p class="mt-6 rounded-xl border border-ink/10 bg-white/60 px-4 py-3 text-xs leading-relaxed text-smoke">
+      Attirel may earn a commission from links on this page, at no additional cost to you. This
+      never affects our sizing advice.
+      <a href="/affiliate-disclosure/" class="underline underline-offset-2 hover:text-ink">
+        Learn more
+      </a>
+    </p>
+  )
+}
