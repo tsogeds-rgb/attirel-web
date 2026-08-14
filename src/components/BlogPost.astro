@@ -31,7 +31,6 @@ const articleJsonLd = JSON.stringify({
   headline: heading,
   description,
   datePublished: date,
-  dateModified: date,
   author: { '@type': 'Organization', name: 'Attirel Team', url: 'https://attirel.com/about/' },
   publisher: { '@type': 'Organization', name: 'Attirel', url: 'https://attirel.com/' },
   mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
