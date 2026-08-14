@@ -1,18 +1,22 @@
 ---
 import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
 import type { ConversionTable } from '../../config/sizeConversions';
 
 const charts: ConversionTable[] = [
   {
     heading: 'H&M women’s',
-    minWidth: 640,
-    headers: ['Size', 'US', 'UK', 'EU', 'Bust', 'Waist', 'Hips'],
+    note: 'H&M states single-point centimetre values, two EUR sizes per letter; the inch figures are converted from those. The chart continues to 4XL (EUR 60 / 62). The gaps between letters (for example bust 96 to 100 cm between M and L) are inherent to H&M’s chart, not omissions.',
+    noteAfter: true,
+    minWidth: 860,
+    headers: ['Size', 'EUR', 'US', 'UK', 'Bust', 'Waist', 'Seat'],
     rows: [
-      ['XS', '0–2', '4–6', '32–34', '30–32"', '24–26"', '33–35"'],
-      ['S', '4–6', '8–10', '36–38', '33–35"', '27–29"', '36–38"'],
-      ['M', '8–10', '12–14', '40–42', '36–38"', '30–32"', '39–41"'],
-      ['L', '12–14', '16–18', '44–46', '40–42"', '34–36"', '43–45"'],
-      ['XL', '16–18', '20–22', '48–50', '44–46"', '38–41"', '46–48"'],
+      ['XS', '32 / 34', '2 / 4', '6 / 8', '76 / 80 cm (29.9 / 31.5")', '60 / 64 cm (23.6 / 25.2")', '84 / 88 cm (33.1 / 34.6")'],
+      ['S', '36 / 38', '6 / 8', '10 / 12', '84 / 88 cm (33.1 / 34.6")', '68 / 72 cm (26.8 / 28.3")', '92 / 96 cm (36.2 / 37.8")'],
+      ['M', '40 / 42', '10 / 12', '14 / 16', '92 / 96 cm (36.2 / 37.8")', '76 / 80 cm (29.9 / 31.5")', '100 / 104 cm (39.4 / 40.9")'],
+      ['L', '44 / 46', '14 / 16', '18 / 20', '100 / 104 cm (39.4 / 40.9")', '84 / 88 cm (33.1 / 34.6")', '108 / 112 cm (42.5 / 44.1")'],
+      ['XL', '48 / 50', '18 / 20', '22 / 24', '110 / 116 cm (43.3 / 45.7")', '94 / 100 cm (37.0 / 39.4")', '117 / 122 cm (46.1 / 48.0")'],
+      ['2XL', '52 / 54', '22 / 24', '26 / 28', '122 / 128 cm (48.0 / 50.4")', '106 / 112 cm (41.7 / 44.1")', '127 / 132 cm (50.0 / 52.0")'],
     ],
   },
   {
@@ -47,10 +51,26 @@ const charts: ConversionTable[] = [
     Divided (youth) line runs a size small, and some fashion-line pieces cut slimmer than the
     basics, so check the product page's fit notes.
   </Fragment>
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      The women's chart below is drawn from <AffLink
+        brand="hm"
+        href="https://www.hm.com/xk/customer-service/sizeguide/ladies/"
+        >H&amp;M's published size guide on its Kosovo regional site</AffLink
+      > (captured August 2026), which still hosts the full tables and states centimetre values;
+      the inches are converted from those. H&amp;M's US and Canadian sites no longer publish a
+      brand-level size guide and instead direct shoppers to the measurements on each product page.
+      The men's chart predates that verification and keeps its original figures pending the same
+      check. Fit still varies between styles, so check the size guide on the product page before
+      you order.
+    </p>
+  </Fragment>
   <Fragment slot="tips">
     <li><strong>Divided line:</strong> H&amp;M's youth-oriented line runs about one size small, so size up.</li>
     <li><strong>UK vs US women's:</strong> UK sizes run numerically 4 higher (US 8 = UK 12); the EU label is usually the most reliable reference.</li>
     <li><strong>Knitwear and jersey basics:</strong> tend to relax with wear; stay true to size rather than sizing up.</li>
     <li><strong>Denim:</strong> H&amp;M jeans use waist measurements in inches on many lines. Match your natural waist measurement directly.</li>
+    <li><strong>One inseam for every size:</strong> H&amp;M's main women's range lists a fixed 79 cm (31.1") inside leg from XS through 4XL, with no length variation.</li>
+    <li><strong>Petite is length-only:</strong> H&amp;M bases petite on height, not width: use the regular guide's width measurements and expect a fixed 73 cm (28.7") inside leg. That is the same structure Gap's petite tops show, documented in our <a href="/size-guides/gap-size-chart-fit-guide/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">Gap fit guide</a>: the variant changes length, not width.</li>
   </Fragment>
 </BrandGuide>
