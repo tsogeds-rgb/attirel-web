@@ -1,32 +1,6 @@
 ---
 import BrandGuide from '../../components/BrandGuide.astro';
-import type { ConversionTable } from '../../config/sizeConversions';
-
-const charts: ConversionTable[] = [
-  {
-    heading: 'Zara women’s',
-    minWidth: 640,
-    headers: ['Size', 'US', 'UK', 'EU', 'Bust', 'Waist', 'Hips'],
-    rows: [
-      ['XS', '0–2', '4–6', '34', '31.5"', '24.5"', '34.5"'],
-      ['S', '4', '8', '36', '33"', '26"', '36"'],
-      ['M', '6', '10', '38', '34.5"', '27.5"', '37.5"'],
-      ['L', '8–10', '12', '40', '36.5"', '29.5"', '39.5"'],
-      ['XL', '12', '14', '42', '38.5"', '31.5"', '41.5"'],
-    ],
-  },
-  {
-    heading: 'Zara men’s',
-    headers: ['Size', 'US/UK', 'EU', 'Chest', 'Waist'],
-    rows: [
-      ['S', '36–38', '46', '35–37"', '29–31"'],
-      ['M', '38–40', '48', '37–39"', '31–33"'],
-      ['L', '40–42', '50', '39–41"', '33–35"'],
-      ['XL', '42–44', '52', '41–43"', '35–37"'],
-      ['XXL', '44–46', '54', '43–45"', '37–39"'],
-    ],
-  },
-];
+import AffLink from '../../components/AffLink.astro';
 ---
 
 <BrandGuide
@@ -36,7 +10,7 @@ const charts: ConversionTable[] = [
   description="Zara runs small with a slim European cut, so most shoppers size up. Zara size charts for women and men with US, UK, and EU conversions, plus fitting tips."
   h1="Zara Size Guide"
   standardCharts={false}
-  typicalCharts={charts}
+  chartsHeading="Where Zara's measurements live"
   fitSections={[]}
   faqs={[]}
   related={[]}
@@ -46,6 +20,16 @@ const charts: ConversionTable[] = [
     continental European proportions: narrower shoulders, slimmer sleeves, and a shorter torso
     than typical US/UK brands. Most shoppers should size up at least one size, especially in
     blazers, shirts, and denim.
+  </Fragment>
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Zara publishes no brand-level size chart. Measurements are stated per garment: select a size
+      on <AffLink brand="zara">the product page</AffLink> and Zara shows the body measurements that
+      size fits, alongside a per-item "Find your size" tool that takes your measurements and fit
+      preference. Any brand-wide Zara chart you find elsewhere online is a third-party
+      reconstruction, and they disagree with one another, so treat the product page as the only
+      authority. (Per Zara's help centre, August 2026.)
+    </p>
   </Fragment>
   <Fragment slot="tips">
     <li><strong>Zara sizes by EU numbers first:</strong> the tag shows EU sizing with US/UK conversions printed underneath. When in doubt, trust the EU number and the garment measurements.</li>
