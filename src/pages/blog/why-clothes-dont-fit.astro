@@ -1,119 +1,100 @@
 ---
-import Base from '../../layouts/Base.astro';
+import BlogPost from '../../components/BlogPost.astro';
 ---
 
-<Base
+<BlogPost
   title="Why 40% of Clothes Bought Online Get Returned | Attirel Blog"
   description="Vanity sizing, brand inconsistency, and size chart chaos: why online clothes shopping is broken, what it costs all of us, and how measurement-based fit fixes it."
-  ogType="article"
+  heading="Why 40% of clothes bought online get returned"
+  date="2026-07-17"
+  readingTime="7 min read"
+  ctaHeading="Shop like the size label doesn't exist."
+  ctaBody="Your measurements, an AI fit score on every product, and no more guessing."
 >
-  <article class="mx-auto max-w-article px-5 py-16">
-    <p class="text-sm font-semibold uppercase tracking-wide text-plum">The Attirel Blog</p>
-    <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-      Why 40% of clothes bought online get returned
-    </h1>
-    <p class="mt-4 text-sm text-smoke">By the Attirel team · 7 min read</p>
+  <p>
+    Somewhere in a warehouse right now, a worker is unpacking a dress that fit perfectly.
+    On the size chart, anyway. In the fitting-room mirror of the buyer's bedroom, it didn't.
+    Back in the box it went, joining an estimated <strong>30–40% of all clothing bought online</strong>
+    that makes the return journey. For in-store purchases, that figure is under 10%. The
+    difference isn't buyer's remorse. It's that when we shop online, we're asked to guess,
+    and the game is rigged against us.
+  </p>
 
-    <div class="prose-attirel mt-10 space-y-6 text-lg leading-relaxed text-ink/85">
-      <p>
-        Somewhere in a warehouse right now, a worker is unpacking a dress that fit perfectly.
-        On the size chart, anyway. In the fitting-room mirror of the buyer's bedroom, it didn't.
-        Back in the box it went, joining an estimated <strong>30–40% of all clothing bought online</strong>
-        that makes the return journey. For in-store purchases, that figure is under 10%. The
-        difference isn't buyer's remorse. It's that when we shop online, we're asked to guess,
-        and the game is rigged against us.
-      </p>
+  <h2 class="font-display text-2xl font-semibold text-ink">The vanity sizing spiral</h2>
+  <p>
+    In 1958, the US government published a voluntary commercial standard for women's
+    clothing sizes, giving each size number a defined set of body measurements. It was
+    revised in 1970 and withdrawn entirely in 1983, by which point most brands had long
+    since stopped following it. In the decades since, sizes have drifted steadily downward
+    in a phenomenon researchers call vanity sizing: as average bodies grew, the numbers on
+    the labels shrank to flatter us. A women's size 12 from 1958 is roughly a size 4–6
+    today. The label stopped being a measurement and became a marketing decision.
+  </p>
+  <p>
+    The result: a "medium" is not a fact about a garment. It's a brand's opinion about who
+    they want wearing it.
+  </p>
 
-      <h2 class="font-display text-2xl font-semibold text-ink">The vanity sizing spiral</h2>
-      <p>
-        In 1958, the US government published a voluntary commercial standard for women's
-        clothing sizes, giving each size number a defined set of body measurements. It was
-        revised in 1970 and withdrawn entirely in 1983, by which point most brands had long
-        since stopped following it. In the decades since, sizes have drifted steadily downward
-        in a phenomenon researchers call vanity sizing: as average bodies grew, the numbers on
-        the labels shrank to flatter us. A women's size 12 from 1958 is roughly a size 4–6
-        today. The label stopped being a measurement and became a marketing decision.
-      </p>
-      <p>
-        The result: a "medium" is not a fact about a garment. It's a brand's opinion about who
-        they want wearing it.
-      </p>
+  <h2 class="font-display text-2xl font-semibold text-ink">Every brand speaks its own language</h2>
+  <p>
+    Even setting vanity sizing aside, brands genuinely cut for different bodies. Zara
+    designs to a slim continental European block (narrower shoulders, shorter torso). Nike
+    cuts athletic and runs footwear about half a size small. American heritage brands cut
+    generously through the chest and seat. None of them is wrong; they're just designing
+    for different people while using the same size labels.
+  </p>
+  <p>
+    So the shopper who is a confident M at H&amp;M orders an M at Zara and gets something
+    they can't button. They conclude, reasonably but wrongly, that their body is the
+    problem. Their body was never the problem. The label was.
+  </p>
 
-      <h2 class="font-display text-2xl font-semibold text-ink">Every brand speaks its own language</h2>
-      <p>
-        Even setting vanity sizing aside, brands genuinely cut for different bodies. Zara
-        designs to a slim continental European block (narrower shoulders, shorter torso). Nike
-        cuts athletic and runs footwear about half a size small. American heritage brands cut
-        generously through the chest and seat. None of them is wrong; they're just designing
-        for different people while using the same size labels.
-      </p>
-      <p>
-        So the shopper who is a confident M at H&amp;M orders an M at Zara and gets something
-        they can't button. They conclude, reasonably but wrongly, that their body is the
-        problem. Their body was never the problem. The label was.
-      </p>
+  <h2 class="font-display text-2xl font-semibold text-ink">Size chart chaos within a single brand</h2>
+  <p>
+    Here's the part that surprises even seasoned shoppers: the same brand often doesn't fit
+    like itself. A brand's denim line, its youth line, and its main collection are
+    frequently developed on different fit blocks, in different factories, on different
+    continents. H&amp;M's Divided line famously runs a full size smaller than its basics.
+    Two "size 10" dresses from the same retailer can differ by more than an inch in the
+    bust, well within normal manufacturing tolerance.
+  </p>
+  <p>
+    Size charts, meanwhile, describe the <em>body</em> the garment was designed for, not
+    the garment itself, and they rarely mention ease, stretch, or cut. A chart can be
+    technically accurate and still lead you to the wrong size.
+  </p>
 
-      <h2 class="font-display text-2xl font-semibold text-ink">Size chart chaos within a single brand</h2>
-      <p>
-        Here's the part that surprises even seasoned shoppers: the same brand often doesn't fit
-        like itself. A brand's denim line, its youth line, and its main collection are
-        frequently developed on different fit blocks, in different factories, on different
-        continents. H&amp;M's Divided line famously runs a full size smaller than its basics.
-        Two "size 10" dresses from the same retailer can differ by more than an inch in the
-        bust, well within normal manufacturing tolerance.
-      </p>
-      <p>
-        Size charts, meanwhile, describe the <em>body</em> the garment was designed for, not
-        the garment itself, and they rarely mention ease, stretch, or cut. A chart can be
-        technically accurate and still lead you to the wrong size.
-      </p>
+  <h2 class="font-display text-2xl font-semibold text-ink">What all those returns actually cost</h2>
+  <p>
+    Returns feel free, but somebody pays. Retailers spend an estimated $20–$30 to process a
+    single returned garment: shipping, inspection, repackaging, restocking. Industry
+    analyses put the annual cost of returns in the hundreds of billions of dollars, and a
+    significant share of returned clothing is never resold at all: it's landfilled or
+    incinerated because processing it costs more than it's worth. The environmental bill
+    (double shipping, packaging waste, destroyed inventory) lands on all of us.
+  </p>
+  <p>
+    And shoppers pay twice: once in the prices that absorb all that processing, and again
+    in the quiet tax of time: ordering three sizes to try at home, queueing at the drop-off
+    point, waiting on refunds.
+  </p>
 
-      <h2 class="font-display text-2xl font-semibold text-ink">What all those returns actually cost</h2>
-      <p>
-        Returns feel free, but somebody pays. Retailers spend an estimated $20–$30 to process a
-        single returned garment: shipping, inspection, repackaging, restocking. Industry
-        analyses put the annual cost of returns in the hundreds of billions of dollars, and a
-        significant share of returned clothing is never resold at all: it's landfilled or
-        incinerated because processing it costs more than it's worth. The environmental bill
-        (double shipping, packaging waste, destroyed inventory) lands on all of us.
-      </p>
-      <p>
-        And shoppers pay twice: once in the prices that absorb all that processing, and again
-        in the quiet tax of time: ordering three sizes to try at home, queueing at the drop-off
-        point, waiting on refunds.
-      </p>
-
-      <h2 class="font-display text-2xl font-semibold text-ink">The fix isn't better size charts. It's no size charts.</h2>
-      <p>
-        Every failure above has the same root cause. A size label is a lossy, brand-specific
-        compression of the only data that matters: the measurements of the garment and the
-        measurements of you.
-      </p>
-      <p>
-        That's the premise we built <a href="/app/" class="font-semibold text-plum underline-offset-2 hover:underline">Attirel</a> on.
-        You measure yourself once, with a guided tutorial. Attirel compares your actual
-        dimensions against each product, factoring in how the brand runs, the garment's cut
-        and stretch, and feedback from how past purchases fit you. Then it puts a fit score with
-        a plain-English confidence label on every item, at every store you shop. When the data
-        is thin, it says so, instead of letting you guess.
-      </p>
-      <p>
-        The 40% return rate isn't a shopper problem. It's a translation problem, and
-        translation happens to be exactly what software is for.
-      </p>
-    </div>
-
-    <div class="mt-12 rounded-3xl bg-plum px-8 py-12 text-center text-white">
-      <h2 class="font-display text-2xl font-semibold">Shop like the size label doesn't exist.</h2>
-      <p class="mx-auto mt-3 max-w-md text-white/80">
-        Your measurements, an AI fit score on every product, and no more guessing.
-      </p>
-      <a
-        href="https://attirel.ai"
-        class="mt-6 inline-block rounded-full bg-white px-8 py-3 font-semibold text-plum transition-opacity hover:opacity-90"
-      >
-        Try Attirel at attirel.ai →
-      </a>
-    </div>
-  </article>
-</Base>
+  <h2 class="font-display text-2xl font-semibold text-ink">The fix isn't better size charts. It's no size charts.</h2>
+  <p>
+    Every failure above has the same root cause. A size label is a lossy, brand-specific
+    compression of the only data that matters: the measurements of the garment and the
+    measurements of you.
+  </p>
+  <p>
+    That's the premise we built <a href="/app/" class="font-semibold text-plum underline-offset-2 hover:underline">Attirel</a> on.
+    You measure yourself once, with a guided tutorial. Attirel compares your actual
+    dimensions against each product, factoring in how the brand runs, the garment's cut
+    and stretch, and feedback from how past purchases fit you. Then it puts a fit score with
+    a plain-English confidence label on every item, at every store you shop. When the data
+    is thin, it says so, instead of letting you guess.
+  </p>
+  <p>
+    The 40% return rate isn't a shopper problem. It's a translation problem, and
+    translation happens to be exactly what software is for.
+  </p>
+</BlogPost>
