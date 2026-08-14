@@ -1,5 +1,6 @@
 ---
 import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
 import type { ConversionTable } from '../../config/sizeConversions';
 
 const charts: ConversionTable[] = [
@@ -16,15 +17,21 @@ const charts: ConversionTable[] = [
     ],
   },
   {
-    heading: 'Nike men’s apparel',
+    heading: 'Nike men’s tops',
+    note: 'Nike’s own chart lists hip equal to chest at XS through L, diverging only from XL upward; that is how Nike publishes it, not a transcription error. Tall sizes (S through 4XL, select styles) run 1.75" longer in the body with sleeves adjusted by silhouette; Tall bottoms add 2" of inseam and 0.5" of rise.',
+    noteAfter: true,
     minWidth: 480,
-    headers: ['Size', 'Chest', 'Waist', 'Hips'],
+    headers: ['Size', 'Chest', 'Waist', 'Hip'],
     rows: [
+      ['XXS', '28.1–31.5"', '22.5–25.5"', '28.5–31.5"'],
+      ['XS', '31.5–35"', '25.5–29"', '31.5–35"'],
       ['S', '35–37.5"', '29–32"', '35–37.5"'],
       ['M', '37.5–41"', '32–35"', '37.5–41"'],
       ['L', '41–44"', '35–38"', '41–44"'],
-      ['XL', '44–48.5"', '38–43"', '44–47.5"'],
-      ['XXL', '48.5–53.5"', '43–47.5"', '47.5–51"'],
+      ['XL', '44–48.5"', '38–43"', '44–47"'],
+      ['XXL', '48.5–53.5"', '43–47.5"', '47–50.5"'],
+      ['3XL', '53.5–58"', '47.5–52.5"', '50.5–53.5"'],
+      ['4XL', '58–63"', '52.5–57"', '53.5–58.5"'],
     ],
   },
 ];
@@ -47,10 +54,22 @@ const charts: ConversionTable[] = [
     shoes and Air Force 1s. Most people should size up half a size from their measured size.
     Apparel runs athletic and slim: if you're between sizes or prefer a relaxed fit, size up.
   </Fragment>
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      The men's chart below is drawn from <AffLink
+        brand="nike"
+        href="https://www.nike.com/size-fit/mens_tops_alpha"
+        >Nike's published tops chart</AffLink
+      > (captured August 2026). The women's chart predates that verification and keeps its
+      original figures pending the same check. Fit still varies between styles, so check the size
+      chart on the product page before you order.
+    </p>
+  </Fragment>
   <Fragment slot="tips">
     <li><strong>Shoes:</strong> go up half a size from your true measured size; if you wear thick athletic socks, consider a full size up in running shoes.</li>
     <li><strong>Leggings and tights:</strong> Nike's compression styles run especially snug: size up for a comfort fit, stay true for a compression fit.</li>
     <li><strong>UK vs US women's apparel:</strong> UK sizes are numerically 4 higher (US 8 = UK 12).</li>
     <li><strong>Dri-FIT tops:</strong> designed with an athletic taper through the waist; broad-shouldered builds often prefer one size up.</li>
+    <li><strong>Nike's own tie-breaker:</strong> when your chest and waist land in different sizes, Nike says to go by chest for tops and by hip for bottoms.</li>
   </Fragment>
 </BrandGuide>
