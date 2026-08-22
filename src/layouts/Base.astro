@@ -1,13 +1,41 @@
 ---
+export interface Breadcrumb {
+  /** Visible name for this step of the trail, e.g. "Size Guides". */
+  name: string;
+  /** Root-relative path, e.g. "/size-guides/". Resolved against Astro.site. */
+  href: string;
+}
+
 interface Props {
   title: string;
   description: string;
   ogType?: string;
+  /**
+   * Trail for BreadcrumbList JSON-LD, ordered root-first and ending with the
+   * current page. Omitting it emits no breadcrumb markup at all, so pages
+   * adopt this one at a time rather than all at once.
+   */
+  breadcrumbs?: Breadcrumb[];
 }
 
-const { title, description, ogType = 'website' } = Astro.props;
+const { title, description, ogType = 'website', breadcrumbs } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og-logo.png', Astro.site);
+
+// Absolute URLs, resolved against the same apex origin as the canonical, so
+// the trail and the canonical can never disagree about where a page lives.
+const breadcrumbJsonLd = breadcrumbs?.length
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs.map((crumb, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: crumb.name,
+        item: new URL(crumb.href, Astro.site).href,
+      })),
+    })
+  : null;
 
 const nav = [
   { href: '/size-guides/', label: 'Size Guides' },
@@ -27,6 +55,8 @@ const nav = [
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={canonicalURL} />
+
+    {breadcrumbJsonLd && <script type="application/ld+json" set:html={breadcrumbJsonLd} is:inline />}
 
     <title>{title}</title>
     <meta name="description" content={description} />

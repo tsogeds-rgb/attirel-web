@@ -65,6 +65,12 @@ interface Props {
   fitSections: FitSection[];
   faqs: Faq[];
   related: RelatedLink[];
+  /**
+   * Emit BreadcrumbList JSON-LD for this guide. The trail is fully determined
+   * by where brand guides live, so there is nothing to configure: opting in is
+   * the whole of the change a guide needs to make.
+   */
+  breadcrumbs?: boolean;
 }
 
 const {
@@ -79,7 +85,16 @@ const {
   fitSections,
   faqs,
   related,
+  breadcrumbs = false,
 } = Astro.props;
+
+const breadcrumbTrail = breadcrumbs
+  ? [
+      { name: 'Home', href: '/' },
+      { name: 'Size Guides', href: '/size-guides/' },
+      { name: brand, href: Astro.url.pathname },
+    ]
+  : undefined;
 
 // A guide can supply its own lead-in to the charts; otherwise the default
 // copy below applies.
@@ -102,7 +117,7 @@ const standardTables: ConversionTable[] = standardCharts ? [womensClothing, mens
 const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?`;
 ---
 
-<Base title={title} description={description} ogType="article">
+<Base title={title} description={description} ogType="article" breadcrumbs={breadcrumbTrail}>
   <article class="mx-auto max-w-article px-5 py-16">
     <p class="text-sm font-semibold uppercase tracking-wide text-plum">Size Guide</p>
     <h1 class="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
