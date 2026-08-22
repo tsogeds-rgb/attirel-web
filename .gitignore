@@ -17,3 +17,6 @@ npm-debug.log*
 
 # vercel
 .vercel
+
+# local agent tooling (launch.json is per-machine, not shared config)
+.claude/
