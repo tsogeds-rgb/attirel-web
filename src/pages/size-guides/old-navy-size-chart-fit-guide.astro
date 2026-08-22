@@ -1,0 +1,477 @@
+---
+import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
+
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
+
+const fitSections = [
+  {
+    category: '1. Some measurements have no size',
+    text: [
+      `Read the men's waist column in order: 26–27, 28–29, 30–31, 32–34, 36–38, 40–42, 44–46, 48–50, 52–54.`,
+      `The bands don't meet. M ends at 34 and L begins at 36. XL ends at 42 and XXL begins at 44. Five whole-inch waist measurements (<strong>35, 39, 43, 47 and 51</strong>) fall between two sizes and are assigned to neither.`,
+      `This is not rounding. Men's waists are measured in whole inches and men's trousers are sold in whole inches, so these are real measurements belonging to real customers, sitting in the space between two rows of a chart. If you measure 35 inches, Old Navy's men's bottoms chart does not tell you what to buy.`,
+      `The chest column does the same thing: <strong>43, 47 and 54 inches</strong> have no size. So does the neck, where the jump from XXXL (19–19½) to XXXXL (20½–21) leaves a 20-inch neck unassigned. Arm length leaves a half inch unassigned between every single size.`,
+      `Which inches are missing depends on what you're shopping for, which is the part that should not be possible.`,
+      `A 47-inch chest has no size in shirts, because L ends at 46 and XL begins at 48. In robes, where the bands are S/M 38–42 and L/XL 44–50, that same chest is an L/XL. Outerwear goes further and swaps the gaps around: its XXL runs 52–54 and its XXXL 56–58, so a 54-inch chest that has no shirt size does have an outerwear size, while 51 and 55 have shirt sizes but no outerwear size. Three men's categories, three different sets of unassigned inches, one brand.`,
+      {
+        ariaLabel: "Chest measurements with no size, by men's category",
+        minWidth: 520,
+        headers: ['Chest', 'Shirts & tees', 'Outerwear', 'Robes'],
+        rows: [
+          ['43', 'no size', 'no size', 'no size'],
+          ['47', 'no size', 'no size', 'L/XL'],
+          ['51', 'XXL', 'no size', '—'],
+          ['54', 'no size', 'XXL', '—'],
+          ['55', 'XXXL', 'no size', '—'],
+        ],
+      },
+      `Women's shoes have their own version. The size ladder runs 5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, then jumps to 11. There is no 10.5, and the foot-length step from size 10 to size 11 is half an inch where every other step is an eighth or a quarter. A foot between 10⅜ and 10⅞ inches has no Old Navy size.`,
+      `Worth knowing that the gaps are a choice, not a limitation of how size charts work. Gap, the same parent company running the same chart software for the same garment category, publishes a men's bottoms chart that runs continuously from 28 to 45 with no unassigned inches at all.`,
+      `<strong>What to do:</strong> if you land in a gap, size up. The bands above a gap are wider than the bands below it, so the larger size has more room to absorb the difference, and trouser waists are easier to take in than let out.`,
+    ],
+  },
+  {
+    category: '2. Eight charts, one set of numbers',
+    text: [
+      `Old Navy's women's division has eight size charts. They are all the same chart.`,
+      `The waist figures are identical, size for size, across bottoms, tops, belts, robes, underwear and swim. The chest figures are identical across tops, robes, swim and bras. The hips figures are identical across bottoms, underwear and swim. What changes between categories is which two or three rows Old Navy chooses to show you.`,
+      `That matters for a practical reason. A brand that drafts swimwear, denim and bras from one body model is telling you that its published numbers describe a body, not a garment. Two Old Navy items in the same size are cut for the same measurements regardless of what they are, so the chart cannot help you judge how any particular garment will actually fit.`,
+      `It also means size 20 appears twice in every chart that reaches it, once as XXL and once as 2X, with identical measurements. Same body, two size names, no guidance about which to pick.`,
+      `The men's division does the same thing with two blocks instead of one. Shirts and tees are identical charts. Bottoms, underwear and belts share a single waist column, with underwear being bottoms without its XXS column and belts being the waist row on its own.`,
+      `Outerwear is the only chart in either division that isn't a copy of another. Its chest runs an inch larger than shirts at XXL and XXXL, and it labels the measurement Sleeve where shirts and tees say Arm Length. Whatever source the rest of the charts were copied from, outerwear came from somewhere else.`,
+    ],
+  },
+  {
+    category: '3. Petite and tall are the same chart',
+    text: [
+      `Old Navy's women's bottoms chart has three tabs. Regular, petite and tall are identical: the same waist and the same hip at every size from 000 through 20. Not similar. The same numbers. Tops, outerwear and dresses does the same across its three tabs.`,
+      `There is no inseam anywhere on any women's chart, on any tab. So nothing published tells you how petite, regular and tall actually differ. The tabs change what the page is called and nothing else.`,
+      `That omission is deliberate enough to be strange. Old Navy's own measuring instructions include the inseam. It is measurement 4 of 5 in the women's set and 6 of 7 in the men's, with a diagram. They tell you how to measure the inside of your leg, and then never publish a leg length to compare it against, in either division.`,
+      `For comparison, within the same company: <a href="/size-guides/gap-size-chart-fit-guide/" class="${linkClass}">Gap's</a> women's bottoms chart also keeps regular's body measurements across its length variants, but it publishes five specific inseams (Petite 29, Short 30, Regular 31½, Long 33½, Tall 35½) so you can see what you're choosing. Banana Republic goes further and actually re-proportions its petite line, with a different waist and hip at the same size number.`,
+      `<strong>What to do:</strong> choose petite or tall by the product page's own inseam figure, which individual Old Navy items often list even though the size chart doesn't. Don't expect the size itself to fit differently.`,
+    ],
+  },
+  {
+    category: '4. Five small errors, and what they tell you',
+    text: [
+      `Because Old Navy's charts are copies of one another, they can be checked against one another. Five cells don't match:`,
+      {
+        ariaLabel: "Cells where Old Navy's own charts disagree",
+        minWidth: 560,
+        headers: ['Where', 'Says', 'Every other chart says'],
+        rows: [
+          ["Women's tops, tall tab, size 6 chest", '35', '35½'],
+          ["Women's bras, size 2 chest", '33¼', '33½'],
+          ["Women's underwear, size 24 hip", '56½', '56⅛'],
+          ["Women's robes, first column header", 'XSS', 'XXS'],
+          ["Men's tees, XXXXL arm length", '38 ¹⁄₁₂–39', '38½–39'],
+        ],
+        noteAfter: true,
+        note: `Both columns quote Old Navy as published. The reference tables further down carry the value the majority of charts agree on.`,
+      },
+      `Each is the odd one out against two or more agreeing charts, and each breaks a pattern that otherwise holds. Old Navy's chest grade steps a clean inch at a time through the small sizes, so the tall tab's 35 would step half an inch and then an inch and a half. The underwear figure breaks the constant hip-to-waist difference the plus range holds everywhere else (see finding 5). The men's one is the clearest: a twelfth of an inch is not a measurement anyone drafts a garment to, and every other figure in every Old Navy chart is expressed in halves, quarters or eighths.`,
+      `There is a sixth oddity that isn't a number. Men's shoes has two fit tabs, both labelled "shoes", containing identical tables.`,
+      `Five slips across fifteen tables is what hand-copying looks like. These charts are not generated from one source of truth; they are transcribed from each other, and the transcription is imperfect. The Sleeve-versus-Arm-Length split between outerwear and shirts points the same way: a generated chart would not call one measurement two names inside a single division. That's worth knowing before you treat any single cell as authoritative.`,
+    ],
+  },
+  {
+    category: '5. The chart changes body shape at size 16, without saying so',
+    text: [
+      `Subtract waist from hip and something becomes visible.`,
+      `From 000 through 14, the difference is <strong>exactly 10½ inches</strong> at every single size. Then it moves: 10¼ at size 16, 10 at size 18, and 9½ from size 20 onward, where it locks and holds at 9½ through 22, 24, 26, 28 and 30.`,
+      `So Old Navy is really working from three body models under one chart. A constant-difference range through 14, a three-size transition, and a plus range built on a shape a full inch straighter through the hip than the core sizes. Nothing on the page mentions this.`,
+      `<strong>What to do:</strong> if you're between 14 and 20, your usual relationship to the chart may not hold, because its assumptions about your proportions are changing across exactly that stretch. Measure rather than assume.`,
+    ],
+  },
+  {
+    category: '6. Two measurements Old Navy never explains',
+    text: [
+      `The belt chart is keyed to waist and <strong>high hip</strong>. The bra chart is keyed to chest and <strong>underbust</strong>. Neither high hip nor underbust appears in any other Old Navy chart, and neither appears in Old Navy's own measuring instructions, which cover chest, waist, hips/butt, inseam and foot and stop there.`,
+      `So two of the eight women's charts ask you to compare yourself against a measurement the brand never defines or shows you how to take. High hip is also not the same thing as the hips/butt figure used in bottoms: at size 12, bottoms gives 42 and belts gives 37½.`,
+      `Put beside finding 3, the pair is almost symmetrical. Old Navy explains how to measure an inseam and never publishes one. It publishes a high hip and an underbust and never explains how to measure either.`,
+      `<strong>What to do:</strong> high hip is conventionally taken around the upper hip, roughly where a belt sits, a few inches below the natural waist and above the fullest part of the seat. Underbust is taken snugly around the ribcage directly beneath the bust. Those are the standard readings, not Old Navy's. They don't say.`,
+    ],
+  },
+  {
+    category: '7. Old Navy and Gap sizes are not the same sizes',
+    text: [
+      `Both brands belong to Gap Inc. and use the same size-chart application. Their men's bottoms charts agree exactly at XXS, XS, S and M (26–27, 28–29, 30–31, 32–34) and then separate:`,
+      {
+        ariaLabel: "Gap and Old Navy men's bottoms waist compared",
+        minWidth: 460,
+        headers: ['Size', 'Gap waist', 'Old Navy waist'],
+        rows: [
+          ['S', '30–31', '30–31'],
+          ['M', '32–34', '32–34'],
+          ['L', '35–37', '36–38'],
+          ['XL', '38–41', '40–42'],
+          ['XXL', '42–45', '44–46'],
+        ],
+      },
+      `A 38-inch waist is an <strong>XL at Gap and an L at Old Navy</strong>. And Old Navy's first missing inch, 35, is the exact inch at which Gap opens its L.`,
+      `The women's side has a crossover. Against <a href="/size-guides/gap-size-chart-fit-guide/" class="${linkClass}">Gap's women's bottoms chart</a>, Old Navy runs half an inch smaller at the waist from size 00 through 12, meets Gap exactly at <strong>size 14</strong> (both 33½), and runs larger above it, reaching two and a half inches apart by size 20. So "I'm a 12 at Gap" and "I'm a 12 at Old Navy" mean slightly different bodies, and which direction the difference runs depends on which side of 14 you're on.`,
+      `Two smaller differences worth having: numeric size 000 is XXXS at Old Navy and XXS at Gap, and Old Navy's men's chest runs consistently larger than Gap's at the same letter, widening from one inch at M to three inches at XL.`,
+    ],
+  },
+];
+
+const charts: ConversionTable[] = [
+  {
+    heading: "Women's body measurements: the shared block",
+    note: `Eighth-inch measurements (46⅝, 56⅛, 53⅜) appear only in the plus range. Every other number in Old Navy's charts, and in the charts of all three sibling brands, works in halves and quarters. That's the kind of artifact you get when a range is converted or extrapolated separately rather than graded out from the same block.`,
+    noteAfter: true,
+    minWidth: 520,
+    headers: ['Size', 'Chest', 'Waist', 'Hips/Butt'],
+    rows: [
+      ['XXXS · 000', '—', '22¼', '32¾'],
+      ['XXS · 00', '31½', '24', '34½'],
+      ['XS · 0', '32½', '25', '35½'],
+      ['XS · 2', '33½', '26', '36½'],
+      ['S · 4', '34½', '27', '37½'],
+      ['S · 6', '35½', '28', '38½'],
+      ['M · 8', '36½', '29', '39½'],
+      ['M · 10', '37½', '30', '40½'],
+      ['L · 12', '39', '31½', '42'],
+      ['L · 14', '41', '33½', '44'],
+      ['XL · 16', '43½', '36¼', '46½'],
+      ['XL · 18', '46', '39', '49'],
+      ['XXL · 20', '48¾', '42', '51½'],
+      ['2X · 20', '48¾', '42', '51½'],
+      ['2X · 22', '51', '44¼', '53¾'],
+      ['3X · 24', '53⅜', '46⅝', '56⅛'],
+      ['3X · 26', '55¾', '49', '58½'],
+      ['4X · 28', '58¼', '51½', '61'],
+      ['4X · 30', '60¾', '54', '63½'],
+    ],
+  },
+  {
+    heading: 'Which rows each women’s category publishes',
+    note: `Bottoms is the only category that carries 000. Petite and tall stop at size 20 while regular runs to 30, so Old Navy's extended sizes exist in one length. Four cells depart from this women's block; a fifth departure appears in the men's charts. All five are listed in finding 4 above, and the master table carries the value that the majority of charts agree on.`,
+    noteAfter: true,
+    minWidth: 640,
+    headers: ['Category', 'Rows shown', 'Range', 'Fit tabs'],
+    rows: [
+      ['Bottoms', 'Waist, Hips/Butt', '000–30', 'regular, petite, tall'],
+      ['Tops, outerwear & dresses', 'Chest, Waist', '00–30', 'regular, petite, tall'],
+      ['Swim', 'Chest, Waist, Hips/Butt', '00–30', 'one'],
+      ['Robes', 'Chest, Waist', '00–30', 'one'],
+      ['Underwear', 'Waist, Hips/Butt', '00–30', 'one'],
+      ['Belts', 'Waist, High Hip', '00–30', 'one'],
+      ['Bras', 'Chest, Underbust', '00–30', 'one'],
+      ['Shoes', 'Foot Length', '5–11', 'one'],
+    ],
+  },
+  {
+    heading: "Women's belts",
+    note: `Belts are grouped by size band rather than by size: XS–S, M–L, XL–XXL, 2X–3X, 3X–4X. The bands overlap, so one numeric size can appear under two different band labels. Old Navy publishes this chart through size 30. Sizes above 20 are omitted here: the 2X–3X and 3X–4X bands repeat sizes 24 and 26, and the published figures through that overlap can't be read unambiguously. We'd rather show less than guess.`,
+    noteAfter: true,
+    minWidth: 420,
+    headers: ['Size', 'Waist', 'High Hip'],
+    rows: [
+      ['00', '24', '30'],
+      ['0', '25', '31'],
+      ['2', '26', '32'],
+      ['4', '27', '33'],
+      ['6', '28', '34'],
+      ['8', '29', '35'],
+      ['10', '30', '36'],
+      ['12', '31½', '37½'],
+      ['14', '33½', '39¾'],
+      ['16', '36¼', '42½'],
+      ['18', '39', '45½'],
+      ['20', '42', '48½'],
+    ],
+  },
+  {
+    heading: "Women's bras",
+    note: `Old Navy's own bra chart gives size 2 a chest of 33¼. Every other chart that carries a chest row gives 33½ at that size, and 33½ is the figure that fits the grade, so 33½ is what the table above shows. See finding 4.`,
+    noteAfter: true,
+    minWidth: 420,
+    headers: ['Size', 'Chest', 'Underbust'],
+    rows: [
+      ['00', '31½', '27¼'],
+      ['0', '32½', '28'],
+      ['2', '33½', '28¾'],
+      ['4', '34½', '29½'],
+      ['6', '35½', '30¼'],
+      ['8', '36½', '31'],
+      ['10', '37½', '31¾'],
+      ['12', '39', '33⅛'],
+      ['14', '41', '34⅞'],
+      ['16', '43½', '37'],
+      ['18', '46', '39⅛'],
+      ['20', '48¾', '41⅜'],
+      ['22', '51', '43⅜'],
+      ['24', '53⅜', '45⅜'],
+      ['26', '55¾', '47½'],
+      ['28', '58¼', '49¾'],
+      ['30', '60¾', '52¼'],
+    ],
+  },
+  {
+    heading: "Women's shoes",
+    note: 'Grouped S (5–6.5), M (7–8.5), L (9–10), XL (11).',
+    noteAfter: true,
+    minWidth: 820,
+    headers: ['Size', '5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '11'],
+    rows: [
+      ['Foot Length', '8¾', '9', '9¼', '9⅜', '9½', '9¾', '9⅞', '10', '10¼', '10⅜', '10⅞'],
+    ],
+  },
+  {
+    heading: "Men's tops: shirts and tees, regular",
+    note: `Old Navy's men's charts are drawn from two blocks, one for tops and one for bottoms. Shirts and tees publish identical charts.`,
+    minWidth: 520,
+    headers: ['Size', 'Neck', 'Arm Length', 'Chest'],
+    rows: [
+      ['XS', '13–13½', '31½–32', '36–37'],
+      ['S', '14–14½', '32½–33', '38–39'],
+      ['M', '15–15½', '33½–34', '40–42'],
+      ['L', '16–16½', '34½–35', '44–46'],
+      ['XL', '17–17½', '35½–36', '48–50'],
+      ['XXL', '18–18½', '36½–37', '51–53'],
+      ['XXXL', '19–19½', '37½–38', '55–57'],
+      ['XXXXL', '20½–21', '38½–39', '58–60'],
+    ],
+  },
+  {
+    heading: "Men's tops: shirts and tees, tall",
+    note: `Tall keeps the regular neck and chest at every size and adds one inch of arm length. That inch is not a tall-specific figure: M Tall's arm length is identical to regular L's, L Tall's to regular XL's, and so on up the chart. Tall is the regular sleeve column shifted one size.`,
+    noteAfter: true,
+    minWidth: 520,
+    headers: ['Size', 'Neck', 'Arm Length', 'Chest'],
+    rows: [
+      ['M Tall', '15–15½', '34½–35', '40–42'],
+      ['L Tall', '16–16½', '35½–36', '44–46'],
+      ['XL Tall', '17–17½', '36½–37', '48–50'],
+      ['XXL Tall', '18–18½', '37½–38', '51–53'],
+      ['XXXL Tall', '19–19½', '38½–39', '55–57'],
+      ['XXXXL Tall', '20½–21', '39½–40', '58–60'],
+    ],
+  },
+  {
+    heading: "Men's outerwear",
+    note: `Outerwear does not match shirts and tees. Its chest runs an inch larger at XXL (52–54) and XXXL (56–58), and it calls the same measurement Sleeve rather than Arm Length. Tall outerwear uses the tall sleeve figures (34½–35 through 39½–40). Old Navy also marks XS, XXXL and XXXXL as online exclusive sizes.`,
+    noteAfter: true,
+    minWidth: 680,
+    headers: ['Size', 'Neck', 'Sleeve', 'Chest (regular)', 'Chest (tall)'],
+    rows: [
+      ['XS', '13–13½', '31½–32', '36–37', '—'],
+      ['S', '14–14½', '32½–33', '38–39', '—'],
+      ['M', '15–15½', '33½–34', '40–42', '40–42'],
+      ['L', '16–16½', '34½–35', '44–46', '44–46'],
+      ['XL', '17–17½', '35½–36', '48–50', '48–50'],
+      ['XXL', '18–18½', '36½–37', '52–54', '52–54'],
+      ['XXXL', '19–19½', '37½–38', '56–58', '56–58'],
+      ['XXXXL', '20½–21', '38½–39', '58–60', '58–60'],
+    ],
+  },
+  {
+    heading: "Men's bottoms",
+    note: `Underwear publishes the same waist and hips figures from XS upward, with no XXS column. Belts publish the same waist row alone, XS through XXXXL. Old Navy publishes no inseam for men's bottoms.`,
+    noteAfter: true,
+    minWidth: 420,
+    headers: ['Size', 'Waist', 'Hips/Butt'],
+    rows: [
+      ['XXS', '26–27', '33–34'],
+      ['XS', '28–29', '35–36'],
+      ['S', '30–31', '37–38'],
+      ['M', '32–34', '39–40½'],
+      ['L', '36–38', '42–44'],
+      ['XL', '40–42', '45½–47½'],
+      ['XXL', '44–46', '49–51'],
+      ['XXXL', '48–50', '52½–54'],
+      ['XXXXL', '52–54', '55½–57'],
+    ],
+  },
+  {
+    heading: "Men's robes",
+    minWidth: 320,
+    headers: ['Size', 'Chest'],
+    rows: [
+      ['S/M', '38–42'],
+      ['L/XL', '44–50'],
+    ],
+  },
+  {
+    heading: "Men's shoes",
+    note: 'Grouped S (6–7), M (8–9), L (10–11), XL (12–13). No half sizes.',
+    noteAfter: true,
+    minWidth: 620,
+    headers: ['US Size', '6', '7', '8', '9', '10', '11', '12', '13'],
+    rows: [['Foot Length', '9⅜', '9¾', '10', '10⅜', '10⅝', '11', '11⅜', '11¾']],
+  },
+];
+
+const faqs = [
+  {
+    q: 'Does Old Navy run big or small?',
+    a: "Against its own sibling brand it runs both ways depending on where you are on the chart. Old Navy men's letter sizes cover larger waists than Gap's from L upward, so a Gap XL buyer may be an Old Navy L. On the women's side Old Navy is slightly smaller than Gap up to size 12 and larger from 16 up. There's no single answer, which is why the charts are worth reading rather than generalising from.",
+  },
+  {
+    q: "What's the difference between Old Navy's petite, regular and tall?",
+    a: 'Nothing that Old Navy publishes. All three tabs carry identical measurements in both bottoms and tops, and no inseam is given on any of them. Check the individual product page for its inseam.',
+  },
+  {
+    q: "Old Navy says I'm between two sizes. Which do I take?",
+    a: "Size up, particularly in men's bottoms. Old Navy's bands get wider as sizes increase, so the larger size has more room to absorb a between-sizes measurement, and waists are easier to take in than to let out.",
+  },
+  {
+    q: 'Is XXL the same as 2X at Old Navy?',
+    a: 'At size 20, yes. Every chart that reaches that size gives XXL 20 and 2X 20 the same measurements.',
+  },
+  {
+    q: 'Can I use my Gap size at Old Navy?',
+    a: "Only below M in men's and around size 14 in women's, where the two charts happen to agree. Outside those ranges they diverge, by as much as a full letter size in men's bottoms.",
+  },
+  {
+    q: 'Which waist does Old Navy mean?',
+    a: 'Your natural waist, in both divisions. Their instructions say to bend to one side and measure at the crease. That’s higher and smaller than where most men wear jeans, so your jeans size is not the number to look up.',
+  },
+  {
+    q: 'Why does the bra chart give a different chest measurement than the tops chart?',
+    a: 'At size 2 it does, 33¼ against 33½, and that appears to be an error in Old Navy’s chart rather than a real difference, since every other chart carrying a chest row says 33½. See finding 4.',
+  },
+];
+
+const related = [
+  { href: '/size-guides/gap-size-chart-fit-guide/', label: 'Gap size chart & fit guide' },
+  {
+    href: '/blog/petite-vs-regular-vs-tall/',
+    label: 'Petite vs. regular vs. tall, explained',
+  },
+  { href: '/size-guides/jeans-inseam-length-guide/', label: 'Jeans inseam & length guide' },
+];
+---
+
+<BrandGuide
+  brandKey="oldnavy"
+  brand="Old Navy"
+  title="Old Navy Size Chart & Fit Guide: What Their Own Charts Say"
+  description="Old Navy's size charts, transcribed from the source, plus what their own numbers reveal, including the waist sizes that have no size at all."
+  h1="Old Navy Size Chart & Fit Guide: What Their Own Charts Say"
+  chartsHeading="The charts"
+  standardCharts={false}
+  typicalCharts={charts}
+  fitSections={fitSections}
+  faqs={faqs}
+  related={related}
+>
+  <Fragment slot="verdict">
+    <p>
+      Old Navy publishes its size charts at a single address, and most of what you need to know
+      about them is visible only when you compare one chart against another.
+    </p>
+    <p class="mt-3">
+      We transcribed every Old Navy chart we could reach: eight women's categories, seven men's,
+      across all their fit tabs. Then we checked them against each other and against Gap's, since
+      both brands belong to Gap Inc. and run the same chart software. Seven things came out of it.
+      One of them means that if your waist measures 35 inches, Old Navy's men's chart does not list
+      a size for you.
+    </p>
+    <p class="mt-3">
+      Everything below comes from Old Navy's own charts. Where their numbers are incomplete or
+      contradict each other, we say so rather than filling the gap with a guess.
+    </p>
+  </Fragment>
+
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Every figure below was transcribed in August 2026 from <AffLink brand="oldnavy"
+        >Old Navy's own size-chart application</AffLink
+      >, and the Gap comparisons from Gap's equivalent charts, both reached through the brands' own
+      size-chart links. Nothing here comes from a third-party aggregator or from a reconstruction of
+      these charts elsewhere.
+    </p>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      All measurements are in inches, and they are body measurements rather than garment
+      measurements. Old Navy's eight women's charts are drawn from one set of numbers, so the first
+      table is that shared block and the second shows which rows and which range each category
+      actually publishes.
+    </p>
+  </Fragment>
+
+  <Fragment slot="charts-outro">
+    <h3 class="mt-10 text-lg font-semibold text-ink">How Old Navy tells you to measure</h3>
+    <p class="mt-2 leading-relaxed text-ink/85">
+      These are Old Navy's own instructions, from the measuring tips tab of their size-chart page.
+      They publish one set for women (five measurements) and one for men (seven), and the shared
+      ones are worded identically in both. Their general rule: hold the tape level with the floor,
+      neither tight nor loose.
+    </p>
+    <ul class="mt-4 list-disc space-y-2 pl-5 text-ink/85">
+      <li><strong>Chest:</strong> arms relaxed, measure around the fullest part.</li>
+      <li>
+        <strong>Waist:</strong> bend slightly to one side to find the crease, which is your natural
+        waist, and measure there.
+      </li>
+      <li>
+        <strong>Hips/butt:</strong> stand relaxed with feet shoulder-width apart, measure the fullest
+        part.
+      </li>
+      <li><strong>Inseam:</strong> the inside of the leg, crotch to ankle.</li>
+      <li>
+        <strong>Foot:</strong> stand on paper, mark behind the heel and in front of the longest toe,
+        measure between the marks.
+      </li>
+      <li><strong>Neck</strong> (men's only): around the base of the neck.</li>
+      <li>
+        <strong>Arm length</strong> (men's only): hand on hip, tape from the centre back of the neck
+        across the shoulder, around the elbow, to the wrist.
+      </li>
+    </ul>
+    <blockquote class="mt-5 rounded-xl border-l-4 border-plum/40 bg-white/60 px-4 py-3 text-ink/85">
+      <p class="leading-relaxed">
+        <strong>The waist instruction matters more than it looks.</strong> Old Navy sizes men's
+        bottoms by <em>natural</em> waist, not by where you wear your jeans. The natural waist sits
+        higher and measures smaller. So if you know yourself as a 34 in jeans, do not read the chart
+        at 34. Measure at the crease first, because that number is what the chart is built against,
+        and it will usually be lower.
+      </p>
+    </blockquote>
+    <p class="mt-5 leading-relaxed text-ink/85">
+      Old Navy gives instructions for measuring your inseam in both divisions and publishes no
+      inseam figure anywhere. It publishes high hip and underbust figures and gives no instructions
+      for either. See findings 3 and 6.
+    </p>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Where Old Navy's charts are silent on inseams, on the difference between petite and tall, on
+      how to measure a high hip or an underbust, or on why the plus range is graded differently,
+      this guide says they're silent rather than supplying a plausible number. Where two of Old
+      Navy's charts disagree, both figures are given.
+    </p>
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Size charts change. This page reflects the charts as published in August 2026; we re-check
+      them when we update. Our <a href="/how-to-measure/" class={linkClass}>measuring guide</a> covers
+      the general method in a few minutes.
+    </p>
+  </Fragment>
+
+  <Fragment slot="tips">
+    <li>
+      <strong>If you land between two men's sizes, size up:</strong> the bands above a gap are wider
+      than the bands below it, so the larger size has more room to absorb the difference, and trouser
+      waists are easier to take in than let out.
+    </li>
+    <li>
+      <strong>Measure at your natural waist, not your jeans waist:</strong> Old Navy's charts are built
+      against the higher, smaller reading, in both divisions, and their own instructions say to find
+      the crease first.
+    </li>
+    <li>
+      <strong>Choose petite or tall from the product page's inseam, not the size chart:</strong> all
+      three tabs carry identical measurements, so the tab itself tells you nothing about length.
+    </li>
+    <li>
+      <strong>Between sizes 14 and 20, measure rather than assume:</strong> the chart's hip-to-waist
+      difference changes across exactly that stretch, from 10½ inches down to 9½.
+    </li>
+    <li>
+      <strong>Don't read your Gap size across:</strong> a 38-inch waist is an XL at Gap and an L at Old
+      Navy, and on the women's side the two charts cross over at size 14.
+    </li>
+  </Fragment>
+</BrandGuide>
