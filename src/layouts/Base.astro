@@ -1,4 +1,6 @@
 ---
+import Analytics from '@vercel/analytics/astro';
+
 export interface Breadcrumb {
   /** Visible name for this step of the trail, e.g. "Size Guides". */
   name: string;
@@ -156,5 +158,6 @@ const nav = [
         </div>
       </div>
     </footer>
+    <Analytics />
   </body>
 </html>

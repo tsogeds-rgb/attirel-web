@@ -298,4 +298,42 @@ const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?
   </article>
 
   {faqs.length > 0 && <script type="application/ld+json" set:html={faqJsonLd} is:inline />}
+
+  <script>
+    // Campaign analytics for guide pages: CTA clicks and scroll depth.
+    // Runs only where BrandGuide renders (the brand guides), so these events
+    // are inherently scoped to guides.
+    import { track } from '@vercel/analytics';
+
+    const guide =
+      window.location.pathname.replace(/^\/size-guides\//, '').replace(/\/+$/, '') ||
+      window.location.pathname;
+
+    document.querySelectorAll('[data-va="size-check-cta"]').forEach((el) => {
+      el.addEventListener('click', () => track('guide_size_check_cta', { guide }));
+    });
+    document.querySelectorAll('[data-va="app-cta"]').forEach((el) => {
+      el.addEventListener('click', () => track('guide_app_cta', { guide }));
+    });
+
+    const thresholds = [25, 50, 75, 100];
+    const fired = new Set();
+    const onScroll = () => {
+      const doc = document.documentElement;
+      // Skip pages that don't scroll, so a short page can't fire every threshold at once.
+      if (doc.scrollHeight <= window.innerHeight + 4) return;
+      const seen = window.scrollY + window.innerHeight;
+      const pct = (seen / doc.scrollHeight) * 100;
+      for (const t of thresholds) {
+        const reached = t === 100 ? seen >= doc.scrollHeight - 2 : pct >= t;
+        if (reached && !fired.has(t)) {
+          fired.add(t);
+          track('guide_scroll_depth', { guide, depth: t });
+        }
+      }
+      if (fired.size === thresholds.length) window.removeEventListener('scroll', onScroll);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script>
 </Base>
