@@ -138,6 +138,15 @@ const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?
       <div class="mt-2 text-ink/85"><slot name="verdict" /></div>
     </div>
 
+    {Astro.slots.has('method') && (
+      <>
+        <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
+          How to pick a Skechers size, in order
+        </h2>
+        <slot name="method" />
+      </>
+    )}
+
     {fitSections.length > 0 && (
       <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
         {fitSectionsHeading ?? `How ${brand} fits by category`}
