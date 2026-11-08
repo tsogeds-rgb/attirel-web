@@ -102,6 +102,7 @@ const nav = [
         </nav>
         <a
           href="https://attirel.ai"
+          data-app-cta="header"
           class="rounded-full bg-plum px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-plum-dark"
         >
           Try the App
@@ -159,5 +160,19 @@ const nav = [
       </div>
     </footer>
     <Analytics />
+
+    <script>
+      // "Try the App" / "Try Attirel Free" CTA clicks, tagged by where they
+      // sit. Same pattern as the guide analytics in BrandGuide: each CTA
+      // carries data-app-cta="<placement>" and reports it as the event prop.
+      import { track } from '@vercel/analytics';
+
+      document.querySelectorAll('[data-app-cta]').forEach((el) => {
+        el.addEventListener('click', () => {
+          const placement = el.getAttribute('data-app-cta');
+          if (placement) track('app_cta_clicked', { placement });
+        });
+      });
+    </script>
   </body>
 </html>
