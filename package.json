@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync-brands": "node --env-file-if-exists=.env scripts/sync-brands.ts",
+    "test": "node --test src/lib/brandSnapshot.test.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",

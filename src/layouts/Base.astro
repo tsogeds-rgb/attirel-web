@@ -1,5 +1,6 @@
 ---
 import Analytics from '@vercel/analytics/astro';
+import { brandNames, formatBrandList } from '../lib/supportedBrands';
 
 export interface Breadcrumb {
   /** Visible name for this step of the trail, e.g. "Size Guides". */
@@ -127,7 +128,7 @@ const nav = [
               <img src="/logo-header.png" alt="Attirel" class="h-8 w-auto" />
             </a>
             <p class="mt-2 text-sm text-smoke">
-              Your size at Old Navy, Gap and Athleta, from the brands' own charts.
+              Your size at {formatBrandList(brandNames)}, from the brands' own charts.
             </p>
           </div>
           <div class="flex gap-12 text-sm">

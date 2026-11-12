@@ -6,6 +6,7 @@ import AppCTA from './AppCTA.astro';
 import { womensClothing, mensClothing } from '../config/sizeConversions';
 import type { ConversionTable } from '../config/sizeConversions';
 import { affiliateLinks } from '../config/affiliateLinks';
+import { brands, brandNames, formatBrandList } from '../lib/supportedBrands';
 
 /**
  * A table rendered inline within a fitSection's prose (e.g. a fit comparison,
@@ -123,12 +124,12 @@ const standardTables: ConversionTable[] = standardCharts ? [womensClothing, mens
 
 const heading = h1 ?? `${brand} Size Chart & Fit Guide: Does ${brand} Run Small?`;
 
-// The size checker only covers the three Gap Inc. brands it has verified. On a
-// guide for one of them, the callout speaks directly; on any other brand's
-// guide it leads honestly with "too?", since we don't give a size for the brand
-// this page is about.
-const checkerBrandKeys = ['oldnavy', 'gap', 'athleta'];
-const isCheckerBrand = checkerBrandKeys.includes(brandKey);
+// The size checker only covers the brands Attirel has verified, derived from
+// the retailers table (see src/lib/supportedBrands). On a guide for one of
+// them, the callout speaks directly; on any other brand's guide it leads
+// honestly with "too?", since we don't give a size for the brand this page is
+// about.
+const isCheckerBrand = brands.some((b) => b.slug === brandKey);
 ---
 
 <Base title={title} description={description} ogType="article" breadcrumbs={breadcrumbTrail}>
@@ -157,14 +158,14 @@ const isCheckerBrand = checkerBrandKeys.includes(brandKey);
     <div class="mt-6 rounded-xl bg-plum-light p-5 leading-relaxed text-ink/85">
       <p>
         <strong class="text-plum">
-          {isCheckerBrand ? 'Skip the arithmetic.' : 'Shopping Old Navy, Gap or Athleta too?'}
+          {isCheckerBrand ? 'Skip the arithmetic.' : `Shopping ${formatBrandList(brandNames, 'or')} too?`}
         </strong>
         Enter your measurements once at <a
           href="https://www.attirel.ai/size-check"
           data-va="size-check-cta"
           class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum"
           >attirel.ai/size-check</a
-        > and Attirel matches you to your size at Old Navy, Gap and Athleta, read from each brand's
+        > and Attirel matches you to your size at {formatBrandList(brandNames)}, read from each brand's
         own published chart.
       </p>
     </div>

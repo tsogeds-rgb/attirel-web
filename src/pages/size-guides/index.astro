@@ -1,5 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { brandNames, formatBrandList } from '../../lib/supportedBrands';
+
+const supported = formatBrandList(brandNames);
 
 interface GuideCard {
   href: string;
@@ -162,7 +165,7 @@ const referenceGuides: GuideCard[] = [
     <div class="mt-14 rounded-3xl bg-plum px-8 py-12 text-center text-white">
       <h2 class="font-display text-2xl font-semibold">Or skip the charts entirely.</h2>
       <p class="mx-auto mt-3 max-w-md text-white/80">
-        Attirel knows how Old Navy, Gap and Athleta run and matches sizes to your measurements from their own charts.
+        Attirel knows how {supported} run and matches sizes to your measurements from their own charts.
       </p>
       <a
         href="https://www.attirel.ai"
