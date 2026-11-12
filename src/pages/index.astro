@@ -1,10 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import { brandNames, formatBrandList } from '../lib/supportedBrands';
+
+const supported = formatBrandList(brandNames);
 
 const features = [
   {
     title: 'Your measurements, once',
-    body: 'Add your measurements a single time with our guided tutorial. Attirel remembers them and does the size math at Old Navy, Gap and Athleta, from their own charts.',
+    body: `Add your measurements a single time with our guided tutorial. Attirel remembers them and does the size math at ${supported}, from their own charts.`,
   },
   {
     title: 'Fit scores from the brands’ own charts',
@@ -42,7 +45,7 @@ const guides = [
 
 <Base
   title="Attirel: Never Order the Wrong Size Again"
-  description="Attirel matches your exact measurements to the right size at Old Navy, Gap and Athleta, from the brands' own charts — a fit score against each brand's published numbers, for the brands we've verified."
+  description={`Attirel matches your exact measurements to the right size at ${supported}, from the brands' own charts — a fit score against each brand's published numbers, for the brands we've verified.`}
 >
   <!-- Hero -->
   <section class="mx-auto max-w-6xl px-5 pb-20 pt-16 text-center md:pt-24">
@@ -50,7 +53,7 @@ const guides = [
       Never order the wrong size again.
     </h1>
     <p class="mx-auto mt-6 max-w-2xl text-lg text-smoke md:text-xl">
-      Attirel matches your exact measurements to the right size at Old Navy, Gap and Athleta,
+      Attirel matches your exact measurements to the right size at {supported},
       from the brands’ own charts — a fit score against published numbers, not a guess.
     </p>
     <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -108,7 +111,7 @@ const guides = [
       </h2>
       <p class="mx-auto mt-4 max-w-xl text-white/80">
         Add your measurements once and let Attirel size you against the brands’ own charts —
-        Old Navy, Gap and Athleta, with more as we verify them.
+        {supported}, with more as we verify them.
       </p>
       <a
         href="https://attirel.ai"

@@ -1,4 +1,6 @@
 ---
+import { brandNames, formatBrandList } from '../lib/supportedBrands';
+
 interface Props {
   brand?: string;
   heading?: string;
@@ -10,7 +12,7 @@ const { heading, body } = Astro.props;
 const resolvedHeading = heading ?? 'Skip the guesswork.';
 const resolvedBody =
   body ??
-  'Attirel matches your exact measurements to the right size at Old Navy, Gap and Athleta, from their own charts — more brands as we verify them.';
+  `Attirel matches your exact measurements to the right size at ${formatBrandList(brandNames)}, from their own charts — more brands as we verify them.`;
 ---
 
 <div class="mt-12 rounded-3xl bg-plum px-8 py-12 text-center text-white">

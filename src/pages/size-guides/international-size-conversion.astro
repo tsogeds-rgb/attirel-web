@@ -8,6 +8,9 @@ import {
   womensShoes,
   mensShoes,
 } from '../../config/sizeConversions';
+import { brandNames, formatBrandList } from '../../lib/supportedBrands';
+
+const supported = formatBrandList(brandNames);
 
 const tables = [womensClothingIntl, mensClothingIntl, womensShoes, mensShoes];
 
@@ -147,7 +150,7 @@ const faqJsonLd = JSON.stringify({
     </div>
 
     <AppCTA
-      body="Attirel converts your exact measurements into the right size in any system (US, UK, EU, and beyond) at Old Navy, Gap and Athleta, from their own charts — more brands as we verify them."
+      body={`Attirel converts your exact measurements into the right size in any system (US, UK, EU, and beyond) at ${supported}, from their own charts — more brands as we verify them.`}
     />
   </article>
 
