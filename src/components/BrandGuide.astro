@@ -149,7 +149,7 @@ const isCheckerBrand = brands.some((b) => b.slug === brandKey);
     {Astro.slots.has('method') && (
       <>
         <h2 class="mt-12 font-display text-2xl font-semibold tracking-tight">
-          How to pick a Skechers size, in order
+          How to pick {`a${/^[AEIOU]/i.test(brand) ? 'n' : ''}`} {brand} size, in order
         </h2>
         <slot name="method" />
       </>

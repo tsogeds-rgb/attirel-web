@@ -3,74 +3,263 @@ import BrandGuide from '../../components/BrandGuide.astro';
 import AffLink from '../../components/AffLink.astro';
 import type { ConversionTable } from '../../config/sizeConversions';
 
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
+
+const fitSections = [
+  {
+    category: 'One body chart for every letter-sized women’s garment',
+    text: [
+      `H&amp;M's US site has no standalone size-guide page, which is why so many guides (ours included, until November 2026) rebuilt it from regional sites. But the <strong>Size guide</strong> link on every product page opens a brand-wide chart, not a per-product one: open it on a sequined top, a plain black shirt and a quilted vest and you get the same table, cell for cell. Tops, blouses, jackets and dresses all share a single chest / waist / low-hip chart, XXS to 4XL. Dresses add one row for inside-leg length (for jumpsuits); everything else is identical.`,
+      `The chart is drafted in centimetres. The inch rows are rounded conversions and they don't always agree with each other: the XXL low hip reads 47½–50½ in while its centimetre range (120.5–131) converts to 47½–51½, and 3XL picks up at 51½. Measure in centimetres and read the centimetre row; the inches are a courtesy.`,
+      `The letter bands are wide. S covers a 66–74 cm waist, M 74–82.5, L 82.5–93, so a letter size is a band of 8–11 cm, and two body shapes that both "are a Medium" can be nearly a full size apart in the fabric. The bands also touch rather than overlap — 74 is the top of S and the bottom of M — so if your waist sits exactly on a boundary, your chest or hip decides.`,
+    ],
+  },
+  {
+    category: 'Women’s bottoms are numeric, and each size has its own row',
+    text: [
+      `Jeans and trousers use US numeric sizes 0 to 30 (EUR 32 to 62), and unlike the letter chart every size gets its own waist, low hip and inside-leg figure. That makes bottoms the easiest H&amp;M category to size from a tape measure: a 74–78 cm waist is a size 8, no interpretation needed. The grade is 4 cm per size up to size 10 and widens to 5–7 cm from size 12 up.`,
+      `Inside leg is one number per size, not a length choice — 76–78 cm (about 30–30¾ in) in the regular range, drifting slightly shorter as sizes go up. If you need a shorter leg, that is what the petite tab is for; there is no tall tab on the US site.`,
+    ],
+  },
+  {
+    category: 'Petite changes the hip and the leg, not the waist',
+    text: [
+      `H&amp;M's petite tab is not just "shorter". Chest and waist match the regular chart almost exactly (XXS/P chest starts at 74 cm rather than 75; everything else is identical), but the <strong>low hip is 3–4 cm smaller at every size</strong> and the inside leg drops from 76–78 cm to 71–73 cm. So a petite 8 is a regular 8 at the waist, a slightly smaller hip, and about 5 cm less leg. If your waist fits the regular chart but your hip reads a size down, petite may be the better match even at average height.`,
+      `Maternity drops the waist row and keeps the regular chest and hip figures.`,
+    ],
+  },
+  {
+    category: 'Men’s trousers come in two lengths with the same waist',
+    text: [
+      `Men's trousers are numeric 26 to 50 (plus a 33), and H&amp;M's size selector labels each one <strong>R</strong> or <strong>L</strong> — 32R, 32L. The Regular and Long tabs of the size guide have identical waist and low-hip rows; only inside leg changes, by exactly 4 cm at every size (R 80.5–85.5 cm, L 84.5–89.5 cm). Pick the waist from your measurement, then the letter from your inseam: under about 84 cm, R; over about 86 cm, L; between, either.`,
+      `Men's letter sizes (XS–3XL) map onto the numeric grid two sizes per letter: M is 38–40, L is 42–44, and so on. EUR trouser sizes are US + 14; EUR top sizes are US + 10.`,
+    ],
+  },
+  {
+    category: 'Men’s tops: the Long tab is arm length only',
+    text: [
+      `Shirts, T-shirts, jackets and blazers share one chart, XS to 3XL, with chest, waist, arm length and neckline. The Regular and Long tabs have the same chest, waist and neck; Long adds 3 cm of sleeve. Chest bands are 8 cm wide (M is 94–102 cm) and the waist bands widen with size, from 8 cm at XS to 9 cm at L and above.`,
+    ],
+  },
+  {
+    category: 'Shoes: whole sizes for women, a thinned ladder for men',
+    text: [
+      `Women's shoes run 3 to 11 in whole sizes only — no halves — with a 0.6–0.7 cm step between each (US 7 is 24.3 cm, US 8 is 25.0). If your foot lands between two sizes you are choosing between about 3 mm short and 3 mm long, so measure carefully and lean long.`,
+      `Men's shoes run 6 to 13 but skip 6.5, 8, 9.5, 11 and 12.5, so the ladder is 6, 7, 7.5, 8.5, 9, 10, 10.5, 11.5, 12, 13 — a mix of whole and half steps that doesn't follow a pattern. Go by the centimetre figure on the product page rather than by the size you wear elsewhere.`,
+    ],
+  },
+];
+
+const cm = (lo: number, hi?: number) => (hi === undefined ? `${lo} cm` : `${lo}–${hi} cm`);
+
 const charts: ConversionTable[] = [
   {
-    heading: 'H&M women’s',
-    note: 'H&M states single-point centimetre values, two EUR sizes per letter; the inch figures are converted from those. The chart continues to 4XL (EUR 60 / 62). The gaps between letters (for example bust 96 to 100 cm between M and L) are inherent to H&M’s chart, not omissions.',
+    heading: 'H&M women’s — tops, outerwear and dresses',
+    note: 'H&M’s own centimetre figures, regular tab, captured 12 November 2026 from the size-guide drawer on the US site. Hip is measured at the low hip. Dresses share this chart and add an inside-leg row (76–78 cm regular) for jumpsuits.',
     noteAfter: true,
-    minWidth: 860,
-    headers: ['Size', 'EUR', 'US', 'UK', 'Bust', 'Waist', 'Seat'],
+    minWidth: 640,
+    headers: ['Size', 'US', 'EUR', 'Chest', 'Waist', 'Low hip'],
     rows: [
-      ['XS', '32 / 34', '2 / 4', '6 / 8', '76 / 80 cm (29.9 / 31.5")', '60 / 64 cm (23.6 / 25.2")', '84 / 88 cm (33.1 / 34.6")'],
-      ['S', '36 / 38', '6 / 8', '10 / 12', '84 / 88 cm (33.1 / 34.6")', '68 / 72 cm (26.8 / 28.3")', '92 / 96 cm (36.2 / 37.8")'],
-      ['M', '40 / 42', '10 / 12', '14 / 16', '92 / 96 cm (36.2 / 37.8")', '76 / 80 cm (29.9 / 31.5")', '100 / 104 cm (39.4 / 40.9")'],
-      ['L', '44 / 46', '14 / 16', '18 / 20', '100 / 104 cm (39.4 / 40.9")', '84 / 88 cm (33.1 / 34.6")', '108 / 112 cm (42.5 / 44.1")'],
-      ['XL', '48 / 50', '18 / 20', '22 / 24', '110 / 116 cm (43.3 / 45.7")', '94 / 100 cm (37.0 / 39.4")', '117 / 122 cm (46.1 / 48.0")'],
-      ['2XL', '52 / 54', '22 / 24', '26 / 28', '122 / 128 cm (48.0 / 50.4")', '106 / 112 cm (41.7 / 44.1")', '127 / 132 cm (50.0 / 52.0")'],
+      ['XXS', '0', '32', cm(75, 78), cm(62, 64), cm(82, 86)],
+      ['XS', '2', '34', cm(78, 82), cm(64, 66), cm(86, 90)],
+      ['S', '4–6', '36–38', cm(82, 90), cm(66, 74), cm(90, 97.5)],
+      ['M', '8–10', '40–42', cm(90, 98), cm(74, 82.5), cm(97.5, 103.5)],
+      ['L', '12–14', '44–46', cm(98, 107), cm(82.5, 93), cm(103.5, 110.5)],
+      ['XL', '16–18', '48–50', cm(107, 119), cm(93, 105), cm(110.5, 120.5)],
+      ['XXL', '20–22', '52–54', cm(119, 131), cm(105, 117.5), cm(120.5, 131)],
+      ['3XL', '24–26', '56–58', cm(131, 143), cm(117.5, 131.5), cm(131, 143)],
+      ['4XL', '28–30', '60–62', cm(143, 155), cm(131.5, 145.5), cm(143, 155)],
     ],
   },
   {
-    heading: 'H&M men’s',
-    headers: ['Size', 'US/UK', 'EU', 'Chest', 'Waist'],
+    heading: 'H&M women’s — jeans and trousers',
+    note: 'Regular tab. Petite sizes (0P–30P) keep the same waist, with low hip 3–4 cm smaller and inside leg 71–73 cm.',
+    noteAfter: true,
+    minWidth: 600,
+    headers: ['US', 'EUR', 'Waist', 'Low hip', 'Inside leg'],
     rows: [
-      ['XS', '32–34', '42–44', '32–34"', '26–28"'],
-      ['S', '34–36', '44–46', '34–36"', '28–30"'],
-      ['M', '38–40', '48–50', '38–40"', '32–33"'],
-      ['L', '42–44', '52–54', '42–44"', '34–36"'],
-      ['XL', '46–48', '56–58', '46–48"', '38–40"'],
+      ['0', '32', cm(62, 64), cm(82, 86), cm(76)],
+      ['2', '34', cm(64, 66), cm(86, 90), cm(76.5)],
+      ['4', '36', cm(66, 70), cm(90, 94), cm(77.5)],
+      ['6', '38', cm(70, 74), cm(94, 97.5), cm(78)],
+      ['8', '40', cm(74, 78), cm(97.5, 100.5), cm(78)],
+      ['10', '42', cm(78, 82.5), cm(100.5, 103.5), cm(77.5)],
+      ['12', '44', cm(82.5, 87.5), cm(103.5, 106.5), cm(77.5)],
+      ['14', '46', cm(87.5, 93), cm(106.5, 110.5), cm(77)],
+      ['16', '48', cm(93, 99), cm(110.5, 115.5), cm(77)],
+      ['18', '50', cm(99, 105), cm(115.5, 120.5), cm(77)],
+      ['20', '52', cm(105, 111), cm(120.5, 125.5), cm(76.5)],
+      ['22', '54', cm(111, 117.5), cm(125.5, 131), cm(76.5)],
+      ['24', '56', cm(117.5, 124.5), cm(131, 137), cm(76)],
+      ['26', '58', cm(124.5, 131.5), cm(137, 143), cm(76)],
+      ['28', '60', cm(131.5, 138.5), cm(143, 149), cm(76)],
+      ['30', '62', cm(138.5, 145.5), cm(149, 155), cm(75.5)],
     ],
   },
+  {
+    heading: 'H&M men’s — tops, shirts, jackets and blazers',
+    note: 'Regular tab. The Long tab is identical except arm length, which is 3 cm longer at every size.',
+    noteAfter: true,
+    minWidth: 680,
+    headers: ['Size', 'US', 'EUR', 'Chest', 'Waist', 'Arm', 'Neck'],
+    rows: [
+      ['XS', '30–32', '40–42', cm(78, 86), cm(66, 74), cm(62), cm(34, 35)],
+      ['S', '34–36', '44–46', cm(86, 94), cm(74, 82), cm(62, 63), cm(36, 37)],
+      ['M', '38–40', '48–50', cm(94, 102), cm(82, 90), cm(63, 64), cm(38, 39)],
+      ['L', '42–44', '52–54', cm(102, 110), cm(90, 98.5), cm(64, 65), cm(40, 41)],
+      ['XL', '46–48', '56–58', cm(110, 118), cm(98.5, 107.5), cm(65, 65.5), cm(42, 43)],
+      ['XXL', '50–52', '60–62', cm(118, 126), cm(107.5, 116.5), cm(65.5, 66), cm(44, 45)],
+      ['3XL', '54–56', '64–66', cm(126, 134), cm(116.5, 125.5), cm(66), cm(46, 47)],
+    ],
+  },
+  {
+    heading: 'H&M men’s — trousers',
+    note: 'Waist and low hip are the same on the R and L tabs; only inside leg differs. US 33 pairs with EUR 48 on H&M’s chart.',
+    noteAfter: true,
+    minWidth: 680,
+    headers: ['US', 'EUR', 'Waist', 'Low hip', 'Inside leg R', 'Inside leg L'],
+    rows: [
+      ['26', '40', cm(66, 70), cm(85.5, 88.5), cm(80.5), cm(84.5)],
+      ['28', '42', cm(70, 74), cm(88.5, 91.5), cm(81), cm(85)],
+      ['30', '44', cm(74, 78), cm(91.5, 94.5), cm(81.5), cm(85.5)],
+      ['32', '46', cm(78, 82), cm(94.5, 97.5), cm(82), cm(86)],
+      ['33', '48', cm(82, 86), cm(97.5, 100.5), cm(82.5), cm(86.5)],
+      ['34', '50', cm(86, 90), cm(100.5, 103.5), cm(83), cm(87)],
+      ['36', '52', cm(90, 94), cm(103.5, 106.5), cm(83.5), cm(87.5)],
+      ['38', '54', cm(94, 98.5), cm(106.5, 109.5), cm(84), cm(88)],
+      ['40', '56', cm(98.5, 103), cm(109.5, 112.5), cm(84.25), cm(88.25)],
+      ['42', '58', cm(103, 107.5), cm(112.5, 115.5), cm(84.5), cm(88.5)],
+      ['44', '60', cm(107.5, 112), cm(115.5, 118.5), cm(84.75), cm(88.75)],
+      ['46', '62', cm(112, 116.5), cm(118.5, 121.5), cm(85), cm(89)],
+      ['48', '64', cm(116.5, 121), cm(121.5, 124.5), cm(85.25), cm(89.25)],
+      ['50', '66', cm(121, 125.5), cm(124.5, 127.5), cm(85.5), cm(89.5)],
+    ],
+  },
+  {
+    heading: 'H&M shoes — foot length',
+    note: 'Women’s sizes are whole sizes only. Men’s 11.5 and 12 both show 11½ in on H&M’s chart; the centimetre figures differ.',
+    noteAfter: true,
+    minWidth: 560,
+    headers: ['Women’s US', 'EUR', 'Foot length', 'Men’s US', 'EUR', 'Foot length'],
+    rows: [
+      ['3', '34', cm(21.6), '6', '38', cm(24.3)],
+      ['4', '35', cm(22.3), '7', '39', cm(25)],
+      ['5', '36', cm(23), '7.5', '40', cm(25.6)],
+      ['6', '37', cm(23.6), '8.5', '41', cm(26.3)],
+      ['7', '38', cm(24.3), '9', '42', cm(26.9)],
+      ['8', '39', cm(25), '10', '43', cm(27.6)],
+      ['9', '40', cm(25.6), '10.5', '44', cm(28.3)],
+      ['10', '41', cm(26.3), '11.5', '45', cm(29)],
+      ['11', '42', cm(26.9), '12', '46', cm(29.5)],
+      ['—', '', '', '13', '47', cm(30)],
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: 'Does H&M run small?',
+    a: 'Not by its chart. H&M’s published bands are standard for a European high-street brand, and the measurements above are generous rather than tight: a US 8 covers a 74–78 cm (29–30¾ in) waist. What reads as “small” is usually the Divided line, which is cut for a younger, slimmer frame, or a slim-fit style within a letter band that is 8–11 cm wide. Buy from your measurement, not from the size you wear at another brand.',
+  },
+  {
+    q: 'Where is H&M’s size chart? I can’t find it on the US site.',
+    a: 'There is no standalone size-guide page on hm.com/en_us. The chart is behind the “Size guide” link on every product page, and it is the same brand-wide table on every product in a category. The tables on this page are transcribed from that drawer.',
+  },
+  {
+    q: 'Which H&M size am I if my waist and hip land in different letters?',
+    a: 'For a top or dress, chest decides first, then hip; for a jumpsuit or anything fitted through the hip, go with the hip and expect the waist to be roomy. For bottoms you don’t have to choose: each numeric size has its own waist and hip row, so pick the size whose waist contains yours and check its hip. If your hip reads a full size smaller than your waist, look at the petite tab, which keeps the waist and trims the hip.',
+  },
+  {
+    q: 'What is the difference between H&M Regular and Long in men’s trousers?',
+    a: 'Only the inside leg: Long is 4 cm longer at every size, with the same waist and low hip. Choose the waist number from your measurement, then R if your inseam is under about 84 cm (33 in) and L if it is over about 86 cm (34 in).',
+  },
+  {
+    q: 'How do H&M EUR sizes convert to US?',
+    a: 'For women’s letter sizes, each letter spans two EUR sizes (M is EUR 40–42, US 8–10). Women’s numeric bottoms are EUR = US + 32. Men’s tops are EUR = US + 10 (US 42 chest = EUR 52); men’s trousers are EUR = US + 14 (US 32 waist = EUR 46).',
+  },
+];
+
+const related = [
+  { href: '/size-guides/uniqlo-size-chart-fit-guide/', label: 'Uniqlo size chart & fit guide' },
+  { href: '/size-guides/zara/', label: 'Zara size guide' },
+  { href: '/size-guides/gap-size-chart-fit-guide/', label: 'Gap size chart & fit guide' },
+  { href: '/how-to-measure/', label: 'How to measure yourself' },
 ];
 ---
 
 <BrandGuide
   brandKey="hm"
   brand="H&M"
-  title="H&M Size Guide — Is H&M True to Size? (Charts & Tips) | Attirel"
-  description="H&M is generally true to size with a standard European fit. Full H&M size charts for women and men with US, UK, and EU conversions, plus fitting tips."
-  h1="H&M Size Guide"
+  title="H&M Size Chart & Fit Guide: Women’s, Men’s and Shoes in cm | Attirel"
+  description="H&M’s own size chart in centimetres, transcribed from the US site: women’s XXS–4XL and jeans 0–30, men’s XS–3XL and trousers 26–50 in R and L, shoes. What petite changes, where the letter bands are wide, and how to read it."
+  h1="H&M Size Chart & Fit Guide"
   standardCharts={false}
+  chartsHeading="H&M’s size charts, in centimetres"
   typicalCharts={charts}
-  fitSections={[]}
-  faqs={[]}
-  related={[]}
+  fitSections={fitSections}
+  fitSectionsHeading="How H&M’s chart actually works"
+  faqs={faqs}
+  related={related}
+  breadcrumbs
 >
   <Fragment slot="verdict">
-    <strong>Mostly yes — H&amp;M is generally true to size</strong> with a standard European
-    fit. Basics and everyday lines fit as labelled for most shoppers. The main caveats: the
-    Divided (youth) line runs a size small, and some fashion-line pieces cut slimmer than the
-    basics, so check the product page's fit notes.
+    <p>
+      H&amp;M's chart is honest and wide. Letter sizes span 8–11 cm at the waist, so "true to
+      size" depends on where in the band you land; numeric jeans and trousers have a row per
+      size and are far easier to get right. Measure in centimetres and read the centimetre row
+      — the inch rows are rounded and in two places don't match.
+    </p>
+  </Fragment>
+  <Fragment slot="method">
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Measure chest, waist and low hip in centimetres.</strong> H&amp;M measures the hip
+        at its widest point (the "low hip"), not at the hip bone. Our <a
+          href="/how-to-measure/"
+          class={linkClass}>measuring guide</a
+        > shows where.
+      </li>
+      <li>
+        <strong>For tops and dresses, find the letter whose chest band contains you,</strong> then
+        check that your waist and hip fall in the same band. If they don't, the garment's cut
+        decides which one matters: a shirt is bought on chest, a fitted dress on hip.
+      </li>
+      <li>
+        <strong>For jeans and trousers, use the numeric chart</strong> and pick the size whose waist
+        range contains yours. Men: then choose R or L from your inseam.
+      </li>
+      <li>
+        <strong>If your hip reads a size smaller than your waist, check petite</strong> — it
+        keeps the regular waist and takes 3–4 cm off the hip.
+      </li>
+      <li>
+        <strong>Shoes: go by foot length in centimetres</strong> and round up if you are between
+        sizes; women's have no half sizes.
+      </li>
+    </ol>
   </Fragment>
   <Fragment slot="charts-intro">
     <p class="mt-3 leading-relaxed text-ink/85">
-      The women's chart below is drawn from <AffLink
-        brand="hm"
-        href="https://www.hm.com/xk/customer-service/sizeguide/ladies/"
-        >H&amp;M's published size guide on its Kosovo regional site</AffLink
-      > (captured August 2026), which still hosts the full tables and states centimetre values;
-      the inches are converted from those. H&amp;M's US and Canadian sites no longer publish a
-      brand-level size guide and instead direct shoppers to the measurements on each product page.
-      The men's chart predates that verification and keeps its original figures pending the same
-      check. Fit still varies between styles, so check the size guide on the product page before
-      you order.
+      Every figure below is H&amp;M's own, transcribed on 12 November 2026 from the size-guide
+      drawer on <AffLink brand="hm" href="https://www2.hm.com/en_us/">hm.com's US product
+        pages</AffLink
+      >, which show the same brand-wide table on every product in a category. We load only
+      the centimetre rows, because the inch rows are H&amp;M's rounded conversions and do not
+      always agree with them. Petite, maternity and the men's Long-sleeve tab are described in
+      the sections above rather than tabulated. These same figures are what <a
+        href="https://www.attirel.ai/size-check"
+        class={linkClass}>Attirel's size check</a
+      > reads when it names your H&amp;M size.
     </p>
   </Fragment>
   <Fragment slot="tips">
-    <li><strong>Divided line:</strong> H&amp;M's youth-oriented line runs about one size small, so size up.</li>
-    <li><strong>UK vs US women's:</strong> UK sizes run numerically 4 higher (US 8 = UK 12); the EU label is usually the most reliable reference.</li>
-    <li><strong>Knitwear and jersey basics:</strong> tend to relax with wear; stay true to size rather than sizing up.</li>
-    <li><strong>Denim:</strong> H&amp;M jeans use waist measurements in inches on many lines. Match your natural waist measurement directly.</li>
-    <li><strong>One inseam for every size:</strong> H&amp;M's main women's range lists a fixed 79 cm (31.1") inside leg from XS through 4XL, with no length variation.</li>
-    <li><strong>Petite is length-only:</strong> H&amp;M bases petite on height, not width: use the regular guide's width measurements and expect a fixed 73 cm (28.7") inside leg. That is the same structure Gap's petite tops show, documented in our <a href="/size-guides/gap-size-chart-fit-guide/" class="font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum">Gap fit guide</a>: the variant changes length, not width.</li>
+    <li><strong>Read the centimetre row.</strong> H&amp;M drafts in cm; the inches are conversions and two of them don't match the centimetres.</li>
+    <li><strong>Letter sizes are bands, not points.</strong> An M waist is 74–82.5 cm. If you are at the top of a band and the style is slim, the next size up is not sizing up — it's the same chart read honestly.</li>
+    <li><strong>Jeans by number, not letter.</strong> Each numeric size has its own waist and hip; use that chart even when the product also lists a letter.</li>
+    <li><strong>Divided:</strong> H&amp;M's younger-fashion line is cut slimmer than the main range. The published chart does not change, so treat the top of each band as the realistic limit.</li>
+    <li><strong>Petite is a hip and length change</strong>, not a smaller waist. Consider it if your hip sits a size below your waist.</li>
+    <li><strong>Men's R / L:</strong> same waist, 4 cm of leg. Under 84 cm inseam, R; over 86, L.</li>
+    <li><strong>Shoes:</strong> no women's half sizes and a patchy men's ladder, so measure your foot and pick from the cm column.</li>
   </Fragment>
 </BrandGuide>
