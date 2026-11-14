@@ -3,106 +3,222 @@ import BrandGuide from '../../components/BrandGuide.astro';
 import AffLink from '../../components/AffLink.astro';
 import type { ConversionTable } from '../../config/sizeConversions';
 
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
+
+const fitSections = [
+  {
+    category: 'Shoes: one length scale, three labels',
+    text: [
+      `Nike's men's, women's and unisex footwear charts are the same chart. Every one of them carries an identical <strong>Foot Length (cm)</strong> row; what changes is the label on top. A women's size is the men's size plus 1½ — W 8 is M 6½ — and a kids' "Y" size equals the men's number. Open a women's shoe and the size selector reads "W 8 / M 6.5"; open a men's basketball shoe and it reads "M 6.5 / W 8". Same last, same length.`,
+      `Two consequences. First, if your foot is 25 cm you are a W 8½ <em>and</em> an M 7, and the "women's" and "men's" versions of a shoe will fit identically in length; width is the only reason to prefer one. Second, the "size up half a size in Nikes" rule you'll read everywhere is not in the chart. Nike's ladder steps about 0.4 cm per half size and each size is a single length, not a band — if your foot measures 25.8 cm the chart says M 8 / W 9½, full stop. What people experience as "small" is specific lasts (racing flats, some Air Force 1 and Dunk colourways) running narrow or short, and that is a model question, not a brand one.`,
+      `Nike makes one more distinction worth knowing: the <strong>CM/JP</strong> row on its chart is the number printed on the shoe box, and it is <em>not</em> your foot length. A W 6½ box says 23.5; the body foot length Nike pairs with it is 23.3. Measure your foot and use the Foot Length row. Nike publishes foot lengths up to M 17 / W 18½; it sells shoes to M 22 but gives no measurement for them.`,
+    ],
+  },
+  {
+    category: 'Widths',
+    text: [
+      `Nike's chart pages state it plainly: Wide is about ¼ inch (6.35 mm) more girth around the toe box than regular; Extra Wide is about ½ inch (1.27 cm). Nothing about length changes. If a Nike pinches across the ball of your foot in your measured length, that is the fix — not a half size up, which adds length you don't need and barely touches the width.`,
+    ],
+  },
+  {
+    category: 'Women’s apparel: one body chart, and a plus run that overlaps it',
+    text: [
+      `Nike's women's tops, bottoms, skirts and dresses all use a single body chart, XXS to XXL, in 7-cm bands that touch exactly: XS bust 76–83, S 83–90, M 90–97. There are no gaps and no overlaps within the straight run, so every measurement lands in exactly one letter.`,
+      `The plus run (0X–4X) is where it gets interesting. It is <strong>not</strong> a continuation of XXL. 0X starts at a 112-cm bust while XXL runs 114–124, so a 118-cm bust is an XXL on one chart and a 0X on the other, in Nike's own figures. Nike's conversion table explains why: XXL is US 20–22 and 0X is US 16W — two parallel size systems for different proportions (plus sizes carry more hip for the bust), not one ladder. If you fall in the overlap, the plus garment will be fuller through the hip and the straight one straighter; pick by shape, not by number.`,
+      `One more wrinkle: Nike's Studio Fleece page has its own plus chart (0X bust 109–117, waist 96–104) that differs from the general one by a few centimetres. The tables below are the general chart, which is what the skirts, dresses and bottoms pages show.`,
+    ],
+  },
+  {
+    category: 'Men’s apparel: tops and bottoms share one body',
+    text: [
+      `Nike's men's tops page and men's bottoms page publish the same waist and hip for every size — M is 81–89 waist, 96–104 hip on both. Chest bands run 8 cm wide to L then widen to 12 (XL 112–124). Hip equals chest from XXS to L, which looks odd on the page but is simply Nike's block.`,
+      `Every size from S up has a Tall variant with identical chest, waist and hip; the only difference is the height band (183–196 cm instead of 170–183) and, per Nike, 4.5 cm more body length with sleeves adjusted. Tall is a length choice, not a size. Nike's own tie-breaker, printed under the chart: if chest and waist point to different sizes, go by chest.`,
+    ],
+  },
+  {
+    category: 'So does Nike run small?',
+    text: [
+      `In apparel, not by the chart. A women's M covers a 90–97 cm bust — the same band as H&amp;M's M (90–98) and a touch above Uniqlo's (87–93). A men's M chest of 96–104 is identical to Uniqlo's. What reads as "slim" is cut: Nike's athletic blocks are tapered through the waist and close through the shoulder, and compression styles (tights, Pro tops) are meant to sit tight. The chart gives you the size; the product's fit description tells you whether it's a compression fit.`,
+      `In shoes, Nike's chart assigns one foot length per size on a 0.4-cm grade. If you measure and buy the length that matches, the chart says you will fit. The widespread "half a size up" advice is really about three things: narrow lasts on certain models, thick socks, and people buying by the size they wear in another brand. Measure in centimetres, use the Foot Length row, and choose width separately.`,
+    ],
+  },
+];
+
+const cm = (lo: number, hi?: number) => (hi === undefined ? `${lo} cm` : `${lo}–${hi} cm`);
+
+const shoeRows: [string, string, string][] = [
+  ['1', '2.5', '19.9'], ['1.5', '3', '20.3'], ['2', '3.5', '20.8'], ['2.5', '4', '21.2'],
+  ['3', '4.5', '21.6'], ['3.5', '5', '22'], ['4', '5.5', '22.4'],
+  ['5', '6.5', '23.3'], ['5.5', '7', '23.7'], ['6', '7.5', '24.1'], ['6.5', '8', '24.5'],
+  ['7', '8.5', '25'], ['7.5', '9', '25.4'], ['8', '9.5', '25.8'], ['8.5', '10', '26.2'],
+  ['9', '10.5', '26.7'], ['9.5', '11', '27.1'], ['10', '11.5', '27.5'], ['10.5', '12', '27.9'],
+  ['11', '12.5', '28.3'], ['11.5', '13', '28.8'], ['12', '13.5', '29.2'], ['12.5', '14', '29.6'],
+  ['13', '14.5', '30'], ['13.5', '15', '30.5'], ['14', '15.5', '30.9'], ['14.5', '16', '31.3'],
+  ['15', '16.5', '31.7'], ['15.5', '17', '32.2'],
+];
+
 const charts: ConversionTable[] = [
   {
-    heading: 'Nike women’s tops (regular)',
-    note: `Tall women's tops fit 5'8"–6' (173–183 cm) and run 1.75" (4.5 cm) longer in the body, with sleeves adjusted by silhouette, on select styles only.`,
+    heading: 'Nike footwear — foot length',
+    note: 'Nike’s Foot Length (cm) row, identical on the men’s, women’s and unisex chart pages, captured 13 November 2026. Women’s = men’s + 1½. Kids’ Y sizes equal the men’s number. M 4½ and M 16–17 are omitted: Nike shows an inch figure for them that disagrees with its own cm grade by up to half a size.',
     noteAfter: true,
-    minWidth: 480,
-    headers: ['Size', 'Bust', 'Waist', 'Hip'],
+    minWidth: 420,
+    headers: ['Men’s US', 'Women’s US', 'Foot length'],
+    rows: shoeRows.map(([m, w, c]) => [m, w, `${c} cm`]),
+  },
+  {
+    heading: 'Nike women’s — tops, bottoms, skirts and dresses',
+    note: 'One body chart for every women’s category. Bands touch; 7 cm each to L, then 10.',
+    noteAfter: true,
+    minWidth: 520,
+    headers: ['Size', 'US', 'Bust', 'Waist', 'Hip'],
     rows: [
-      ['XXS', '27.5–29.5"', '21.25–23.5"', '30.5–33"'],
-      ['XS', '29.5–32.5"', '23.5–26"', '33–35.5"'],
-      ['S', '32.5–35.5"', '26–29"', '35.5–38.5"'],
-      ['M', '35.5–38"', '29–31.5"', '38.5–41"'],
-      ['L', '38–41"', '31.5–34.5"', '41–44"'],
-      ['XL', '41–44.5"', '34.5–38.5"', '44–47"'],
-      ['XXL', '44.5–48.5"', '38.5–42.5"', '47–50"'],
+      ['XXS', '0', cm(70, 76), cm(54, 60), cm(78, 84)],
+      ['XS', '0–2', cm(76, 83), cm(60, 67), cm(84, 91)],
+      ['S', '4–6', cm(83, 90), cm(67, 74), cm(91, 98)],
+      ['M', '8–10', cm(90, 97), cm(74, 81), cm(98, 105)],
+      ['L', '12–14', cm(97, 104), cm(81, 88), cm(105, 112)],
+      ['XL', '16–18', cm(104, 114), cm(88, 98), cm(112, 120)],
+      ['XXL', '20–22', cm(114, 124), cm(98, 108), cm(120, 128)],
     ],
   },
   {
-    heading: 'Nike women’s tops (plus)',
-    note: `A separate chart, not a continuation of the regular one, and the two overlap at the boundary: XXL bust runs 44.5–48.5" while 0X runs 44–47", so a 46" bust is both an XXL and a 0X in Nike's own published data. Plus sizes map US 16W–32W across 0X–4X.`,
+    heading: 'Nike women’s — plus (0X–4X)',
+    note: 'A separate run, not a continuation: 0X overlaps XL–XXL. Nike maps 0X to US 16W. The Studio Fleece line publishes its own, slightly smaller, plus chart.',
     noteAfter: true,
-    minWidth: 480,
-    headers: ['Size', 'Bust', 'Waist', 'Hip'],
+    minWidth: 520,
+    headers: ['Size', 'US', 'Bust', 'Waist', 'Hip'],
     rows: [
-      ['0X', '44–47"', '40–43"', '48–51"'],
-      ['1X', '47–49.5"', '43–45.5"', '51–54"'],
-      ['2X', '49.5–52"', '45.5–49"', '54–57"'],
-      ['3X', '52–55"', '49–53"', '57–61"'],
-      ['4X', '55–58"', '53–57"', '61–65"'],
+      ['0X', '16W', cm(112, 119), cm(101.5, 108.5), cm(122.5, 129.5)],
+      ['1X', '18W–20W', cm(119, 126), cm(108.5, 115.5), cm(129.5, 136.5)],
+      ['2X', '22W–24W', cm(126, 133), cm(115.5, 124), cm(136.5, 145)],
+      ['3X', '26W–28W', cm(133, 140), cm(124, 134), cm(145, 155)],
+      ['4X', '30W–32W', cm(140, 147), cm(134, 144), cm(155, 165)],
     ],
   },
   {
-    heading: 'Nike women’s: international conversion (Nike’s own)',
-    minWidth: 640,
-    headers: ['Size', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    rows: [
-      ['US', '0', '0–2', '4–6', '8–10', '12–14', '16–18', '20–22'],
-      ['UK', '2', '4–6', '8–10', '12–14', '16–18', '20–22', '24–26'],
-      ['EU', '30', '32–34', '36–38', '40–42', '44–46', '48–50', '52–54'],
-      ['FR', '32', '34–36', '38–40', '42–44', '46–48', '50–52', '54–56'],
-      ['IT', '34', '36–38', '40–42', '44–46', '48–50', '52–54', '56–58'],
-      ['KR', '60', '65', '70', '75', '80', '85', '90'],
-    ],
-  },
-  {
-    heading: 'Nike men’s tops',
-    note: 'Nike’s own chart lists hip equal to chest at XS through L, diverging only from XL upward; that is how Nike publishes it, not a transcription error. Tall sizes (S through 4XL, select styles) run 1.75" longer in the body with sleeves adjusted by silhouette; Tall bottoms add 2" of inseam and 0.5" of rise.',
+    heading: 'Nike men’s — tops and bottoms',
+    note: 'Waist and hip are the same on Nike’s tops and bottoms pages. Tall sizes (S Tall–4XL Tall) share these figures and add 4.5 cm of body length for 183–196 cm heights.',
     noteAfter: true,
-    minWidth: 480,
+    minWidth: 520,
     headers: ['Size', 'Chest', 'Waist', 'Hip'],
     rows: [
-      ['XXS', '28.1–31.5"', '22.5–25.5"', '28.5–31.5"'],
-      ['XS', '31.5–35"', '25.5–29"', '31.5–35"'],
-      ['S', '35–37.5"', '29–32"', '35–37.5"'],
-      ['M', '37.5–41"', '32–35"', '37.5–41"'],
-      ['L', '41–44"', '35–38"', '41–44"'],
-      ['XL', '44–48.5"', '38–43"', '44–47"'],
-      ['XXL', '48.5–53.5"', '43–47.5"', '47–50.5"'],
-      ['3XL', '53.5–58"', '47.5–52.5"', '50.5–53.5"'],
-      ['4XL', '58–63"', '52.5–57"', '53.5–58.5"'],
+      ['XXS', cm(72, 80), cm(57, 65), cm(72, 80)],
+      ['XS', cm(80, 88), cm(65, 73), cm(80, 88)],
+      ['S', cm(88, 96), cm(73, 81), cm(88, 96)],
+      ['M', cm(96, 104), cm(81, 89), cm(96, 104)],
+      ['L', cm(104, 112), cm(89, 97), cm(104, 112)],
+      ['XL', cm(112, 124), cm(97, 109), cm(112, 120)],
+      ['XXL', cm(124, 136), cm(109, 121), cm(120, 128)],
+      ['3XL', cm(136, 148), cm(121, 133), cm(128, 136)],
+      ['4XL', cm(148, 160), cm(133, 145), cm(136, 148)],
     ],
   },
+];
+
+const faqs = [
+  {
+    q: 'Does Nike run small?',
+    a: 'Not by its chart. Nike’s apparel bands match H&M’s and Uniqlo’s almost cm for cm, and its footwear chart assigns one foot length per size on a 0.4-cm grade. What people call “small” is cut — athletic tapers, compression styles, and a few narrow shoe lasts. Measure in centimetres, use the Foot Length row for shoes, and treat width as a separate choice.',
+  },
+  {
+    q: 'Should I size up half a size in Nike shoes?',
+    a: 'Only if you’re buying by the size you wear elsewhere. If you measure your foot and buy the Nike size whose Foot Length matches, the chart says you fit. A shoe that pinches at the ball of the foot in your measured length needs a wide fitting (about ¼ in more toe-box girth), not a longer shoe.',
+  },
+  {
+    q: 'What is the difference between Nike men’s and women’s shoe sizes?',
+    a: 'A label. Nike’s men’s, women’s and unisex charts share one foot-length row; the women’s number is the men’s number plus 1½. W 9 and M 7½ are the same length (25.4 cm). Product pages show both, as “W 9 / M 7.5”.',
+  },
+  {
+    q: 'Why does a Nike shoe box say 23.5 when my foot is 23.3 cm?',
+    a: 'The box shows Nike’s CM/JP size, which is a label, not a body measurement. Nike’s chart pages state that it differs from Foot Length. Go by the Foot Length row when choosing, and expect the box number to be a few millimetres higher.',
+  },
+  {
+    q: 'Which Nike size if I’m in both XXL and 0X?',
+    a: 'Both are correct on Nike’s chart — the two runs overlap by about 10 cm of bust. The plus run carries more hip for the same bust (0X hip 122.5–129.5 vs XXL 120–128). Choose plus if your hip is the measurement that usually decides your size, straight if it isn’t.',
+  },
+  {
+    q: 'Do Nike Tall sizes fit bigger?',
+    a: 'No. Tall shares the exact chest, waist and hip of the regular size and adds about 4.5 cm of body length (and, on bottoms, inseam). It is for height 183–196 cm, not for a larger body.',
+  },
+];
+
+const related = [
+  { href: '/size-guides/adidas-size-chart-fit-guide/', label: 'Adidas size chart & fit guide' },
+  { href: '/size-guides/skechers-size-chart-fit-guide/', label: 'Skechers size chart & fit guide' },
+  { href: '/size-guides/lululemon-size-chart-fit-guide/', label: 'Lululemon size chart & fit guide' },
+  { href: '/how-to-measure/', label: 'How to measure yourself' },
 ];
 ---
 
 <BrandGuide
   brandKey="nike"
   brand="Nike"
-  title="Nike Size Guide — Does Nike Run Small? (Charts & Tips) | Attirel"
-  description="Nike runs about half a size small in shoes and slim in apparel. Full Nike size charts for women and men with US, UK, and EU conversions, plus fitting tips."
-  h1="Nike Size Guide"
+  title="Nike Size Chart & Fit Guide: Shoes by Foot Length, Apparel in cm | Attirel"
+  description="Nike’s own size charts in centimetres: one footwear length scale for men’s, women’s and kids’, women’s XXS–XXL and 0X–4X, men’s XXS–4XL. Why ‘runs small’ isn’t in the chart, and what the shoe-box number really means."
+  h1="Nike Size Chart & Fit Guide"
   standardCharts={false}
+  chartsHeading="Nike’s size charts, in centimetres"
   typicalCharts={charts}
-  fitSections={[]}
-  faqs={[]}
-  related={[]}
+  fitSections={fitSections}
+  fitSectionsHeading="How Nike’s charts actually work"
+  faqs={faqs}
+  related={related}
+  breadcrumbs
 >
   <Fragment slot="verdict">
-    <strong>Yes — Nike runs about half a size small in footwear</strong>, especially in running
-    shoes and Air Force 1s. Most people should size up half a size from their measured size.
-    Apparel runs athletic and slim: if you're between sizes or prefer a relaxed fit, size up.
+    <p>
+      Nike's shoe chart is one foot-length scale with men's, women's and kids' labels on it —
+      W 8 and M 6½ are the same shoe. Its apparel bands match H&amp;M and Uniqlo almost
+      exactly. "Runs small" is not in either chart; it's cut, compression styles and a few narrow
+      lasts. Measure in centimetres, use Nike's Foot Length row (not the box number), and pick
+      width separately.
+    </p>
+  </Fragment>
+  <Fragment slot="method">
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Shoes: measure your foot in centimetres</strong> and find it in the Foot Length
+        column. Read the men's or women's label — they're the same shoe.
+      </li>
+      <li>
+        <strong>Tight across the ball of the foot? Choose Wide,</strong> not a longer size. Nike's
+        wide adds about ¼ in of toe-box girth at the same length.
+      </li>
+      <li>
+        <strong>Apparel: bust or chest first.</strong> Nike's bands touch, so one letter contains
+        you. If chest and waist disagree, Nike says go by chest.
+      </li>
+      <li>
+        <strong>Women in both XXL and 0X:</strong> plus carries more hip for the same bust. Pick
+        by your hip, not the number.
+      </li>
+      <li>
+        <strong>Tall is length, not size.</strong> Same body figures; choose it for height
+        183–196 cm.
+      </li>
+    </ol>
   </Fragment>
   <Fragment slot="charts-intro">
     <p class="mt-3 leading-relaxed text-ink/85">
-      Every chart below is drawn from Nike's published size charts: the <AffLink
-        brand="nike"
-        href="https://www.nike.com/size-fit/womens-tops-alpha"
-        >women's tops chart</AffLink
-      > and the <AffLink brand="nike" href="https://www.nike.com/size-fit/mens_tops_alpha"
-        >men's tops chart</AffLink
-      >, captured August 2026. Fit still varies between styles, so check the size chart on the
-      product page before you order.
+      Every figure below is Nike's own, transcribed on 13 November 2026 from the size-chart pages
+      at <AffLink brand="nike" href="https://www.nike.com/size-fit/mens-footwear">nike.com/size-fit</AffLink
+      > with Metric selected (men's and women's footwear, unisex footwear, women's skirts &amp;
+      dresses, women's bottoms, men's tops and men's bottoms). Nike drafts in centimetres; its inch
+      rows are rounded conversions. These same figures are what <a
+        href="https://www.attirel.ai/size-check"
+        class={linkClass}>Attirel's size check</a
+      > reads when it names your Nike size.
     </p>
   </Fragment>
   <Fragment slot="tips">
-    <li><strong>Shoes:</strong> go up half a size from your true measured size; if you wear thick athletic socks, consider a full size up in running shoes.</li>
-    <li><strong>Leggings and tights:</strong> Nike's compression styles run especially snug: size up for a comfort fit, stay true for a compression fit.</li>
-    <li><strong>UK vs US women's apparel:</strong> UK sizes are numerically 4 higher (US 8 = UK 12).</li>
-    <li><strong>Dri-FIT tops:</strong> designed with an athletic taper through the waist; broad-shouldered builds often prefer one size up.</li>
-    <li><strong>Nike's men's tie-breaker:</strong> when your chest and waist land in different sizes, Nike says to go by chest for tops and by hip for bottoms.</li>
-    <li><strong>Nike's women's tie-breaker:</strong> when bust and waist disagree on a top, Nike says to go by bust.</li>
+    <li><strong>Foot Length, not CM/JP.</strong> The box number is a label and runs a few millimetres over your foot.</li>
+    <li><strong>W = M + 1½.</strong> Buy whichever version has the colour you want; length is identical.</li>
+    <li><strong>Width is a separate choice.</strong> Wide ≈ +¼ in girth, Extra Wide ≈ +½ in, same length.</li>
+    <li><strong>Bands touch; no overlap in the straight run.</strong> One letter contains you.</li>
+    <li><strong>Plus overlaps straight.</strong> XXL and 0X share 10 cm of bust; the plus run has the bigger hip.</li>
+    <li><strong>Compression is a fit, not a size.</strong> Tights and Pro layers are meant to sit tight at your chart size.</li>
+    <li><strong>Tall adds length only.</strong> 4.5 cm of body, same chest and waist.</li>
   </Fragment>
 </BrandGuide>
