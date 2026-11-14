@@ -1,70 +1,224 @@
 ---
 import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
+
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
 
 const fitSections = [
   {
-    category: 'Shoes',
-    text: "Adidas sneakers, especially Originals like the Superstar, Stan Smith, Samba, and Gazelle, tend to run about half a size large, so many shoppers drop half a size from their measured foot size. Performance styles behave differently: Ultraboost and most running models are commonly reported to fit snug and true, and soccer shoes are designed to hug the foot closely. Treat each silhouette as its own decision rather than picking one 'Adidas size'.",
+    category: 'Shoes: one chart, W = M + 1, and a half size apart from Nike',
+    text: [
+      `Adidas publishes a single footwear chart headed "Men's and Women's Adidas Footwear Sizing". It is one length scale with two labels: a women's size is the men's size plus one — W 9 and M 8 are the same shoe at 25.5 cm. (Nike uses plus 1½, so a woman who is a W 9 at Nike is a W 8½ at Adidas for the same foot.) Half sizes run to M 14½ / W 15½; above that Adidas sells M 15 to 20 in whole sizes with no women's label.`,
+      `Here is the number behind the "Adidas runs big, Nike runs small" folklore. For a 26.3-cm foot, Adidas' chart says M 9. Nike's chart says the same foot is between M 8½ (26.2) and M 9 (26.7), and a 26.7-cm foot is a Nike M 9 but an Adidas M 9½. <strong>Adidas draws every size line about 0.4 cm — half a size — lower than Nike does.</strong> So the same foot gets a larger label at Adidas, which is what people feel as "big", and a smaller label at Nike, which is what they feel as "small". Neither chart is wrong; they disagree with each other. Measure your foot and use each brand's own table.`,
+      `Adidas' own between-sizes rule, printed on the chart: "for a tight fit, go one size down; for a loose fit, go one size up." Measure at the end of the day, big toe to heel.`,
+    ],
   },
   {
-    category: 'Tops & jerseys',
-    text: "Originals tees, hoodies, and trefoil styles tend toward a roomy, boxy streetwear cut, so shoppers who want a neater line often go down one. Performance tops flip that logic: training and running pieces are cut slimmer to sit close to the body, and football jerseys in 'authentic' player specs commonly fit tighter than the looser replica versions of the same shirt.",
+    category: 'Which lasts actually run long',
+    text: [
+      `The chart gives one length per size and the app sizes you from it. What the chart can't show is that certain Originals silhouettes — Superstar, Samba, Gazelle, Stan Smith — are built on lasts with more length in the toe than the running and training shoes, so shoppers consistently report a half size down in those models. Ultraboost and most performance models fit the chart. This is model behaviour reported by shoppers, not a chart figure, and it should be weighed accordingly: start from your measured size and let the product page's fit notes decide whether to step down.`,
+    ],
   },
   {
-    category: 'Bottoms & track pants',
-    text: "Classic three-stripe track pants carry a generous, sporty cut through the seat and thigh (part of their retro appeal), and many shoppers size down or look for styles labeled slim or tapered when they want a trimmer leg. Training shorts and tights from the performance side tend to fit true to the size chart, with tights intentionally compressive at your usual size.",
+    category: 'Apparel: one body chart per gender, with tabs that only change length',
+    text: [
+      `Adidas women's tops, bottoms and maternity tabs share the same waist and hip bands; men's tops and the men's bottoms alpha chart share the same chest, waist and hip. The Tall, Short and Petite tabs on every product carry <em>identical</em> body measurements and change only the inseam — women's Tall adds 6 cm, Petite takes 5 off; men's Tall adds about 5, Short takes about 5 off. Pick your letter from your body, then the tab from your height.`,
+      `Women's bands are narrow and touch (waist S 67–72, M 73–78, L 79–85 cm). Men's bands widen with size: chest XS is 4 cm wide, M is 8, XL is 10, 2XL 12. A 4XL exists for men but only as 4XL Tall.`,
+    ],
+  },
+  {
+    category: 'Plus sizes overlap the standard run',
+    text: [
+      `As at Nike, Adidas' women's plus chart (1X–4X) is not a continuation of 2XL. 1X waist is 89–98 cm, which straddles XL (86–94) and 2XL (95–104); 1X bust (41–44½ in) sits across XL and 2XL too. Adidas maps 1X to US 14W–16W and 2XL to US 20, so these are parallel systems for different proportions. If you land in both, the plus garment carries more hip for the same bust; choose by shape.`,
+    ],
+  },
+  {
+    category: 'Men’s trousers: two charts on one page',
+    text: [
+      `The men's bottoms size guide shows an alpha chart (XS–3XL with waist, hip and inseam) and, below it, a second standard table labelled by waist inch and alpha pair — "38″/L", "40″/L-XL", "44″/XL-2XL" — with narrower waist bands (38″/L is 92.5–96 cm; the alpha L is 89–96). The alpha chart is the one that matches Adidas' tops body and is what the app reads. The inch-pair grid is Adidas' own finer map for trousers sold by waist number; if a product's size selector shows inch sizes, it is using that grid. Jeans add a third table mapping XS–2XL to 27–32 in and a 30/32/34 inseam key (75–79, 80–84, 85–89 cm).`,
+    ],
+  },
+  {
+    category: 'So does Adidas run big?',
+    text: [
+      `In shoes, only relative to Nike. Against the centimetre, Adidas' chart is if anything on the short side: it pairs M 9 with 26.3 cm, where Nike pairs M 9 with 26.7 and Skechers with 27. "Runs big" is a comparison people make after wearing Nikes, and it describes the labels, not the shoes. In apparel, Adidas' women's M (bust 88.9–94 cm) is a touch under H&amp;M's (90–98) and above Uniqlo's (87–93); men's M chest 93–100 sits between Uniqlo (96–104) and Levi's (94–102). Ordinary. Originals cuts are boxy and performance cuts are close, which is a fit description on the product page, not a chart question.`,
+    ],
+  },
+];
+
+const cm = (lo: number, hi?: number) => (hi === undefined ? `${lo} cm` : `${lo}–${hi} cm`);
+const shoeRows: [string, string, string][] = [
+  ['4', '5', '22.1'], ['4.5', '5.5', '22.5'], ['5', '6', '22.9'], ['5.5', '6.5', '23.3'],
+  ['6', '7', '23.8'], ['6.5', '7.5', '24.2'], ['7', '8', '24.6'], ['7.5', '8.5', '25'],
+  ['8', '9', '25.5'], ['8.5', '9.5', '25.9'], ['9', '10', '26.3'], ['9.5', '10.5', '26.7'],
+  ['10', '11', '27.1'], ['10.5', '11.5', '27.6'], ['11', '12', '28'], ['11.5', '12.5', '28.4'],
+  ['12', '13', '28.8'], ['12.5', '13.5', '29.3'], ['13', '14', '29.7'], ['13.5', '14.5', '30.1'],
+  ['14', '15', '30.5'], ['14.5', '15.5', '31'], ['15', '—', '31.4'], ['16', '—', '31.8'],
+  ['17', '—', '32.6'], ['18', '—', '33.5'], ['19', '—', '34.3'], ['20', '—', '35.2'],
+];
+
+const charts: ConversionTable[] = [
+  {
+    heading: 'Adidas footwear — heel to toe',
+    note: 'Adidas’ own “Men’s and Women’s Adidas Footwear Sizing” chart, cm tab, captured 13 November 2026. Women’s = men’s + 1. Half sizes stop at M 14½.',
+    noteAfter: true,
+    minWidth: 420,
+    headers: ['Men’s US', 'Women’s US', 'Heel–toe'],
+    rows: shoeRows.map(([m, w, c]) => [m, w, `${c} cm`]),
+  },
+  {
+    heading: 'Adidas women’s — tops and bottoms',
+    note: 'Waist and hip are the same on the tops, bottoms and maternity tabs. Bust from the tops tab (inches, converted), inseam from the bottoms tab. Tall +6 cm inseam, Petite −5 cm.',
+    noteAfter: true,
+    minWidth: 640,
+    headers: ['Size', 'US', 'Bust', 'Waist', 'Hip', 'Inseam'],
+    rows: [
+      ['2XS', '00', '28½–29½″', cm(57, 60), cm(82, 85), cm(77.5)],
+      ['XS', '0–2', '30–32″', cm(61, 66), cm(86, 91), cm(78)],
+      ['S', '4–6', '32½–34½″', cm(67, 72), cm(92, 97), cm(78.5)],
+      ['M', '8–10', '35–37″', cm(73, 78), cm(98, 103), cm(79)],
+      ['L', '12–14', '37½–40″', cm(79, 85), cm(104, 110), cm(79.5)],
+      ['XL', '16–18', cm(102, 109), cm(86, 94), cm(111, 117), cm(80)],
+      ['2XL', '20', cm(110, 118), cm(95, 104), cm(118, 125), cm(80.5)],
+    ],
+  },
+  {
+    heading: 'Adidas women’s — plus (1X–4X)',
+    note: 'A separate run that overlaps XL–2XL. Adidas maps 1X to US 14W–16W.',
+    noteAfter: true,
+    minWidth: 640,
+    headers: ['Size', 'US', 'Bust', 'Waist', 'Hip', 'Inseam'],
+    rows: [
+      ['1X', '14W–16W', '41–44½″', cm(89, 98), cm(111, 120), cm(78)],
+      ['2X', '18W–20W', '45–48½″', cm(99, 108), cm(121, 130), cm(78)],
+      ['3X', '22W–24W', '49–52½″', cm(109, 118), cm(131, 140), cm(77)],
+      ['4X', '26W–28W', '53–56½″', cm(119, 128), cm(141, 150), cm(76)],
+    ],
+  },
+  {
+    heading: 'Adidas men’s — tops and bottoms (alpha)',
+    note: 'Chest/waist/hip identical on the tops chart and the bottoms alpha chart; Tall and Short tabs share them and change inseam only. 4XL exists only as 4XL Tall (chest 143–154).',
+    noteAfter: true,
+    minWidth: 600,
+    headers: ['Size', 'Chest', 'Waist', 'Hip', 'Inseam'],
+    rows: [
+      ['XS', cm(83, 86), cm(71, 74), cm(82, 85), '32″'],
+      ['S', cm(87, 92), cm(75, 80), cm(86, 91), '32″'],
+      ['M', cm(93, 100), cm(81, 88), cm(92, 99), '32″'],
+      ['L', cm(101, 108), cm(89, 96), cm(100, 107), '32½″'],
+      ['XL', cm(109, 118), cm(97, 106), cm(108, 116), '32½″'],
+      ['2XL', cm(119, 130), cm(107, 119), cm(117, 125), '32½″'],
+      ['3XL', cm(131, 142), cm(120, 132), cm(126, 135), '32″'],
+    ],
   },
 ];
 
 const faqs = [
   {
-    q: 'Do Adidas Superstars run big?',
-    a: "That's the common experience, yes. The Superstar's shell-toe construction leaves extra room up front, and many shoppers report going down half a size (sometimes a full size for narrow feet) compared with their usual sneaker size. Wide feet are the exception; staying true to size preserves toe-box comfort.",
-  },
-  {
-    q: 'Should I size down in all Adidas shoes?',
-    a: "No. The half-size-down rule mainly applies to Originals and other lifestyle silhouettes. Ultraboost and most running shoes tend to fit true or even snug thanks to their knit uppers, and cleats are meant to fit close for ball feel. Check the fit notes on each product page before assuming the Originals rule carries over.",
+    q: 'Does Adidas run big?',
+    a: 'Compared with Nike, yes, by half a size — but that is because the two charts disagree, not because Adidas shoes are roomy. Adidas pairs a 26.3-cm foot with M 9; Nike pairs 26.7 cm with M 9. Measure your foot in centimetres and use Adidas’ heel-to-toe column; the size it names is the size that fits. Certain Originals lasts (Superstar, Samba, Gazelle) are reported to run long and are the one place a half size down is common.',
   },
   {
     q: 'Is Adidas sizing the same as Nike?',
-    a: "Not quite: the two brands have opposite reputations. Nike shoes are commonly reported to run slightly small, while Adidas lifestyle shoes tend to run slightly large. The adjustments stack: someone who goes up half a size in Nike may find they drop a full size when switching to Adidas Originals.",
+    a: 'No, and the difference is in the charts themselves. For the same foot length Adidas gives a label about half a size larger than Nike. Also, Adidas women’s = men’s + 1 while Nike women’s = men’s + 1½, so a Nike W 9 is an Adidas W 8½. Don’t carry a size across; carry the centimetre.',
   },
   {
-    q: 'Does Adidas clothing run big or small?',
-    a: "It depends on the line. Originals apparel tends to run roomy and boxy in keeping with its streetwear styling, so sizing down for a closer fit is common. Performance lines like training, running, and Techfit are cut slimmer and closer to the chart, and compression pieces are meant to feel tight at your normal size.",
+    q: 'Do Adidas Superstars and Sambas run big?',
+    a: 'Shoppers consistently report so, and it is specific to those lasts rather than to Adidas’ chart. Start from your measured size on the chart; if you are near the top of a size, or the product page says the style runs long, go a half size down. Wide feet are the exception — keep the length for the toe-box room.',
   },
   {
-    q: 'Do Adidas Sambas fit true to size?',
-    a: "The Samba runs low-profile and slightly long, and many shoppers find a half size down gives the best fit, similar to other Originals. It's also commonly described as a narrow shoe, so wide-footed shoppers often stay true to size and accept a little extra length instead of a squeezed midfoot.",
+    q: 'What is the difference between Adidas Tall, Short and Petite sizes?',
+    a: 'Only inseam. Every tab carries the same chest, waist and hip as the standard size. Women’s Tall adds 6 cm, Petite takes 5 cm off; men’s Tall adds about 5 cm, Short takes about 5 off. Choose the letter from your body and the tab from your height (women’s Tall is for over 179 cm, Petite up to 165; men’s Tall over 6′2″, Short up to 5′9″).',
+  },
+  {
+    q: 'Which Adidas size if I’m in both XL and 1X?',
+    a: 'Both are right on Adidas’ chart; the plus run overlaps the standard run by most of a size. The plus garment is cut with more hip for the same bust. Go plus if your hip usually decides your size, standard if your bust does.',
+  },
+  {
+    q: 'Why do Adidas men’s trousers show two size charts?',
+    a: 'One is the alpha chart (XS–3XL) that matches Adidas’ tops body; the other is a finer grid labelled by waist inch and alpha pair (38″/L, 40″/L-XL …) used when trousers are sold by waist number. The alpha chart is what Attirel reads. If a product’s size selector shows inch sizes, the second table is the one to check.',
   },
 ];
 
 const related = [
+  { href: '/size-guides/nike/', label: 'Nike size chart & fit guide' },
+  { href: '/size-guides/skechers-size-chart-fit-guide/', label: 'Skechers size chart & fit guide' },
   { href: '/size-guides/lululemon-size-chart-fit-guide/', label: 'Lululemon size chart & fit guide' },
-  { href: '/size-guides/levis-size-chart-fit-guide/', label: "Levi's size chart & fit guide" },
-  { href: '/blog/how-to-shop-online-between-sizes/', label: 'How to shop online when you are between sizes' },
+  { href: '/how-to-measure/', label: 'How to measure yourself' },
 ];
 ---
 
 <BrandGuide
   brandKey="adidas"
   brand="Adidas"
-  title="Adidas Size Chart & Fit Guide: Does It Run Big?"
-  description="Adidas shoes tend to run about half a size big, especially Originals, so many size down. Apparel is roomy in Originals, slimmer in performance lines."
+  title="Adidas Size Chart & Fit Guide: Shoes by Heel-to-Toe, Apparel in cm | Attirel"
+  description="Adidas’ own size charts: one footwear scale (women’s = men’s + 1) with heel-to-toe in cm, women’s 2XS–2XL and 1X–4X, men’s XS–3XL. Why Adidas ‘runs big’ next to Nike, and what Tall, Short and Plus actually change."
+  h1="Adidas Size Chart & Fit Guide"
+  standardCharts={false}
+  chartsHeading="Adidas’ size charts, in centimetres"
+  typicalCharts={charts}
   fitSections={fitSections}
+  fitSectionsHeading="How Adidas’ charts actually work"
   faqs={faqs}
   related={related}
+  breadcrumbs
 >
   <Fragment slot="verdict">
-    <strong>Adidas footwear tends to run big</strong> — Originals like the Superstar, Stan Smith,
-    and Samba are commonly reported to fit about half a size large, so many shoppers size down.
-    Apparel splits by line: Originals clothing leans roomy and boxy, while performance pieces are
-    cut slimmer and closer to the chart. Know which line you're buying before you pick a size.
+    <p>
+      Adidas publishes one footwear chart for men and women (W = M + 1) and draws its size lines
+      about half a size lower than Nike's — which is the whole of the "Adidas runs big, Nike
+      runs small" story. Apparel is one body chart per gender; Tall, Short and Petite change
+      inseam only; plus sizes run parallel to, and overlap, the standard run. Measure in
+      centimetres and read Adidas' own column.
+    </p>
+  </Fragment>
+  <Fragment slot="method">
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Shoes: measure heel to toe in centimetres</strong>, at the end of the day, and
+        find it in the chart. Men's or women's label — same shoe.
+      </li>
+      <li>
+        <strong>Don't carry your Nike size over.</strong> Carry the centimetre; Adidas' label
+        will come out half a size larger.
+      </li>
+      <li>
+        <strong>Originals that run long (Superstar, Samba, Gazelle):</strong> if the product page
+        says so and you're near the top of your size, step a half down.
+      </li>
+      <li>
+        <strong>Apparel: pick the letter from bust or chest</strong>, check waist and hip fall in
+        the same band, then choose Tall / Short / Petite from your height — the body doesn't
+        change.
+      </li>
+      <li>
+        <strong>In both XL and 1X?</strong> Plus carries more hip for the same bust. Pick by
+        shape.
+      </li>
+    </ol>
+  </Fragment>
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Every figure below is Adidas's own, transcribed on 13–14 November 2026 from the Size Guide
+      drawer on <AffLink brand="adidas" href="https://www.adidas.com/us">adidas.com's US product
+        pages</AffLink
+      > with cm selected (the women's tops standard and plus tabs publish inches; those bust
+      figures are shown as published). The drawer is brand-wide and the same table appears on
+      every product in a category. These same figures are what <a
+        href="https://www.attirel.ai/size-check"
+        class={linkClass}>Attirel's size check</a
+      > reads when it names your Adidas size.
+    </p>
   </Fragment>
   <Fragment slot="tips">
-    <li><strong>Sort by silhouette, not brand:</strong> half a size down is common in Originals sneakers, while Ultraboost and running models tend to fit true.</li>
-    <li><strong>Coming from Nike?</strong> The brands lean opposite ways, so your Nike size is a starting point at best: re-measure rather than transfer the number.</li>
-    <li><strong>Check the line on apparel:</strong> Originals cuts run relaxed for the retro look; training and Techfit pieces are meant to sit close to the body.</li>
-    <li><strong>Wide feet change the math:</strong> shoppers with wider feet often skip the size-down advice in Originals to keep toe-box room.</li>
+    <li><strong>W = M + 1 at Adidas</strong> (M + 1½ at Nike). Same shoe, different label.</li>
+    <li><strong>Half a size "bigger" than Nike</strong> is the charts disagreeing, not loose shoes. Use the centimetre.</li>
+    <li><strong>Between sizes:</strong> Adidas says down for tight, up for loose.</li>
+    <li><strong>Tall / Short / Petite change inseam only.</strong> Don't size up for height.</li>
+    <li><strong>Plus overlaps standard</strong> by most of a size; the plus run has the bigger hip.</li>
+    <li><strong>Men's trousers sold by waist inch</strong> use the second, finer table on the page.</li>
+    <li><strong>Originals lasts run long;</strong> performance lasts don't. Let the product page decide a half step down.</li>
   </Fragment>
 </BrandGuide>
