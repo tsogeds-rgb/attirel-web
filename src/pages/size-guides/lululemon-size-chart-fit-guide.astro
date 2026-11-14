@@ -1,70 +1,242 @@
 ---
 import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
+
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
 
 const fitSections = [
   {
-    category: 'Leggings & bottoms',
-    text: "Lululemon leggings are engineered as compression garments, so a snug first try-on is the intended fit, not a sizing mistake. In the brand's numeric 0–20 range, most shoppers do best taking their true size: sizing up sacrifices the compression and hold the leggings are designed around. Fabric matters, too: the buttery Align line feels noticeably less compressive than the firmer Wunder Train, so the same number can feel like two different fits.",
+    category: 'There is no “Lululemon size chart” — there are five',
+    text: [
+      `Every brand so far in this series publishes one body chart per gender and shows it on every product. Lululemon doesn't. Its Size guide drawer opens the chart for <em>that garment type</em>: a trouser shows waist and hip by numeric size, a tee shows chest only, a bra shows band and under-bust, a sneaker shows foot length. The figures don't disagree with each other, but you won't find them in one place, and a tee page will never tell you your hip size.`,
+      `The tables below are assembled from five product pages. Lululemon drafts in inches: the men's henley cm tab reads 88.9–91.4 / 94–96.5 / 99.1–101.6, exact conversions of 35–36 / 37–38 / 39–40 in. Inches are native here, so inch figures are shown where Lululemon publishes them.`,
+    ],
   },
   {
-    category: 'Tops & bras',
-    text: "Tanks and fitted tops follow the athletic, close-to-body cut you'd expect, while styles the brand labels relaxed or oversized genuinely are, so the product page's fit designation is worth reading before defaulting to your number. Sports bras are sized for support, so they tend to feel firm on first wear; many shoppers find that checking the listed support level (light, medium, high) against their activity matters more than shifting a size.",
+    category: 'Women’s: numeric 0–20, mostly point values',
+    text: [
+      `Women's sizes run 0 to 20 with an alpha alongside (XXXS to 2X), and the chart is unusual in giving a <strong>single number</strong> at most sizes rather than a band: size 8 chest is 35–36 in on a tee, but size 12 is simply 40 in and size 14 is 42 in. Bottoms do the same — a size 12 is a 33-in waist and a 43-in hip, full stop; only 4 through 10 carry ranges. There is no published band between a 12 and a 14, so if you measure 41 in you are between sizes on Lululemon's own chart and the garment's fabric decides.`,
+      `The alpha column doubles up at the top: 12 and 14 are both XL, 16 and 18 are both 1X. When a product is sold by letter rather than number, XL spans two numeric sizes and the fit will be looser at the lower one.`,
+    ],
   },
   {
-    category: 'Outerwear & jackets',
-    text: "Jackets like the Define hug the body with an intentionally sculpted, fitted silhouette: comfortable over a tank, snug over a hoodie. If you routinely layer, many shoppers find one size up in fitted jackets gives welcome room without losing the shape. Looser outerwear and hoodies are cut with more ease from the start and are commonly reported fine at your regular number.",
+    category: 'Men’s: chest by letter, trousers by waistband inch',
+    text: [
+      `Men's tops are chest-only, XS to 5XL, in 2-inch bands to L (35–36, 37–38, 39–40, 41–42) widening to 3 and then 6 at the top. Lululemon publishes no waist or hip for men's tops.`,
+      `Trousers are labelled by <strong>waistband inch</strong>, 26 to 50, and the body measurements behind the label are consistent: your waist is the label plus 1 (a 32 is for a 33-in waist) and your hip is the label plus 7½ (39½ in), all the way to 40. From 42 the grade jumps — 42 is a 46-in waist and 48-in hip, 50 is 54 / 56. The alpha sizes (XXS to 5XL) each cover two or three waistband labels, so a letter is a coarse guide and the number is the size.`,
+      `Lululemon's own fit note on the ABC trouser: measure hip at the widest point and inseam from groin to ankle bone; inseam is a separate choice (28, 30, 32, 34, 37) and the body chart doesn't include it.`,
+    ],
+  },
+  {
+    category: 'Bras: band from under-bust, cup from the product',
+    text: [
+      `Lululemon's bra chart is a band ladder keyed to under-bust (ribcage) measurement: 28 → 24⅞ in, 28/30 → 26, 30/32 → 27¾, 32/34 → 29¼, 34/36 → 30, 36/38 → 32¾, 38/40 → 35, 40/42 → 37⅛. It is the same table on the B/C-cup and D–DDD-cup products — <strong>cup is chosen by buying the variant</strong>, not by a column in the chart, and Lululemon publishes no bust or cup-difference row. Each band also maps to an alpha and a numeric (32/34 = S = 8), so a bra and a tee in the same letter are sized to the same body.`,
+      `Two things worth knowing. The inch and cm rows don't convert cleanly (74.4 cm is 29.3 in, shown as 29¼; 78 cm is 30.7, shown as 30), so measure in whichever unit you'll compare against. And the D–DDD Wundermost bralette carries a "runs a bit large" tag from Lululemon's own reviews while the Invisiwear is "true to size" on the identical chart — the chart is the same, the garments aren't.`,
+    ],
+  },
+  {
+    category: 'Shoes: two foot-length scales under one label',
+    text: [
+      `Lululemon's sneaker chart lists a women's and a men's foot length under the <em>same</em> US label — US 9 is 10 in for women and 10⅜ in for men. This is not Nike's "W = M + 1½" where the shoe is identical; these are two lasts sharing a number, with the men's about ⅜ in longer at every label. Women's runs 5 to 12, men's 7 to 14. Measure your foot and read your own column; don't convert from the other.`,
+    ],
+  },
+  {
+    category: 'Compression is a fit, not a size',
+    text: [
+      `Everything above is Lululemon's chart. This paragraph isn't. Lululemon's leggings and fitted tops are designed to sit close — Align is soft and low-compression, Wunder Train and Everlux are firmer — and a snug first pull-on at your chart size is the intended fit. Sizing up to make a compression garment feel like a loose one usually ends in bagging at the knee and slipping at the waist. Read the product page's fit label (fitted, relaxed, oversized) and the fabric name; they change how your chart size feels more than a size step does.`,
+    ],
+  },
+];
+
+const cm = (lo: number, hi?: number) => (hi === undefined ? `${lo} cm` : `${lo}–${hi} cm`);
+
+const charts: ConversionTable[] = [
+  {
+    heading: 'Lululemon women’s — tops (chest) and bottoms (waist, hip)',
+    note: 'Chest from the Little Ribbed Tee page; waist and hip from the Daydrift Trouser page; captured 14 November 2026. Single values are Lululemon’s — most sizes are points, not bands.',
+    noteAfter: true,
+    minWidth: 600,
+    headers: ['Size', 'Alpha', 'Chest', 'Waist', 'Hip'],
+    rows: [
+      ['0', 'XXXS', '28½″', '21½″', '31½″'],
+      ['2', 'XXS', '30″', '23″', '33″'],
+      ['4', 'XS', '31–32″', '24–25″', '34–35″'],
+      ['6', 'S', '33–34″', '26–27″', '36–37″'],
+      ['8', 'M', '35–36″', '28–29″', '38–39″'],
+      ['10', 'L', '37–38½″', '30–31½″', '40–41½″'],
+      ['12', 'XL', '40″', '33″', '43″'],
+      ['14', 'XL', '42″', '35″', '45″'],
+      ['16', '1X', '45″', '39″', '47″'],
+      ['18', '1X', '47″', '41″', '49″'],
+      ['20', '2X', '49–51″', '43″', '51″'],
+    ],
+  },
+  {
+    heading: 'Lululemon bras — band by under-bust',
+    note: 'Same table on the B/C-cup Invisiwear and the D–DDD Wundermost. Cup is selected by product variant; no cup row is published.',
+    noteAfter: true,
+    minWidth: 520,
+    headers: ['Band', 'Alpha', 'Numeric', 'Under-bust'],
+    rows: [
+      ['28', 'XXS', '2', '24⅞″ · 63.3 cm'],
+      ['28/30', 'XXS', '4', '26″ · 65.8 cm'],
+      ['30/32', 'XS', '6', '27¾″ · 70.8 cm'],
+      ['32/34', 'S', '8', '29¼″ · 74.4 cm'],
+      ['34/36', 'M', '10', '30″ · 78 cm'],
+      ['36/38', 'L', '12', '32¾″ · 83.4 cm'],
+      ['38/40', 'XL', '14', '35″ · 88.8 cm'],
+      ['40/42', '1X', '16', '37⅛″ · 94.3 cm'],
+    ],
+  },
+  {
+    heading: 'Lululemon men’s — tops (chest)',
+    minWidth: 400,
+    headers: ['Size', 'Chest'],
+    rows: [
+      ['XS', '35–36″'], ['S', '37–38″'], ['M', '39–40″'], ['L', '41–42″'], ['XL', '43–45″'],
+      ['XXL', '46–48″'], ['3XL', '50–52″'], ['4XL', '53–55″'], ['5XL', '56–58″'],
+    ],
+  },
+  {
+    heading: 'Lululemon men’s — trousers by waistband',
+    note: 'Body waist = label + 1 in and hip = label + 7½ in through 40; the grade jumps from 42.',
+    noteAfter: true,
+    minWidth: 520,
+    headers: ['Waistband', 'Alpha', 'Waist', 'Hip'],
+    rows: [
+      ['26', 'XXS', '27″', '33½″'], ['27', 'XS', '28″', '34½″'], ['28', 'XS', '29″', '35½″'],
+      ['29', 'S', '30″', '36½″'], ['30', 'S', '31″', '37½″'], ['31', 'M', '32″', '38½″'],
+      ['32', 'M', '33″', '39½″'], ['33', 'L', '34″', '40½″'], ['34', 'L', '35″', '41½″'],
+      ['35', 'XL', '36″', '42½″'], ['36', 'XL', '37″', '43½″'], ['37', 'XL', '38″', '44½″'],
+      ['38', 'XXL', '39″', '45½″'], ['39', 'XXL', '40″', '46½″'], ['40', 'XXL', '41″', '47½″'],
+      ['42', '3XL', '46″', '48″'], ['44', '3XL', '48″', '50″'], ['46', '4XL', '50″', '52″'],
+      ['48', '5XL', '52″', '54″'], ['50', '5XL', '54″', '56″'],
+    ],
+  },
+  {
+    heading: 'Lululemon footwear — foot length',
+    note: 'Two scales under one label column; the men’s last is about ⅜ in longer at every size. Read your own column.',
+    noteAfter: true,
+    minWidth: 480,
+    headers: ['US', 'Women’s foot', 'Men’s foot'],
+    rows: [
+      ['5', '8¾″', '—'], ['5.5', '8⅞″', '—'], ['6', '9″', '—'], ['6.5', '9⅛″', '—'],
+      ['7', '9⅜″', '9⅝″'], ['7.5', '9½″', '9⅞″'], ['8', '9⅝″', '10″'], ['8.5', '9⅞″', '10¼″'],
+      ['9', '10″', '10⅜″'], ['9.5', '10¼″', '10½″'], ['10', '10⅜″', '10⅝″'], ['10.5', '10½″', '10⅞″'],
+      ['11', '10⅝″', '11″'], ['11.5', '10⅞″', '11⅛″'], ['12', '11″', '11⅜″'], ['12.5', '—', '11½″'],
+      ['13', '—', '11⅝″'], ['14', '—', '12″'],
+    ],
   },
 ];
 
 const faqs = [
   {
-    q: 'Do Lululemon leggings run small?',
-    a: "They run snug by design rather than small. Lululemon leggings are compression fit, so the tight feel at first pull-on is intentional; it's what delivers the hold and smoothing the brand is known for. Most shoppers land right at their true numeric size; a pair that slides on effortlessly is usually a size too big.",
+    q: 'Does Lululemon run small?',
+    a: 'By the chart, no — a women’s 8 is a 35–36 in chest and 28–29 in waist, in line with H&M’s and Adidas’ M. What feels small is compression: Align, Wunder Train and fitted tops are designed to sit close at your chart size. Take the number the chart gives you and let the fabric name tell you how firm it will feel.',
   },
   {
-    q: 'Should I size up in Lululemon Align leggings?',
-    a: "Usually not. Align's Nulu fabric is the softest and least compressive in the lineup, so it already feels gentler than firmer lines like Wunder Train. Sizing up in Align commonly leads to bagging at the knees and slipping at the waist. Take your true size and let the fabric do its thing.",
+    q: 'Where is Lululemon’s size chart?',
+    a: 'On every product page, under “Size guide” — but it shows only that garment type’s chart. A trouser shows waist and hip, a tee shows chest, a bra shows band. The tables on this page are assembled from five product pages so you can see them together.',
   },
   {
-    q: 'What size am I in Lululemon numeric sizing?',
-    a: "Lululemon uses numeric women's sizing from 0 to 20 rather than letters. As a rough anchor, a US 4 corresponds to a Lululemon 4, since the numbers track standard US sizes fairly closely. Use the size guide on each product page to match your measurements, and remember compression pieces are meant to fit firmly at that number.",
+    q: 'What is my Lululemon size if I measure between two numbers?',
+    a: 'Lululemon’s women’s chart gives single values at most sizes (12 = 40 in chest, 14 = 42 in), so a 41-in chest is between sizes on the brand’s own chart. For compression fabrics take the smaller; for relaxed or oversized styles, or anything you’ll layer, the larger.',
   },
   {
-    q: 'Is Wunder Train tighter than Align?',
-    a: "It feels that way to most people. Wunder Train uses the brand's Everlux fabric, which is more compressive and structured for high-sweat training, while Align's Nulu is light and buttery for yoga and lounging. Same size, distinctly different sensation. Shoppers commonly keep the same number across both and choose the line by activity.",
+    q: 'How do Lululemon bra sizes work?',
+    a: 'Measure around your ribcage just under the bust and find it in the band column: 29¼ in is a 32/34, which is also alpha S and numeric 8. Cup isn’t in the chart — Lululemon sells each bra as a B/C or D–DDD variant, so pick the band from the table and the variant from your cup.',
   },
   {
-    q: 'Do Lululemon sports bras run tight?',
-    a: "A supportive first impression is normal, as bras are built to feel firmer than a top. If a band feels restrictive rather than secure after a few minutes of movement, going up one size or dropping to a lighter support level tends to fix it. Knowing your measured band and cup size helps you read Lululemon's bra size chart accurately.",
+    q: 'What does the number on Lululemon men’s trousers mean?',
+    a: 'It is the waistband size, and your body waist is one inch more: a 32 is for a 33-in waist with a 39½-in hip. From 42 up the grade changes (42 → 46-in waist). Inseam is chosen separately and isn’t part of the body chart.',
+  },
+  {
+    q: 'Are Lululemon men’s and women’s shoe sizes the same shoe?',
+    a: 'No. Unlike Nike, the two share a label column but have different foot lengths: US 9 is 10 in on the women’s scale and 10⅜ in on the men’s. Measure your foot and read the column for the shoe you are buying.',
   },
 ];
 
 const related = [
+  { href: '/size-guides/nike/', label: 'Nike size chart & fit guide' },
   { href: '/size-guides/adidas-size-chart-fit-guide/', label: 'Adidas size chart & fit guide' },
   { href: '/size-guides/bra-size-calculator-guide/', label: 'Bra size calculator & fitting guide' },
-  { href: '/blog/why-the-same-size-fits-differently/', label: 'Why the same size fits differently across brands' },
+  { href: '/how-to-measure/', label: 'How to measure yourself' },
 ];
 ---
 
 <BrandGuide
   brandKey="lululemon"
   brand="Lululemon"
-  title="Lululemon Size Chart & Fit Guide: Does It Run Small?"
-  description="Lululemon runs true to size with intentional compression: leggings feel snug by design, so don't size up. Numeric sizing explained, fit notes, and FAQ."
+  title="Lululemon Size Chart & Fit Guide: Women’s 0–20, Men’s, Bras, Shoes | Attirel"
+  description="Lululemon’s own size charts, assembled from the per-product size guides: women’s 0–20 chest/waist/hip, men’s chest and waistband trousers, bra bands by under-bust, and footwear. Why most sizes are single numbers, and what compression changes."
+  h1="Lululemon Size Chart & Fit Guide"
+  standardCharts={false}
+  chartsHeading="Lululemon’s size charts, as published"
+  typicalCharts={charts}
   fitSections={fitSections}
+  fitSectionsHeading="How Lululemon’s charts actually work"
   faqs={faqs}
   related={related}
+  breadcrumbs
 >
   <Fragment slot="verdict">
-    <strong>Lululemon runs true to size — the snugness is the point.</strong> Leggings are
-    compression fit, so they're meant to feel firm at your true number in the brand's 0–20
-    numeric range. Sizing up loses the hold they're engineered for. Expect Align to feel softer
-    and less compressive than Wunder Train at the identical size.
+    <p>
+      Lululemon publishes a different chart on every garment type, mostly as single numbers
+      rather than bands — a women's 12 is a 40-inch chest, not a range. Men's trousers are
+      labelled one inch under your waist. Bras are sized by under-bust with cup chosen by
+      product. None of it runs small; the compression fabrics are meant to feel snug at the
+      size the chart names.
+    </p>
+  </Fragment>
+  <Fragment slot="method">
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Measure in inches</strong> — chest at the fullest point, waist at the smallest,
+        hip at the widest, and under-bust around the ribcage for bras. Our <a
+          href="/how-to-measure/"
+          class={linkClass}>measuring guide</a
+        > shows where.
+      </li>
+      <li>
+        <strong>Women: find the number whose value matches yours</strong> on the measurement
+        that matters for the garment — chest for tops, hip for leggings. Between two points,
+        smaller for compression, larger for relaxed.
+      </li>
+      <li>
+        <strong>Men: tops by chest band; trousers by waist minus one.</strong> A 33-in waist is
+        a 32.
+      </li>
+      <li>
+        <strong>Bras: band from under-bust, then choose the B/C or D–DDD product</strong> for
+        your cup.
+      </li>
+      <li>
+        <strong>Shoes: read the column for the shoe you're buying</strong> — the men's and
+        women's foot lengths differ at the same label.
+      </li>
+    </ol>
+  </Fragment>
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Every figure below is Lululemon's own, transcribed on 14 November 2026 from the Size guide
+      drawer on <AffLink brand="lululemon" href="https://shop.lululemon.com/">shop.lululemon.com
+        product pages</AffLink
+      > — the Little Ribbed Tee, Daydrift Trouser, Invisiwear and Wundermost bras, Waffle-Knit
+      Henley, ABC Classic-Fit Trouser and Cityverse Sneaker. Lululemon drafts in inches and shows
+      cm as a conversion. These same figures are what <a
+        href="https://www.attirel.ai/size-check"
+        class={linkClass}>Attirel's size check</a
+      > reads when it names your Lululemon size (bras coming soon).
+    </p>
   </Fragment>
   <Fragment slot="tips">
-    <li><strong>Trust the squeeze:</strong> compression leggings should feel firm on first wear; if they pull on with zero effort, try the number below.</li>
-    <li><strong>Pick the line by feel:</strong> Align for soft, low-compression comfort; Wunder Train for locked-in support (same size, different sensation).</li>
-    <li><strong>Read the fit label:</strong> product pages state whether a style is fitted, relaxed, or oversized, and that designation shifts the fit more than a size step.</li>
-    <li><strong>Size jackets for layers:</strong> sculpted styles like the Define are cut close, so go up one if you'll regularly wear them over more than a tank.</li>
+    <li><strong>Points, not bands.</strong> Most women's sizes are one number; between two, let the fabric decide.</li>
+    <li><strong>Trousers: label = waist − 1.</strong> Don't buy your waist measurement as the size.</li>
+    <li><strong>Bras: under-bust picks the band, the product picks the cup.</strong></li>
+    <li><strong>XL covers 12 and 14, 1X covers 16 and 18.</strong> Letter-sized products fit looser at the lower number.</li>
+    <li><strong>Compression at chart size.</strong> Align soft, Wunder Train firm, same number.</li>
+    <li><strong>Shoes: own column only.</strong> Men's and women's lengths differ under the same label.</li>
   </Fragment>
 </BrandGuide>
