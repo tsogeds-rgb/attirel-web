@@ -1,46 +1,133 @@
 ---
 import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
+
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
 
 const fitSections = [
   {
-    category: 'Tops & knits',
-    text: "Uniqlo cuts to a slim Japanese fit block: many shoppers find tops narrower through the shoulders and chest than US mall brands, with noticeably shorter sleeves and torsos. Supima tees and merino knits in particular tend to fit close to the body, so shoppers used to a relaxed American cut often go up one size.",
+    category: 'Two tabs on every product page, and only one is a size chart',
+    text: [
+      `Uniqlo's size guide opens from every product page and has two tabs. <strong>Body Size</strong> is the chart: the body measurements each letter corresponds to, and it is the same table on every women's product and every men's product we opened. <strong>Product Size</strong> is the garment itself — the flat measurements of that particular pair of trousers or that particular shirt — and it changes with every item.`,
+      `This is the source of most "Uniqlo runs small" confusion. On a pair of women's flare pants, Product Size lists a 23½-inch waist for an M; Body Size says an M is for a 27¼–29½-inch waist. Neither is wrong. The first is the fabric, which stretches; the second is you. Size from Body Size. Use Product Size to compare a garment you're considering with one you already own, which is what Uniqlo's "Compare Sizes" tool does.`,
+    ],
   },
   {
-    category: 'Bottoms',
-    text: "Trousers and jeans tend to run slim through the hip and thigh with a tapered leg. Uniqlo hems trousers in-store and online in many regions, which helps with length. The waist itself, though, tends to measure true to the labeled size rather than generously, so there's less hidden room than at vanity-sized brands.",
+    category: 'The chart is in centimetres, and it is very regular',
+    text: [
+      `Uniqlo is a Japanese company and its chart is drafted in centimetres; the inch toggle is a rounded conversion (75–81 cm becomes "29½–32″"). In centimetres the women's chart is almost mechanical: every band is 6 cm wide and each size steps up by 4 cm (XXS bust 75–81, XS 79–85, S 83–89, M 87–93), with a 6-cm jump into L (93–99). Because the bands are wider than the steps, <strong>adjacent sizes overlap by 2 cm</strong>: an 84-cm bust is inside both XS and S on Uniqlo's own chart.`,
+      `That overlap is a feature once you know it's there. If you land in the shared 2 cm, you have a free choice, and the garment decides: a fitted knit takes the smaller letter, an oversized shirt the larger. Most other brands' charts touch or leave gaps; Uniqlo's deliberately offer you both.`,
+    ],
   },
   {
-    category: 'Outerwear',
-    text: "Ultra Light Down, blocktech coats, and jackets are cut trim so they layer under other clothing. If you plan to wear anything heavier than a t-shirt underneath, many shoppers find sizing up one gives the intended silhouette. Collaboration lines like Uniqlo U and JW Anderson deliberately cut boxier, so check the model measurements before defaulting to your usual size.",
+    category: 'Does Uniqlo actually run small?',
+    text: [
+      `Not by the chart. Uniqlo's women's M covers an 87–93 cm bust. H&amp;M's M is 90–98 cm; Levi's M is 36–37½ in (91–95 cm); Athleta's is 36½–37½ in (93–95 cm). Uniqlo's M starts about 3 cm lower than its rivals and ends about 2–5 cm lower, so it is a <em>slightly smaller body</em> per letter — roughly half a size, not a whole one — and the overlap means that an M at another brand is usually still an M or an L here, not an XL.`,
+      `What shoppers feel as "small" is mostly cut and length, which the body chart doesn't describe: Uniqlo blocks sit closer through the shoulder and run shorter in the sleeve and torso than US mall brands. That is a Product Size question. If your chest measurement puts you in an M but you have long arms, compare the sleeve-length column in Product Size against a shirt you own before you decide.`,
+    ],
+  },
+  {
+    category: 'Men’s chart: chest only, and it reaches 3XL',
+    text: [
+      `For men, Uniqlo publishes a single body measurement — chest — on an 8-cm grade from XXS (78–84) to 3XL (128–136). XXS and XS overlap (78–84 and 80–88); from S upward the bands touch exactly (88–96, 96–104, 104–112). There is no waist or hip row for men's tops, so a V-shaped torso can't be checked against the chart; buy the chest.`,
+      `Men's jeans and chinos are sold by waist inch ("32inch") and the Body Size tab gives a single centimetre waist per size, 27 to 40 with no 37 or 39: 30 → 76 cm, 32 → 81.5, 34 → 86.5. The labels are inches but the figures are Uniqlo's own, and they don't all round the same way (32 → 81.5, not 81.3). No hip is published for bottoms. Length isn't a size: Uniqlo hems trousers to your chosen inseam at purchase, free on most items.`,
+    ],
+  },
+  {
+    category: 'Regional cuts and collaborations',
+    text: [
+      `Everything on this page is the US site's chart. Uniqlo's Japanese range is cut roughly a size smaller for the same letter, so a Japan-spec M bought abroad is closer to a US S; shoppers importing from the Japanese site should size up. Uniqlo U, JW Anderson and other collaboration lines use the same Body Size chart but a boxier Product Size, which is another reason to open that second tab before buying one.`,
+    ],
+  },
+];
+
+const cm = (lo: number, hi?: number) => (hi === undefined ? `${lo} cm` : `${lo}–${hi} cm`);
+
+const charts: ConversionTable[] = [
+  {
+    heading: 'Uniqlo women’s — Body Size',
+    note: 'Uniqlo’s own centimetre figures from the Body Size tab, captured 13 November 2026. Same table on tops, dresses, skirts and trousers (bottoms pages omit the bust column). Bands overlap by 2 cm.',
+    noteAfter: true,
+    minWidth: 520,
+    headers: ['Size', 'Bust', 'Waist', 'Hip'],
+    rows: [
+      ['XXS', cm(75, 81), cm(57, 63), cm(83, 89)],
+      ['XS', cm(79, 85), cm(61, 67), cm(87, 93)],
+      ['S', cm(83, 89), cm(65, 71), cm(91, 97)],
+      ['M', cm(87, 93), cm(69, 75), cm(95, 101)],
+      ['L', cm(93, 99), cm(75, 81), cm(101, 107)],
+      ['XL', cm(99, 105), cm(81, 87), cm(107, 113)],
+      ['XXL', cm(105, 111), cm(87, 93), cm(113, 119)],
+    ],
+  },
+  {
+    heading: 'Uniqlo men’s tops — Body Size',
+    note: 'Chest is the only body measurement Uniqlo publishes for men’s tops. XXS and XS overlap; S upward touch.',
+    noteAfter: true,
+    minWidth: 400,
+    headers: ['Size', 'Chest', 'Chest (in)'],
+    rows: [
+      ['XXS', cm(78, 84), '30¾–33″'],
+      ['XS', cm(80, 88), '31½–34¾″'],
+      ['S', cm(88, 96), '34¾–37¾″'],
+      ['M', cm(96, 104), '37¾–41″'],
+      ['L', cm(104, 112), '41–44″'],
+      ['XL', cm(112, 120), '44–47¼″'],
+      ['XXL', cm(120, 128), '47¼–50½″'],
+      ['3XL', cm(128, 136), '50½–53½″'],
+    ],
+  },
+  {
+    heading: 'Uniqlo men’s jeans and trousers — Body Size',
+    note: 'Waist-labelled sizes with Uniqlo’s own centimetre waist per size. No hip published; length is hemmed to order.',
+    noteAfter: true,
+    minWidth: 400,
+    headers: ['Size', 'Waist'],
+    rows: [
+      ['27', cm(68.5)],
+      ['28', cm(71)],
+      ['29', cm(73.5)],
+      ['30', cm(76)],
+      ['31', cm(78.5)],
+      ['32', cm(81.5)],
+      ['33', cm(84)],
+      ['34', cm(86.5)],
+      ['35', cm(89)],
+      ['36', cm(91.5)],
+      ['38', cm(96.5)],
+      ['40', cm(101.5)],
+    ],
   },
 ];
 
 const faqs = [
   {
-    q: 'Does Uniqlo run small in the US?',
-    a: "For most US shoppers, yes. Uniqlo's fit block originates from Japanese sizing, which tends to run slimmer and shorter than typical US brands. Uniqlo adjusts sizing upward for its US range, but many shoppers still find it fits about one size smaller than they expect from American mall brands.",
+    q: 'Does Uniqlo run small?',
+    a: 'By its body chart, Uniqlo’s letters sit about half a size smaller than H&M, Athleta or Levi’s — a women’s M is for an 87–93 cm bust against H&M’s 90–98 — and adjacent sizes overlap by 2 cm, so most people who are an M elsewhere are an M or L here, not an XL. What feels small is the cut: Uniqlo blocks are closer through the shoulder and shorter in sleeve and body. Check the Product Size tab against a garment you own for that.',
   },
   {
-    q: 'Should I size up in Uniqlo?',
-    a: "If you're between sizes, or buying knits and outerwear you plan to layer, sizing up one is the common advice. For base layers like Heattech and Airism, stay true to size: they're designed to fit snug against the skin.",
+    q: 'What is the difference between Product Size and Body Size on Uniqlo?',
+    a: 'Body Size is the size chart: the body measurements each letter is for, the same on every product. Product Size is that garment’s own flat measurements, different on every item. Choose your letter from Body Size; use Product Size to compare with clothes you already have.',
   },
   {
-    q: 'Is Uniqlo sizing the same as Japan?',
-    a: "No. Items sold in Uniqlo's US and European ranges are cut roughly one size more generous than the same item in Japan. If you buy Japan-spec items abroad or from the Japanese site, expect them to run a full size smaller than the Western equivalent.",
+    q: 'Which Uniqlo size if I fall in the overlap between two sizes?',
+    a: 'Uniqlo’s women’s bands are 6 cm wide but step 4 cm, so every pair of neighbouring sizes shares 2 cm. If you are in that shared band you are correctly both sizes; let the garment decide — the smaller letter for fitted knits and base layers, the larger for shirts, outerwear and anything you’ll layer.',
   },
   {
-    q: 'Do Uniqlo clothes shrink?',
-    a: 'Cotton-heavy pieces like Supima tees can shrink slightly in a hot wash or dryer. Washing cold and air-drying keeps them close to their original size; if you always machine-dry, consider going up a size in pure cotton styles.',
+    q: 'Is Uniqlo US sizing the same as Japan?',
+    a: 'No. The US and European ranges are cut roughly one size more generous than the same item in Japan. This page is the US site’s chart; a Japan-spec garment will run about a size smaller than these figures suggest.',
   },
   {
-    q: 'How does Uniqlo U sizing differ from regular Uniqlo?',
-    a: 'Uniqlo U and designer collaborations (like JW Anderson) are intentionally cut boxier and more oversized than the core range. Many shoppers take their regular size or even size down in these lines. Check the listed model size and measurements on each product page.',
+    q: 'How do Uniqlo men’s jeans sizes work?',
+    a: 'They are labelled by waist inch — 30, 32, 34 — and the Body Size tab gives Uniqlo’s own centimetre waist for each: 30 is 76 cm, 32 is 81.5, 34 is 86.5. There is no 37 or 39, and no hip measurement. Inseam isn’t part of the size; Uniqlo hems to the length you choose at checkout.',
   },
 ];
 
 const related = [
-  { href: '/size-guides/asos-size-chart-fit-guide/', label: 'ASOS size chart & fit guide' },
+  { href: '/size-guides/hm/', label: 'H&M size chart & fit guide' },
+  { href: '/size-guides/levis-size-chart-fit-guide/', label: 'Levi’s size chart & fit guide' },
   { href: '/size-guides/mango-size-chart-fit-guide/', label: 'Mango size chart & fit guide' },
   { href: '/blog/why-the-same-size-fits-differently/', label: 'Why the same size fits differently across brands' },
 ];
@@ -49,22 +136,74 @@ const related = [
 <BrandGuide
   brandKey="uniqlo"
   brand="Uniqlo"
-  title="Uniqlo Size Chart & Fit Guide: Does It Run Small?"
-  description="Uniqlo tends to run small with a slim Japanese cut, so many shoppers size up one. Standard US/UK/EU conversions, fit notes, and sizing FAQ."
+  title="Uniqlo Size Chart & Fit Guide: Body Size vs Product Size | Attirel"
+  description="Uniqlo’s own body-size chart in centimetres, transcribed from the US site: women’s XXS–XXL, men’s XXS–3XL, jeans 27–40. Why the two size-guide tabs confuse people, where the bands overlap, and whether Uniqlo really runs small."
+  h1="Uniqlo Size Chart & Fit Guide"
+  standardCharts={false}
+  chartsHeading="Uniqlo’s body-size charts, in centimetres"
+  typicalCharts={charts}
   fitSections={fitSections}
+  fitSectionsHeading="How Uniqlo’s chart actually works"
   faqs={faqs}
   related={related}
+  breadcrumbs
 >
   <Fragment slot="verdict">
-    <strong>Uniqlo tends to run small for most Western shoppers.</strong> Its slim Japanese fit
-    block sits narrower in the shoulders and shorter in the sleeves and torso than typical US
-    brands. If you're between sizes — or layering knits and outerwear — most shoppers do best
-    sizing up one.
+    <p>
+      Uniqlo's chart is the most regular in this series: 6-cm bands stepping 4 cm, so every
+      neighbouring pair of sizes overlaps by 2 cm and you often have a legitimate choice of two.
+      Its letters sit about half a size smaller than US brands', not a full one. The "runs
+      small" reputation is mostly cut and length — which the chart doesn't show, but the
+      Product Size tab on every page does.
+    </p>
+  </Fragment>
+  <Fragment slot="method">
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Measure in centimetres</strong> — bust at the fullest point, waist at the
+        narrowest, hip at the fullest. Our <a href="/how-to-measure/" class={linkClass}
+          >measuring guide</a
+        > shows where.
+      </li>
+      <li>
+        <strong>Open the Size Guide and click the Body Size tab, then CM.</strong> Ignore
+        Product Size for now.
+      </li>
+      <li>
+        <strong>Find the letter whose bands contain you.</strong> If two do — you're in the
+        2-cm overlap — pick the smaller for fitted pieces and base layers, the larger for
+        shirts, knits you'll layer, and outerwear.
+      </li>
+      <li>
+        <strong>Men: buy tops on chest, jeans on the waist number.</strong> Uniqlo publishes
+        nothing else for men.
+      </li>
+      <li>
+        <strong>Then check Product Size against something you own</strong> for sleeve and body
+        length, which is where Uniqlo differs from US brands.
+      </li>
+    </ol>
+  </Fragment>
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Every figure below is Uniqlo's own, transcribed on 13 November 2026 from the Body Size tab
+      of the size guide on <AffLink brand="uniqlo" href="https://www.uniqlo.com/us/en/"
+        >uniqlo.com's US product pages</AffLink
+      >, with CM selected. The table is brand-wide — identical on nine women's and three men's
+      products — though each page shows only the sizes that item is sold in, so the full chart is
+      assembled across products. These same figures are what <a
+        href="https://www.attirel.ai/size-check"
+        class={linkClass}>Attirel's size check</a
+      > reads when it names your Uniqlo size.
+    </p>
   </Fragment>
   <Fragment slot="tips">
-    <li><strong>Know your region:</strong> US/EU-range items are cut roughly a size more generous than Japan-spec stock, so check which version you're buying.</li>
-    <li><strong>Watch sleeve and torso length:</strong> if you have long arms or a long torso, size up even when the width fits.</li>
-    <li><strong>Base layers stay true:</strong> Heattech and Airism are designed to fit snug; take your usual size for the intended effect.</li>
-    <li><strong>Collabs cut boxy:</strong> Uniqlo U and JW Anderson run oversized. Check model measurements before sizing up again.</li>
+    <li><strong>Body Size, not Product Size.</strong> One is you, the other is the garment. Size from the first.</li>
+    <li><strong>Read the cm.</strong> Uniqlo drafts in centimetres; the inch figures are rounded.</li>
+    <li><strong>In the overlap, you're both sizes.</strong> Let the garment's purpose decide.</li>
+    <li><strong>Half a size smaller, not a full one.</strong> Your M at Levi's or Athleta is an M or L here; check the chart before reflexively sizing up.</li>
+    <li><strong>Length is the real difference.</strong> Long arms or torso? Compare Product Size sleeve and body length against a shirt that fits.</li>
+    <li><strong>Base layers stay true:</strong> Heattech and Airism are meant to sit close; take the smaller of your two sizes.</li>
+    <li><strong>Japan-spec runs a size smaller</strong> than these US figures.</li>
   </Fragment>
 </BrandGuide>
