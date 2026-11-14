@@ -10,7 +10,7 @@ const steps = [
   {
     n: '1',
     title: 'Measure',
-    body: 'Chest, waist and hips with a tape measure, plus inseam and foot length if you want bottoms and shoes. Our measuring guide shows where each one goes. Five numbers, once.',
+    body: 'Chest, waist and hips with a tape measure, plus inseam and foot length if you want bottoms and shoes, and under-bust and high-bust for bras. Our measuring guide shows where each one goes. Once.',
   },
   {
     n: '2',
@@ -43,15 +43,15 @@ const labels = [
 ];
 
 const inApp = [
-  ['Categories', 'Tops, bottoms, dresses, outerwear and shoes, wherever the brand publishes a chart for them. Men’s and women’s.'],
+  ['Categories', 'Tops, bottoms, dresses, outerwear, shoes and bras, wherever the brand publishes a chart for them. Men’s and women’s.'],
   ['The numbers beside yours', 'Every result shows your measurement and the chart’s figure for that size side by side — “You 29″ · Size 8 29″” — so you can check the arithmetic against the brand’s own page.'],
   ['Between sizes, said plainly', 'When your waist lands on one size and your chest on another, the card says so and tells you which one decides, instead of hiding it behind a single number.'],
   ['Chart dates', 'Each result says when we transcribed that brand’s chart. Brands change charts; we re-check and update the date.'],
+  ['Bras: band and cup', 'Add your under-bust and high-bust and the app names your band from the brand’s own chart and your cup from bust minus band — at Lululemon and Athleta today. Brands measure band two ways; the app holds both.'],
 ];
 
 const notYet = [
   ['Shoe widths', 'We check foot length. Wide and extra-wide fittings are described in the brand guides but not yet scored.'],
-  ['Bras', 'No band or cup checks yet. Brands that publish bra charts are on the list.'],
   ['Shopping', 'Attirel tells you your size. It doesn’t sell clothes, compare prices or show products.'],
 ];
 ---
@@ -120,7 +120,7 @@ const notYet = [
         ))}
       </div>
       <h2 class="mt-14 font-display text-2xl font-semibold tracking-tight">Not yet</h2>
-      <div class="mt-6 grid gap-6 sm:grid-cols-3">
+      <div class="mt-6 grid gap-6 sm:grid-cols-2">
         {notYet.map(([title, body]) => (
           <div class="rounded-2xl border border-ink/10 p-6">
             <h3 class="font-semibold">{title}</h3>
