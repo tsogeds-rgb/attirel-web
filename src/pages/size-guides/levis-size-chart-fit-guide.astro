@@ -1,47 +1,156 @@
 ---
 import BrandGuide from '../../components/BrandGuide.astro';
+import AffLink from '../../components/AffLink.astro';
+import type { ConversionTable } from '../../config/sizeConversions';
+
+const linkClass =
+  'font-semibold text-plum underline decoration-plum/40 underline-offset-2 hover:decoration-plum';
 
 const fitSections = [
   {
-    category: 'Jeans & denim',
-    text: "Levi's sizes its jeans by actual waist and inseam inches, and modern stretch fits like the 511, 721, and 312 tend to run true to the labeled waist: measure your natural waist and you're most of the way there. The classics are the exception: rigid, non-stretch denim commonly fits tighter than the label suggests, and 501 Shrink-to-Fit is famous for tightening further after the first washes, so many shoppers go up in those styles.",
+    category: 'Men’s jeans: the size is your waist, and the hip is fixed',
+    text: [
+      `Levi's publishes one jeans chart for men, "Find Your Levi's Waist", and it is the simplest in this whole series: <strong>your Levi's size is your waist measurement in inches</strong>, 24 through 42, with no 37, 39 or 41. That is a point value, not a band — a 32 is for a 32-inch waist, and if you measure 32½ the chart has nothing to say, which is where the stretch-versus-rigid question below comes in.`,
+      `What most shoppers never look at is the hip row. Levi's assigns <strong>exactly waist + 6½ inches</strong> of hip to every size: 32 → 38½, 34 → 40½, 42 → 48½. Thigh grades by half an inch per size to 36, then jumps (25¼, 26⅛, 26⅞). So the chart describes one body proportion. If your hip is more than 6½ in over your waist, every Levi's size that fits your waist is narrow for you through the seat, and that is a fit-family problem (go looser: 550, 559, 569) rather than a size problem.`,
+      `Length is a separate choice and Levi's gives you no inseam-to-length table. The modal maps <em>height</em> to a recommended length range instead — 5'6" or shorter 28–30, 5'6"–5'10" 30–32, 5'10"–6' 32–34, 6'1"+ 36–38. That is guidance about trouser break, not a measurement, so the app doesn't use it; measure a pair you like and buy that L.`,
+    ],
   },
   {
-    category: 'Tops',
-    text: "Levi's tees, western shirts, and flannels tend to follow a standard American cut, neither notably slim nor oversized. Many shoppers find graphic tees and batwing-logo styles fit true with a classic, slightly relaxed body, while heritage and vintage-inspired shirts can feel boxier through the chest. When in doubt, staying with your usual US letter size is the commonly reported safe bet.",
+    category: 'Women’s jeans: the number is 1¼ inches under your waist',
+    text: [
+      `Women's Levi's run 23 to 35, and unlike the men's chart the number is <strong>not</strong> your waist. Levi's pairs a 23 with a 24¼-inch waist, a 28 with 29¼, a 30 with 31¼ — 1¼ in under your measurement, consistently, through size 30. Above that the grade widens: 31 is 32¾, 32 is 34¼, 33 is 35¾, 34 is 37¾, 35 is 39¾. Hip is the Levi's number + 10 (23 → 33, 30 → 40) up to 30, then 41½, 43, 44½, 46½, 48½.`,
+      `The chart also carries a US numeric size, and it is lumpy: <strong>23, 24 and 25 are all "size 0"</strong>, then 26 is a 2, 27 a 4, and so on in twos to 35 = 20. Alpha sizes run XXS (23–24), XS (25–26), S (27–28), M (29–30), L (31–32), XL (33–34), XXL (35). Buy by the Levi's number, which is what the size selector shows; the numeric and alpha columns are for cross-reference.`,
+    ],
   },
   {
-    category: 'Jackets & trucker',
-    text: "The trucker jacket is deliberately cut short and trim in the body. That cropped silhouette is the design, not a sizing error. Many shoppers take their true size for the classic close fit, but if you plan to layer a hoodie or heavy flannel underneath, going up one is a common move. Sherpa-lined truckers tend to feel snugger than the unlined version in the same size because the lining takes up interior room.",
+    category: 'Tops: letter bands with gaps between them',
+    text: [
+      `Levi's publishes one "Tops & Outerwear" table per gender and uses it for everything — tees, western shirts, flannels, sweaters, trucker jackets. The same table opened on a $30 tee and a $200 selvedge trucker.`,
+      `Women's bands are narrow and <strong>don't touch</strong>: chest M is 36–37½ and L starts at 38½; waist S is 28–29 and M starts at 30; hip bands step by a full inch. If you measure 38 in the chest you are between M and L on Levi's own chart, and the garment's cut decides — a western shirt is meant to be close, a flannel is not. The same table appears on plus-size product pages; there is no separate plus chart on the US site.`,
+      `Men's bands are wider and do touch (chest M 37–40, L 40–44). Waist bands run narrower than chest bands — M waist 31–34 against a 37–40 chest — so a V-shaped torso can be an L in the chest and an S in the waist; for a shirt, buy the chest. A Big & Tall page adds LT–4XLT: same chest and hip as L–3XL plus one more size, with a slightly higher neck and a 34¼-inch waist floor at LT.`,
+    ],
+  },
+  {
+    category: 'Stretch, rigid and Shrink-to-Fit — what the chart can’t tell you',
+    text: [
+      `Everything above is Levi's own chart. This section is not: it is the fabric behaviour shoppers consistently report, and you should weight it accordingly. Stretch-blend fits (511, 512, 721, 312) tend to hold the labelled waist and relax slightly with wear, so between sizes most people go down. Rigid 100% cotton denim (501 Original, Vintage Clothing) has no give; between sizes, go up. <strong>501 Shrink-to-Fit</strong> is sold unshrunk and loses roughly an inch to an inch and a half in the waist and more in length after the first washes, so it is traditionally bought a size up in the waist and two in the length.`,
+      `The trucker jacket is cut short and trim on purpose; take your chart size for the classic look or one up to layer a hoodie under it. Sherpa-lined truckers feel a size snugger than the unlined version because the lining takes up room.`,
+    ],
+  },
+];
+
+const inch = (lo: number, hi?: number) => (hi === undefined ? `${lo}″` : `${lo}–${hi}″`);
+
+const charts: ConversionTable[] = [
+  {
+    heading: 'Levi’s men’s jeans — Find Your Levi’s Waist',
+    note: 'Levi’s own figures, US/Canada, captured 13 November 2026. Your Levi’s size is your waist; hip is waist + 6½ at every size. No 37, 39 or 41.',
+    noteAfter: true,
+    minWidth: 600,
+    headers: ['Levi’s size', 'Alpha', 'Your waist', 'Your hip', 'Your thigh'],
+    rows: [
+      ['24', 'XXS', inch(24), inch(30.5), inch(18.5)],
+      ['25', 'XXS', inch(25), inch(31.5), inch(19)],
+      ['26', 'XS', inch(26), inch(32.5), inch(19.5)],
+      ['27', 'XS', inch(27), inch(33.5), inch(20)],
+      ['28', 'XS', inch(28), inch(34.5), inch(20.5)],
+      ['29', 'S', inch(29), inch(35.5), inch(21)],
+      ['30', 'S', inch(30), inch(36.5), inch(21.5)],
+      ['31', 'S', inch(31), inch(37.5), inch(22)],
+      ['32', 'M', inch(32), inch(38.5), inch(22.5)],
+      ['33', 'M', inch(33), inch(39.5), inch(23)],
+      ['34', 'M', inch(34), inch(40.5), inch(23.5)],
+      ['35', 'L', inch(35), inch(41.5), inch(24)],
+      ['36', 'L', inch(36), inch(42.5), inch(24.5)],
+      ['38', 'L', inch(38), inch(44.5), '25¼″'],
+      ['40', 'XL', inch(40), inch(46.5), '26⅛″'],
+      ['42', 'XL', inch(42), inch(48.5), '26⅞″'],
+    ],
+  },
+  {
+    heading: 'Levi’s women’s jeans — Find Your Levi’s Waist',
+    note: 'Your waist is 1¼″ over the Levi’s number through size 30, then the grade widens. Sizes 23, 24 and 25 all carry US numeric 0.',
+    noteAfter: true,
+    minWidth: 640,
+    headers: ['Levi’s size', 'US numeric', 'Alpha', 'Your waist', 'Your hip', 'Your thigh'],
+    rows: [
+      ['23', '0', 'XXS', '24¼″', inch(33), '18¾″'],
+      ['24', '0', 'XXS', '25¼″', inch(34), '19⅜″'],
+      ['25', '0', 'XS', '26¼″', inch(35), inch(20)],
+      ['26', '2', 'XS', '27¼″', inch(36), '20⅝″'],
+      ['27', '4', 'S', '28¼″', inch(37), '21¼″'],
+      ['28', '6', 'S', '29¼″', inch(38), '21⅞″'],
+      ['29', '8', 'M', '30¼″', inch(39), inch(22.5)],
+      ['30', '10', 'M', '31¼″', inch(40), '23¼″'],
+      ['31', '12', 'L', '32¾″', inch(41.5), '24⅛″'],
+      ['32', '14', 'L', '34¼″', inch(43), inch(25)],
+      ['33', '16', 'XL', '35¾″', inch(44.5), '25⅞″'],
+      ['34', '18', 'XL', '37¾″', inch(46.5), inch(27)],
+      ['35', '20', 'XXL', '39¾″', inch(48.5), '27⅞″'],
+    ],
+  },
+  {
+    heading: 'Levi’s women’s tops & outerwear',
+    note: 'Same table on tees, shirts, flannels, jackets and plus-size product pages. Bands do not touch; the gaps are Levi’s.',
+    noteAfter: true,
+    minWidth: 520,
+    headers: ['Size', 'Chest', 'Waist', 'Hip'],
+    rows: [
+      ['XXS', inch(30, 31), inch(24, 25), inch(33, 34)],
+      ['XS', inch(32, 33), inch(26, 27), inch(35, 36)],
+      ['S', inch(34, 35), inch(28, 29), inch(37, 38)],
+      ['M', inch(36, 37.5), inch(30, 31), inch(39, 40)],
+      ['L', inch(38.5, 40), inch(32, 34), inch(41, 43)],
+      ['XL', inch(41, 43), inch(35, 37), inch(44, 46)],
+      ['XXL', inch(44, 46), inch(38, 40), inch(47, 49)],
+    ],
+  },
+  {
+    heading: 'Levi’s men’s tops & outerwear',
+    note: 'Same table on shirts, sweaters and trucker jackets. Big & Tall pages add LT–4XLT (chest 40–44 … 56–60) with the same hip bands.',
+    noteAfter: true,
+    minWidth: 600,
+    headers: ['Size', 'Neck', 'Chest', 'Waist', 'Hip'],
+    rows: [
+      ['XXS', inch(14.5, 14.75), inch(30, 32), inch(24, 26), inch(29, 31)],
+      ['XS', inch(14.75, 15), inch(32, 34.5), inch(26, 28.5), inch(31, 33.5)],
+      ['S', inch(15, 15.25), inch(34.5, 37), inch(28.5, 31), inch(33.5, 36)],
+      ['M', inch(15.25, 15.75), inch(37, 40), inch(31, 34), inch(36, 39)],
+      ['L', inch(15.75, 16.5), inch(40, 44), '34–38¼″', inch(39, 43.5)],
+      ['XL', inch(16.5, 17.5), inch(44, 48), '38¼–42½″', inch(43.5, 48)],
+      ['2XL', inch(17.5, 18.5), inch(48, 52), '42½–46¾″', inch(48, 52.5)],
+      ['3XL', inch(18.5, 19.5), inch(52, 56), '46¾–51″', inch(52.5, 57)],
+    ],
   },
 ];
 
 const faqs = [
   {
-    q: "Should I size up in Levi's?",
-    a: "It depends on the fabric. Modern stretch fits tend to run true to the labeled waist, and some shoppers even find they relax slightly with wear, so between sizes going down is common there. Rigid, non-stretch denim has no give, so between sizes most shoppers go up. And for 501 Shrink-to-Fit, sizing up is standard advice because the raw denim shrinks after washing.",
+    q: 'Are Levi’s true to size?',
+    a: 'By the chart, men’s jeans are literally your waist measurement — a 32 is for a 32-inch waist — so the number is honest; what varies is the fabric. Stretch fits hold the number and relax a little; rigid denim and Shrink-to-Fit run tighter and shrink, so shoppers size up in those. Women’s jeans are labelled 1¼ inches under your waist (a 28 is for a 29¼-inch waist), which is why they can feel “small” if you buy your actual waist number.',
   },
   {
-    q: "Are Levi's 501s true to size?",
-    a: "The regular pre-shrunk 501 tends to fit close to true, though its straight, non-stretch cut feels less forgiving than stretch styles. The 501 Shrink-to-Fit version is a different story: it's sold unshrunk and is commonly reported to lose around an inch to an inch and a half in the waist and more in length after washing, so buyers traditionally size up to land at their target fit.",
+    q: 'What does W32 L32 mean on Levi’s jeans?',
+    a: 'W is the waist and L the inseam, both in inches. On Levi’s men’s chart W is exactly your waist measurement; L is the leg length you choose, which Levi’s recommends by height (5′6″–5′10″ → 30–32, for instance) rather than by measured inseam.',
   },
   {
-    q: "Do Levi's stretch out over time?",
-    a: "Stretch-blend styles tend to relax modestly through the waist and thigh with wear, which is why many shoppers prefer them snug out of the box. Rigid 100% cotton denim also molds and loosens a little where your body flexes, but far less predictably; it won't rescue a pair that's genuinely too tight in the waist.",
+    q: 'How do Levi’s women’s sizes convert to US sizes?',
+    a: 'The size guide pairs them: 23, 24 and 25 are all US 0; 26 is 2; 27 is 4; 28 is 6; 29 is 8; 30 is 10; 31 is 12; 32 is 14; 33 is 16; 34 is 18; 35 is 20. Buy by the Levi’s number — it is what the size selector uses and it corresponds to a single waist figure.',
   },
   {
-    q: "What does W32 L32 mean on Levi's jeans?",
-    a: "W is the waist and L is the inseam (inside leg), both in inches, so a 32×32 is intended for roughly a 32-inch waist with a 32-inch leg length. Because many brands vanity-size their labels, your Levi's W number may be larger than the size you wear elsewhere; measuring a well-fitting pair of jeans you already own is the most reliable starting point.",
+    q: 'My hips are big for my waist. Which Levi’s size?',
+    a: 'Levi’s chart gives every men’s size a hip of exactly waist + 6½ in, and every women’s size waist + roughly 8¾. If your proportion is wider than that, the size that fits your waist will be tight through the seat on a straight or slim fit. Keep the waist size and change fit family — relaxed and loose fits (550, 559, 569; women’s Ribcage Wide or Baggy) add hip and thigh room without moving the waist.',
   },
   {
-    q: "How do Levi's women's sizes work?",
-    a: "Most women's Levi's are sold by waist size (W25 through W34 and beyond) alongside a US size equivalent, with separate inseam options on many fits. High-rise stretch styles like the 721 tend to run true to the waist number, and curvy-cut fits are designed to add hip room without changing the waist, which is helpful if you usually size up just to clear your hips.",
+    q: 'Should I size up in 501 Shrink-to-Fit?',
+    a: 'That is the long-standing advice and Levi’s own product pages repeat it: the unshrunk 501 loses around an inch to an inch and a half in the waist and more in length after washing. One size up in the waist and two in the length is the usual starting point. This is fabric behaviour, not a chart figure — the size guide itself shows the same waist numbers for every 501.',
   },
 ];
 
 const related = [
   { href: '/size-guides/jeans-inseam-length-guide/', label: 'Jeans inseam & length guide' },
   { href: '/size-guides/gap-size-chart-fit-guide/', label: 'Gap size chart & fit guide' },
+  { href: '/size-guides/hm/', label: 'H&M size chart & fit guide' },
   { href: '/blog/vanity-sizing-explained/', label: 'Vanity sizing explained' },
 ];
 ---
@@ -49,22 +158,71 @@ const related = [
 <BrandGuide
   brandKey="levis"
   brand="Levi's"
-  title="Levi's Size Chart & Fit Guide: Does It Run Small?"
-  description="Levi's stretch fits tend to run true to the labeled waist; rigid and Shrink-to-Fit styles run tight, so size up. Fit notes by style plus sizing FAQ."
+  title="Levi's Size Chart & Fit Guide: Jeans by Waist, Tops by Letter | Attirel"
+  description="Levi's own size chart, transcribed from the US site: men's jeans 24–42 where the size is your waist, women's jeans 23–35 and their US numeric equivalents, tops XXS–3XL. Where the chart stops and fabric takes over."
+  h1="Levi's Size Chart & Fit Guide"
+  standardCharts={false}
+  chartsHeading="Levi's size charts, in inches"
+  typicalCharts={charts}
   fitSections={fitSections}
+  fitSectionsHeading="How Levi's chart actually works"
   faqs={faqs}
   related={related}
+  breadcrumbs
 >
   <Fragment slot="verdict">
-    <strong>Levi's tends to run true to size in modern stretch fits</strong> because the brand
-    labels by real waist inches rather than vanity sizes. The catch is the classics: rigid denim
-    and 501 Shrink-to-Fit commonly fit tight and tighten further after washing, so many shoppers
-    size up in those — and trust the tape measure, not the number they wear at other brands.
+    <p>
+      Men's Levi's jeans are sized by your actual waist — a 32 is a 32-inch waist, full stop —
+      with a fixed 6½ inches of hip over it. Women's are labelled 1¼ inches under your waist.
+      Tops use narrow letter bands with gaps between them. The chart is honest; what makes
+      Levi's "run small" or "run big" is the denim, and the chart can't see that.
+    </p>
+  </Fragment>
+  <Fragment slot="method">
+    <ol class="mt-3 list-decimal space-y-2 pl-5">
+      <li>
+        <strong>Measure your waist in inches</strong> at the narrowest point, and your hip at
+        the fullest. Our <a href="/how-to-measure/" class={linkClass}>measuring guide</a> shows
+        where.
+      </li>
+      <li>
+        <strong>Men: your Levi's size is that waist number.</strong> Check the hip row — if
+        yours is more than 6½ in over your waist, choose a looser fit family, not a bigger
+        size.
+      </li>
+      <li>
+        <strong>Women: find the Levi's number whose waist figure matches you</strong> (it will be
+        about 1¼ less than your measurement), and check the hip beside it.
+      </li>
+      <li>
+        <strong>Then adjust for fabric:</strong> between sizes, down in stretch, up in rigid,
+        and a full size up in Shrink-to-Fit.
+      </li>
+      <li>
+        <strong>Tops: find the letter whose chest band contains you.</strong> If you fall in a
+        gap between two bands, the garment's cut decides — close-fitting styles take the
+        smaller, relaxed styles the larger.
+      </li>
+    </ol>
+  </Fragment>
+  <Fragment slot="charts-intro">
+    <p class="mt-3 leading-relaxed text-ink/85">
+      Every figure below is Levi's own, transcribed on 13 November 2026 from the "Size Guide"
+      modal on <AffLink brand="levis" href="https://www.levi.com/US/en_US/">levi.com's US product
+        pages</AffLink
+      >, which show the same brand-wide table on every product in a category. Levi's drafts in
+      inches (the modal's cm toggle is a conversion), so these are the published inch figures.
+      These same figures are what <a href="https://www.attirel.ai/size-check" class={linkClass}
+        >Attirel's size check</a
+      > reads when it names your Levi's size.
+    </p>
   </Fragment>
   <Fragment slot="tips">
-    <li><strong>Measure first:</strong> Levi's W number is meant to match your actual waist in inches, which is often larger than the vanity-sized label you wear elsewhere.</li>
-    <li><strong>Match strategy to fabric:</strong> between sizes, many shoppers go down in stretch fits (they tend to relax with wear) and up in rigid, non-stretch denim.</li>
-    <li><strong>Shrink-to-Fit needs headroom:</strong> the unshrunk 501 is commonly bought a size up in the waist and longer in the leg to allow for wash shrinkage.</li>
-    <li><strong>Truckers run short on purpose:</strong> take your true size for the classic cropped look, or go up one if you'll layer sweaters underneath.</li>
+    <li><strong>Men: buy your waist number.</strong> Levi's doesn't vanity-size men's jeans, so the W may be two inches bigger than the label you wear elsewhere. That's the label elsewhere lying, not Levi's.</li>
+    <li><strong>Women: the number is 1¼ under your waist.</strong> A 29¼-inch waist is a 28, not a 29.</li>
+    <li><strong>Hip is fixed per size.</strong> Wider through the seat than waist + 6½? Change fit family, not size.</li>
+    <li><strong>Length by inseam, not by height.</strong> Levi's height table is a rule of thumb; measure jeans you already like.</li>
+    <li><strong>Tops have gaps between letters.</strong> A 38-inch chest is between women's M and L on the chart; let the cut decide.</li>
+    <li><strong>Fabric last:</strong> down in stretch, up in rigid, a size up in Shrink-to-Fit, one up on a trucker you'll layer under.</li>
   </Fragment>
 </BrandGuide>
